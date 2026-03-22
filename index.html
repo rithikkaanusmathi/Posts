@@ -1,0 +1,1009 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>QSBS — The Complete Guide</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --navy: #0d1b2a;
+    --navy2: #162032;
+    --gold: #c9a84c;
+    --gold-light: #e0c97f;
+    --gold-pale: #f9f3e3;
+    --cream: #fdfaf4;
+    --cream2: #f4efe3;
+    --text: #1a1a1a;
+    --muted: #6b6b6b;
+    --border: #e8e0cc;
+    --bg: #fdfaf4;
+    --card-bg: #ffffff;
+    --section-alt: #f4efe3;
+  }
+  body.dark-mode {
+    --cream: #0d1b2a;
+    --cream2: #0a1520;
+    --text: #e8e0cc;
+    --muted: #9aacba;
+    --border: #1e3248;
+    --bg: #0d1b2a;
+    --card-bg: #122032;
+    --section-alt: #0a1520;
+    --gold-pale: #1a2e44;
+  }
+  body.dark-mode{background:var(--cream);}
+  body.dark-mode .icard{background:var(--card-bg);border-color:var(--border);}
+  body.dark-mode .icard h4{color:var(--gold-light);}
+  body.dark-mode .sec-title{color:var(--gold-light);}
+  body.dark-mode .t-body h4{color:#fff;}
+  body.dark-mode .elig-content strong{color:#fff;}
+  body.dark-mode .section{background:var(--cream);}
+  body.dark-mode .divider{background:var(--border);}
+  body.dark-mode .elig-list li{border-color:var(--border);}
+  body.dark-mode footer{background:#060e18;}
+  body.dark-mode .comp-table tr:nth-child(even) td{background:rgba(255,255,255,0.03);}
+
+  /* PROGRESS BAR */
+  #progress-bar{
+    position:fixed;top:0;left:0;z-index:999;
+    height:3px;width:0%;
+    background:linear-gradient(90deg,var(--gold),var(--gold-light));
+    transition:width .1s linear;
+    border-radius:0 2px 2px 0;
+  }
+
+  /* DARK MODE TOGGLE */
+  #theme-toggle{
+    position:fixed;bottom:2rem;right:2rem;z-index:500;
+    width:48px;height:48px;border-radius:50%;
+    background:var(--navy);border:2px solid var(--gold);
+    color:var(--gold-light);font-size:20px;
+    cursor:pointer;display:flex;align-items:center;justify-content:center;
+    box-shadow:0 4px 16px rgba(0,0,0,0.3);
+    transition:background .3s,transform .2s;
+  }
+  #theme-toggle:hover{transform:scale(1.1);}
+  body.dark-mode #theme-toggle{background:var(--gold);color:var(--navy);}
+
+  /* CALCULATOR */
+  .calc-section{
+    background:var(--navy);
+    padding:4rem 0;
+    margin:0;
+  }
+  .calc-box{
+    background:rgba(255,255,255,0.04);
+    border:1px solid rgba(201,168,76,0.2);
+    border-radius:16px;
+    padding:2.5rem;
+    max-width:740px;
+    margin:0 auto;
+  }
+  .calc-title{
+    font-family:'Cormorant Garamond',serif;
+    font-size:2.2rem;color:#fff;font-weight:700;
+    margin-bottom:0.5rem;
+  }
+  .calc-subtitle{font-size:15px;color:rgba(255,255,255,0.5);margin-bottom:2rem;line-height:1.7;}
+  .calc-rate-tag{
+    display:inline-block;font-size:13px;
+    background:rgba(201,168,76,0.12);
+    border:1px solid rgba(201,168,76,0.3);
+    color:var(--gold-light);padding:6px 16px;
+    border-radius:20px;margin-bottom:1.75rem;font-weight:500;
+  }
+  .calc-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.25rem;margin-bottom:1.5rem;}
+  .calc-field label{
+    display:block;font-size:12px;letter-spacing:2px;
+    text-transform:uppercase;color:rgba(255,255,255,0.45);
+    font-weight:600;margin-bottom:0.5rem;
+  }
+  .calc-field input{
+    width:100%;background:rgba(255,255,255,0.07);
+    border:1px solid rgba(255,255,255,0.12);
+    border-radius:8px;padding:13px 16px;
+    color:#fff;font-size:16px;font-family:'Jost',sans-serif;
+    transition:border-color .2s;outline:none;
+  }
+  .calc-field input:focus{border-color:var(--gold);}
+  .calc-field input::placeholder{color:rgba(255,255,255,0.2);}
+  .calc-btn{
+    width:100%;background:var(--gold);color:var(--navy);
+    border:none;border-radius:8px;padding:16px;
+    font-size:15px;font-weight:700;letter-spacing:1.5px;
+    text-transform:uppercase;cursor:pointer;
+    font-family:'Jost',sans-serif;transition:background .2s;
+    margin-bottom:1.5rem;
+  }
+  .calc-btn:hover{background:var(--gold-light);}
+  .calc-results{display:none;}
+  .calc-results.show{display:block;}
+  .calc-results-grid{
+    display:grid;grid-template-columns:repeat(3,1fr);
+    gap:1px;background:rgba(201,168,76,0.1);
+    border-radius:12px;overflow:hidden;margin-bottom:1.25rem;
+  }
+  .calc-stat{
+    background:rgba(255,255,255,0.04);
+    padding:1.25rem 1rem;text-align:center;
+  }
+  .calc-stat .cs-label{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.4);margin-bottom:6px;}
+  .calc-stat .cs-val{font-family:'Cormorant Garamond',serif;font-size:1.9rem;font-weight:700;}
+  .calc-stat .cs-sub{font-size:11px;color:rgba(255,255,255,0.35);margin-top:4px;}
+  .calc-savings-box{
+    background:rgba(22,163,74,0.1);
+    border:1px solid rgba(22,163,74,0.3);
+    border-radius:10px;padding:1.25rem 1.5rem;
+    display:flex;align-items:center;justify-content:space-between;
+    flex-wrap:wrap;gap:1rem;margin-bottom:1rem;
+  }
+  .calc-savings-box .cs-title{font-size:15px;color:rgba(255,255,255,0.7);}
+  .calc-savings-box .cs-amount{font-family:'Cormorant Garamond',serif;font-size:2.4rem;color:#4ade80;font-weight:700;}
+  .calc-note{font-size:12px;color:rgba(255,255,255,0.3);line-height:1.8;border-top:1px solid rgba(255,255,255,0.07);padding-top:1rem;}
+  .calc-eligibility{
+    background:rgba(201,168,76,0.08);
+    border:1px solid rgba(201,168,76,0.2);
+    border-radius:8px;padding:1rem 1.25rem;
+    font-size:13.5px;color:rgba(255,255,255,0.55);
+    margin-bottom:1rem;line-height:1.8;
+  }
+  .calc-reset{
+    background:transparent;border:1px solid rgba(255,255,255,0.15);
+    color:rgba(255,255,255,0.5);border-radius:8px;
+    padding:9px 22px;font-size:13px;cursor:pointer;
+    font-family:'Jost',sans-serif;transition:border-color .2s;
+  }
+  .calc-reset:hover{border-color:var(--gold);color:var(--gold);}
+  @media(max-width:600px){
+    .calc-grid{grid-template-columns:1fr;}
+    .calc-results-grid{grid-template-columns:1fr;}
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:'Jost',sans-serif;
+    background:var(--cream);
+    color:var(--text);
+    font-size:18px;
+    line-height:1.8;
+  }
+
+  /* NAV */
+  nav{
+    position:sticky;top:0;z-index:100;
+    background:var(--navy);
+    border-bottom:1px solid rgba(201,168,76,0.3);
+    display:flex;align-items:center;justify-content:space-between;
+    padding:0 2rem;height:56px;
+  }
+  .nav-brand{font-family:'Cormorant Garamond',serif;font-size:24px;color:var(--gold-light);letter-spacing:1px;font-weight:600;}
+  .nav-links{display:flex;gap:1.5rem;}
+  .nav-links a{font-size:13px;color:rgba(255,255,255,0.6);text-decoration:none;letter-spacing:1.5px;text-transform:uppercase;font-weight:500;transition:color .2s;}
+  .nav-links a:hover{color:var(--gold-light);}
+
+  /* HERO */
+  .hero{
+    background:var(--navy);
+    padding:5rem 2rem 4rem;
+    text-align:center;
+    position:relative;
+    overflow:hidden;
+  }
+  .hero::before{
+    content:'§ 1202';
+    position:absolute;
+    font-family:'Cormorant Garamond',serif;
+    font-size:22vw;
+    font-weight:700;
+    color:rgba(201,168,76,0.04);
+    top:50%;left:50%;
+    transform:translate(-50%,-50%);
+    white-space:nowrap;
+    pointer-events:none;
+  }
+  .hero-tag{
+    display:inline-block;
+    font-size:13px;letter-spacing:3px;text-transform:uppercase;
+    color:var(--gold);border:1px solid rgba(201,168,76,0.4);
+    padding:6px 20px;border-radius:20px;margin-bottom:1.5rem;
+    font-weight:500;
+  }
+  .hero h1{
+    font-family:'Cormorant Garamond',serif;
+    font-size:clamp(3.2rem,8vw,6.5rem);
+    color:#fff;
+    font-weight:700;
+    line-height:1.05;
+    margin-bottom:1.25rem;
+  }
+  .hero h1 em{color:var(--gold-light);font-style:italic;}
+  .hero-sub{
+    max-width:640px;margin:0 auto 2.5rem;
+    font-size:1.2rem;color:rgba(255,255,255,0.65);
+    font-weight:300;line-height:1.9;
+  }
+  .hero-stats{
+    display:flex;gap:1px;justify-content:center;flex-wrap:wrap;
+    max-width:760px;margin:0 auto;
+  }
+  .hstat{
+    flex:1;min-width:160px;
+    background:rgba(255,255,255,0.04);
+    border:1px solid rgba(201,168,76,0.15);
+    padding:1.75rem 1.25rem;
+  }
+  .hstat:first-child{border-radius:12px 0 0 12px;}
+  .hstat:last-child{border-radius:0 12px 12px 0;}
+  .hstat .num{
+    font-family:'Cormorant Garamond',serif;
+    font-size:3rem;color:var(--gold-light);font-weight:700;
+    line-height:1;display:block;
+  }
+  .hstat .lbl{font-size:13px;color:rgba(255,255,255,0.5);margin-top:8px;letter-spacing:1px;text-transform:uppercase;}
+
+  /* MAIN LAYOUT */
+  .container{max-width:900px;margin:0 auto;padding:0 1.5rem;}
+
+  /* SECTION TITLES */
+  .section{padding:4rem 0;}
+  .sec-label{
+    font-size:12px;letter-spacing:3px;text-transform:uppercase;
+    color:var(--gold);font-weight:600;margin-bottom:0.75rem;
+  }
+  .sec-title{
+    font-family:'Cormorant Garamond',serif;
+    font-size:clamp(2.2rem,5vw,3.4rem);
+    font-weight:700;color:var(--navy);
+    line-height:1.15;margin-bottom:1rem;
+  }
+  .sec-intro{
+    font-size:1.2rem;color:var(--muted);
+    max-width:680px;line-height:1.9;margin-bottom:2.5rem;
+  }
+
+  /* DIVIDER */
+  .divider{height:1px;background:var(--border);margin:0;}
+  .gold-rule{height:2px;width:60px;background:var(--gold);margin-bottom:1.5rem;}
+
+  /* ANALOGY BOX */
+  .analogy{
+    background:var(--navy);
+    border-radius:16px;
+    padding:2rem 2.5rem;
+    margin:2rem 0;
+    position:relative;
+    overflow:hidden;
+  }
+  .analogy::before{
+    content:'"';
+    font-family:'Cormorant Garamond',serif;
+    font-size:10rem;color:rgba(201,168,76,0.08);
+    position:absolute;top:-1rem;left:1rem;
+    line-height:1;pointer-events:none;
+  }
+  .analogy p{
+    font-family:'Cormorant Garamond',serif;
+    font-size:1.7rem;color:#fff;
+    font-style:italic;line-height:1.65;
+    position:relative;
+  }
+  .analogy .src{
+    font-size:14px;color:var(--gold);
+    margin-top:1rem;font-style:normal;
+    font-family:'Jost',sans-serif;letter-spacing:1px;
+    text-transform:uppercase;
+  }
+
+  /* INFO CARDS GRID */
+  .cards-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin:2rem 0;}
+  .icard{
+    background:#fff;
+    border:1px solid var(--border);
+    border-radius:12px;
+    padding:1.5rem;
+    transition:border-color .2s,transform .2s;
+  }
+  .icard:hover{border-color:var(--gold);transform:translateY(-2px);}
+  .icard .icon-wrap{
+    width:40px;height:40px;border-radius:10px;
+    background:var(--gold-pale);
+    display:flex;align-items:center;justify-content:center;
+    font-size:18px;margin-bottom:1rem;
+  }
+  .icard h4{font-size:16px;font-weight:600;color:var(--navy);margin-bottom:0.6rem;}
+  .icard p{font-size:14.5px;color:var(--muted);line-height:1.7;}
+
+  /* TIMELINE / STEPS */
+  .timeline{margin:2rem 0;}
+  .t-step{display:flex;gap:1.25rem;margin-bottom:2rem;position:relative;}
+  .t-left{display:flex;flex-direction:column;align-items:center;gap:0;}
+  .t-circle{
+    width:42px;height:42px;border-radius:50%;
+    background:var(--navy);
+    color:var(--gold-light);
+    font-family:'Cormorant Garamond',serif;
+    font-size:18px;font-weight:700;
+    display:flex;align-items:center;justify-content:center;
+    flex-shrink:0;
+  }
+  .t-line{flex:1;width:2px;background:var(--border);margin:4px 0;}
+  .t-body{padding-top:8px;padding-bottom:1rem;}
+  .t-body h4{font-size:17px;font-weight:600;color:var(--navy);margin-bottom:0.5rem;}
+  .t-body p{font-size:15px;color:var(--muted);line-height:1.8;}
+  .t-body .t-tag{
+    display:inline-block;margin-top:0.5rem;
+    font-size:12px;padding:4px 12px;border-radius:20px;
+    background:var(--gold-pale);color:#8a6500;font-weight:500;
+  }
+
+  /* COMPARISON TABLE */
+  .comp-table{width:100%;border-collapse:collapse;margin:2rem 0;border-radius:12px;overflow:hidden;border:1px solid var(--border);}
+  .comp-table th{
+    background:var(--navy);color:var(--gold-light);
+    font-size:12px;letter-spacing:1.5px;text-transform:uppercase;
+    font-weight:500;padding:1rem 1.25rem;text-align:left;
+  }
+  .comp-table td{
+    padding:0.9rem 1.25rem;font-size:13.5px;
+    border-bottom:1px solid var(--border);
+    vertical-align:top;
+  }
+  .comp-table tr:last-child td{border-bottom:none;}
+  .comp-table tr:nth-child(even) td{background:#faf7f0;}
+  .comp-table .good{color:#1a7f4e;font-weight:500;}
+  .comp-table .bad{color:#b91c1c;font-weight:500;}
+  .comp-table .label{color:var(--navy);font-weight:600;}
+
+  /* DARK SECTION */
+  .dark-section{
+    background:var(--navy2);
+    padding:4rem 0;
+    margin:0;
+  }
+  .dark-section .sec-title{color:#fff;}
+  .dark-section .sec-intro{color:rgba(255,255,255,0.6);}
+  .dark-section .sec-label{color:var(--gold);}
+
+  /* HIGHLIGHT BOX */
+  .highlight{
+    background:var(--gold-pale);
+    border-left:4px solid var(--gold);
+    border-radius:0 8px 8px 0;
+    padding:1.25rem 1.5rem;
+    margin:1.5rem 0;
+  }
+  .highlight p{font-size:15.5px;color:#5a4200;line-height:1.8;}
+  .highlight strong{color:#3a2a00;}
+
+  /* CPA PERSPECTIVE */
+  .cpa-card{
+    background:#fff;border:1px solid var(--border);
+    border-radius:16px;padding:2rem;margin:1.5rem 0;
+  }
+  .cpa-header{display:flex;align-items:center;gap:1rem;margin-bottom:1.25rem;}
+  .cpa-avatar{
+    width:52px;height:52px;border-radius:50%;
+    background:var(--navy);
+    color:var(--gold-light);
+    font-family:'Cormorant Garamond',serif;
+    font-size:20px;font-weight:700;
+    display:flex;align-items:center;justify-content:center;
+  }
+  .cpa-meta h4{font-size:15px;font-weight:600;color:var(--navy);}
+  .cpa-meta p{font-size:12px;color:var(--muted);}
+  .cpa-text{font-size:14px;color:var(--text);line-height:1.8;}
+  .cpa-insight-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:0.75rem;margin-top:1.5rem;}
+  .cpa-ins{
+    background:var(--cream2);
+    border-radius:10px;padding:1rem;
+    border:1px solid var(--border);
+  }
+  .cpa-ins .ins-title{font-size:12px;font-weight:600;color:var(--navy);margin-bottom:4px;text-transform:uppercase;letter-spacing:0.5px;}
+  .cpa-ins p{font-size:12px;color:var(--muted);line-height:1.6;}
+
+  /* RISK CARDS */
+  .risk-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1rem;margin:2rem 0;}
+  .risk-card{background:#fff;border:1px solid var(--border);border-radius:12px;padding:1.25rem;border-top:3px solid transparent;}
+  .risk-card.high{border-top-color:#dc2626;}
+  .risk-card.med{border-top-color:#d97706;}
+  .risk-card.low{border-top-color:#16a34a;}
+  .risk-card .risk-level{font-size:10px;letter-spacing:2px;text-transform:uppercase;font-weight:600;margin-bottom:0.5rem;}
+  .risk-card.high .risk-level{color:#dc2626;}
+  .risk-card.med .risk-level{color:#d97706;}
+  .risk-card.low .risk-level{color:#16a34a;}
+  .risk-card h4{font-size:14px;font-weight:600;color:var(--navy);margin-bottom:0.5rem;}
+  .risk-card p{font-size:12.5px;color:var(--muted);line-height:1.6;}
+
+  /* EXAMPLE SCENARIO */
+  .scenario{
+    background:var(--navy);border-radius:16px;
+    padding:2rem 2.5rem;margin:2rem 0;
+  }
+  .scenario h3{
+    font-family:'Cormorant Garamond',serif;
+    font-size:1.9rem;color:var(--gold-light);margin-bottom:1.5rem;
+  }
+  .scenario-row{display:flex;gap:2rem;flex-wrap:wrap;margin-bottom:1rem;}
+  .s-item{flex:1;min-width:150px;}
+  .s-item .s-label{font-size:12px;color:rgba(255,255,255,0.4);letter-spacing:2px;text-transform:uppercase;margin-bottom:4px;}
+  .s-item .s-val{font-size:1.7rem;font-family:'Cormorant Garamond',serif;color:#fff;font-weight:700;}
+  .s-item .s-sub{font-size:13px;color:rgba(255,255,255,0.5);margin-top:2px;}
+  .s-divider{height:1px;background:rgba(255,255,255,0.1);margin:1.25rem 0;}
+  .s-result{
+    background:rgba(201,168,76,0.1);
+    border:1px solid rgba(201,168,76,0.3);
+    border-radius:10px;padding:1rem 1.25rem;
+  }
+  .s-result p{font-size:15px;color:rgba(255,255,255,0.85);line-height:1.8;}
+  .s-result .big{font-size:2.4rem;font-family:'Cormorant Garamond',serif;color:var(--gold-light);font-weight:700;display:block;margin-top:6px;}
+
+  /* ELIGIBILITY CHECKLIST */
+  .elig-list{list-style:none;margin:1.5rem 0;}
+  .elig-list li{
+    display:flex;gap:1rem;align-items:flex-start;
+    padding:1rem 0;border-bottom:1px solid var(--border);
+    font-size:16px;
+  }
+  .elig-list li:last-child{border-bottom:none;}
+  .elig-icon{
+    width:30px;height:30px;border-radius:50%;
+    display:flex;align-items:center;justify-content:center;
+    font-size:13px;flex-shrink:0;margin-top:1px;
+  }
+  .elig-icon.yes{background:#dcfce7;color:#16a34a;}
+  .elig-icon.no{background:#fee2e2;color:#dc2626;}
+  .elig-content strong{font-weight:600;color:var(--navy);display:block;margin-bottom:4px;font-size:16px;}
+  .elig-content span{color:var(--muted);font-size:14px;}
+
+  /* STATE TABLE */
+  .state-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:0.5rem;margin:1.5rem 0;}
+  .state-pill{
+    border-radius:8px;padding:0.6rem 0.9rem;
+    font-size:12px;font-weight:500;
+    display:flex;align-items:center;gap:6px;
+  }
+  .state-pill.conform{background:#dcfce7;color:#14532d;}
+  .state-pill.no-conform{background:#fee2e2;color:#7f1d1d;}
+  .state-pill .dot{width:7px;height:7px;border-radius:50%;flex-shrink:0;}
+  .state-pill.conform .dot{background:#16a34a;}
+  .state-pill.no-conform .dot{background:#dc2626;}
+
+  /* FAQ */
+  .faq-item{border-bottom:1px solid var(--border);padding:1.25rem 0;}
+  .faq-q{font-size:15px;font-weight:600;color:var(--navy);cursor:pointer;display:flex;justify-content:space-between;align-items:center;}
+  .faq-q::after{content:'+';font-size:20px;color:var(--gold);font-weight:300;}
+  .faq-a{font-size:13.5px;color:var(--muted);line-height:1.8;margin-top:0.75rem;}
+
+  /* CTA BANNER */
+  .cta-banner{
+    background:var(--navy);
+    border-radius:16px;
+    padding:3rem 2.5rem;
+    text-align:center;
+    margin:3rem 0;
+    position:relative;overflow:hidden;
+  }
+  .cta-banner::after{
+    content:'';
+    position:absolute;top:0;left:0;right:0;bottom:0;
+    background:radial-gradient(circle at 50% 0%,rgba(201,168,76,0.12),transparent 70%);
+    pointer-events:none;
+  }
+  .cta-banner h2{
+    font-family:'Cormorant Garamond',serif;
+    font-size:2.6rem;color:#fff;margin-bottom:0.75rem;font-weight:700;
+  }
+  .cta-banner p{font-size:16px;color:rgba(255,255,255,0.6);margin-bottom:2rem;max-width:500px;margin-left:auto;margin-right:auto;}
+  .cta-steps-row{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;margin-bottom:2rem;}
+  .cta-step{
+    background:rgba(255,255,255,0.07);border:1px solid rgba(201,168,76,0.2);
+    border-radius:10px;padding:1rem;
+    flex:1;min-width:160px;max-width:200px;
+    text-align:center;
+  }
+  .cta-step .sn{
+    font-family:'Cormorant Garamond',serif;
+    font-size:2.4rem;color:var(--gold-light);font-weight:700;
+  }
+  .cta-step p{font-size:13.5px;color:rgba(255,255,255,0.65);margin-top:4px;line-height:1.6;}
+  .tag-row{display:flex;flex-wrap:wrap;gap:0.5rem;justify-content:center;}
+  .htag{
+    font-size:13px;padding:6px 14px;border-radius:20px;
+    background:rgba(201,168,76,0.1);color:var(--gold-light);
+    border:1px solid rgba(201,168,76,0.2);
+  }
+
+  /* FOOTER */
+  footer{
+    background:var(--navy);
+    padding:2rem;text-align:center;
+    font-size:14px;color:rgba(255,255,255,0.3);
+    border-top:1px solid rgba(201,168,76,0.1);
+  }
+  footer span{color:var(--gold);font-weight:500;}
+
+  /* RESPONSIVE */
+  @media(max-width:600px){
+    nav{padding:0 1rem;}
+    .nav-links{gap:0.75rem;}
+    .hero{padding:3rem 1.25rem 2.5rem;}
+    .container{padding:0 1.25rem;}
+    .section{padding:2.5rem 0;}
+    .analogy{padding:1.5rem;}
+    .scenario{padding:1.5rem;}
+    .cta-banner{padding:2rem 1.5rem;}
+  }
+
+  /* SCROLL ANIMATION */
+  .reveal{opacity:1;transform:none;}
+</style>
+</head>
+<body>
+<div id="progress-bar"></div>
+<button id="theme-toggle" title="Toggle dark/light mode">🌙</button>
+<section class="hero">
+  <div class="hero-tag">Section 1202 · Internal Revenue Code</div>
+  <h1>The <em>Tax Break</em> That Can<br/>Save You Millions</h1>
+  <p class="hero-sub">QSBS — Qualified Small Business Stock — is one of the most generous and least-known tax benefits in the U.S. tax code. Here's everything you need to know, explained simply.</p>
+  <div class="hero-stats">
+    <div class="hstat"><span class="num">$10M</span><div class="lbl">Max exclusion per investor</div></div>
+    <div class="hstat"><span class="num">100%</span><div class="lbl">Federal gains excluded</div></div>
+    <div class="hstat"><span class="num">5 yrs</span><div class="lbl">Minimum holding period</div></div>
+    <div class="hstat"><span class="num">$50M</span><div class="lbl">Company asset limit</div></div>
+  </div>
+</section>
+
+<!-- WHAT IS IT -->
+<section class="section" id="what">
+  <div class="container">
+    <div class="reveal">
+      <div class="sec-label">Chapter 01</div>
+      <h2 class="sec-title">What Is QSBS?<br/>Let's Start Simple.</h2>
+      <p class="sec-intro">Imagine the government saying: "Invest in small startups, take the risk — and if it pays off, you can keep the profits completely tax-free." That is essentially what QSBS is.</p>
+    </div>
+
+    <div class="analogy reveal">
+      <p>"Think of QSBS as a golden reward for backing the little guy. You bet on a small company early, hold your stake for 5 years, and if it grows — the IRS steps aside and lets you keep up to $10 million of that win, completely free of federal tax."</p>
+      <div class="src">— Simple Analogy for New Investors</div>
+    </div>
+
+    <div class="reveal">
+      <p style="font-size:14px;color:var(--muted);line-height:1.9;margin-bottom:1.5rem;">QSBS stands for <strong style="color:var(--navy);">Qualified Small Business Stock</strong>. It is governed by <strong style="color:var(--navy);">Section 1202 of the Internal Revenue Code (IRC)</strong>, a law originally passed in 1993 and significantly strengthened in 2010 when Congress increased the exclusion to 100%. The core idea is simple: to encourage investment into small, growing U.S. businesses by offering extraordinary tax benefits to investors who take the early risk.</p>
+    </div>
+
+    <div class="cards-grid reveal">
+      <div class="icard">
+        <div class="icon-wrap">📜</div>
+        <h4>The Law Behind It</h4>
+        <p>Section 1202 of the U.S. Internal Revenue Code. Enacted in 1993, enhanced in 2010. It specifically rewards patient, long-term investors in small startups.</p>
+      </div>
+      <div class="icard">
+        <div class="icon-wrap">🎯</div>
+        <h4>The Purpose</h4>
+        <p>Congress created QSBS to funnel private investment into small businesses — the engine of the U.S. economy — by making early-stage investing extremely tax-efficient.</p>
+      </div>
+      <div class="icard">
+        <div class="icon-wrap">💡</div>
+        <h4>Who Benefits</h4>
+        <p>Angel investors, startup founders, early employees with stock options, and venture capital investors. Anyone who invests in qualifying startups at an early stage.</p>
+      </div>
+      <div class="icard">
+        <div class="icon-wrap">🏛️</div>
+        <h4>Federal vs. State</h4>
+        <p>The 100% exclusion applies to federal taxes. Individual states have their own rules — some follow the federal law, others do not (like California).</p>
+      </div>
+      <div class="icard">
+        <div class="icon-wrap">💰</div>
+        <h4>The $10M Rule</h4>
+        <p>You can exclude the <strong>greater of $10 million</strong> in gains OR 10 times your original investment from federal tax. The more you invest early, the bigger your potential exclusion.</p>
+      </div>
+      <div class="icard">
+        <div class="icon-wrap">🌍</div>
+        <h4>Who Can Invest</h4>
+        <p>Any individual, trust, or estate that buys original stock directly from a qualifying U.S. C-Corporation. Corporate investors do not qualify — this benefit is for people, not companies.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- HOW IT WORKS -->
+<section class="section" id="how">
+  <div class="container">
+    <div class="reveal">
+      <div class="sec-label">Chapter 02</div>
+      <h2 class="sec-title">How Does QSBS Work?<br/>Step by Step.</h2>
+      <p class="sec-intro">The process has four distinct stages — from investing to collecting your tax-free gains. Here's how it unfolds in real life.</p>
+    </div>
+
+    <div class="timeline reveal">
+      <div class="t-step">
+        <div class="t-left">
+          <div class="t-circle">1</div>
+          <div class="t-line"></div>
+        </div>
+        <div class="t-body">
+          <h4>You Invest in a Small Business (C-Corp)</h4>
+          <p>You purchase original stock (not on a secondary market) in a U.S. C-Corporation. The company must have gross assets of $50 million or less at the time you invest. You can invest as an individual or through certain pass-through entities like partnerships. The stock must be acquired for cash, property, or services — not purchased from another shareholder.</p>
+          <div class="t-tag">Key requirement: Must be an original issuance</div>
+        </div>
+      </div>
+      <div class="t-step">
+        <div class="t-left">
+          <div class="t-circle">2</div>
+          <div class="t-line"></div>
+        </div>
+        <div class="t-body">
+          <h4>The Company Operates in a Qualifying Industry</h4>
+          <p>Not all businesses qualify. QSBS applies to startups in technology, retail, manufacturing, scientific research, and most general industries. It does NOT apply to professional service firms (law, accounting, consulting, financial services, health services, hospitality, or entertainment). The company must also be an active business — not a holding company.</p>
+          <div class="t-tag">Excluded: law, finance, health, hospitality, consulting</div>
+        </div>
+      </div>
+      <div class="t-step">
+        <div class="t-left">
+          <div class="t-circle">3</div>
+          <div class="t-line"></div>
+        </div>
+        <div class="t-body">
+          <h4>You Hold the Stock for at Least 5 Years</h4>
+          <p>This is the patience test. You must hold the stock for a minimum of 5 years without selling. If you sell even a day before the 5-year mark, you lose the entire benefit. There is a partial exclusion for earlier sales (50% for stock acquired before Feb 2009, 75% between Feb 2009 and Sept 2010), but the full 100% exclusion only kicks in after 5 years of continuous ownership.</p>
+          <div class="t-tag">Partial exclusions exist for pre-2010 acquisitions</div>
+        </div>
+      </div>
+      <div class="t-step">
+        <div class="t-left">
+          <div class="t-circle">4</div>
+        </div>
+        <div class="t-body">
+          <h4>You Sell and Claim the Exclusion</h4>
+          <p>When you sell after 5+ years, you can exclude from federal income tax the greater of: $10 million in gain, OR 10 times your original investment (adjusted basis). You report the sale on your tax return but exclude the qualifying gain. The gain that is excluded does NOT appear in your taxable income for federal purposes. Your CPA reports this on Form 8949 and Schedule D.</p>
+          <div class="t-tag">Greater of: $10M or 10x adjusted basis</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- REAL WORLD EXAMPLE -->
+    <div class="scenario reveal">
+      <h3>Real-World Example: The $1M Investment</h3>
+      <div class="scenario-row">
+        <div class="s-item">
+          <div class="s-label">Investment</div>
+          <div class="s-val">$1,000,000</div>
+          <div class="s-sub">Invested in qualifying C-Corp startup</div>
+        </div>
+        <div class="s-item">
+          <div class="s-label">Exit Value (after 6 years)</div>
+          <div class="s-val">$11,000,000</div>
+          <div class="s-sub">Company acquired or IPO</div>
+        </div>
+        <div class="s-item">
+          <div class="s-label">Capital Gain</div>
+          <div class="s-val">$10,000,000</div>
+          <div class="s-sub">Profit on the investment</div>
+        </div>
+      </div>
+      <div class="s-divider"></div>
+      <div class="scenario-row">
+        <div class="s-item">
+          <div class="s-label">QSBS Exclusion Limit</div>
+          <div class="s-val" style="color:var(--gold-light);">$10,000,000</div>
+          <div class="s-sub">Greater of $10M or 10x basis ($10M)</div>
+        </div>
+        <div class="s-item">
+          <div class="s-label">Tax WITHOUT QSBS</div>
+          <div class="s-val" style="color:#f87171;">~$2,380,000</div>
+          <div class="s-sub">At 23.8% federal long-term CGT rate</div>
+        </div>
+        <div class="s-item">
+          <div class="s-label">Tax WITH QSBS</div>
+          <div class="s-val" style="color:#4ade80;">$0</div>
+          <div class="s-sub">Full exclusion applies at federal level</div>
+        </div>
+      </div>
+      <div class="s-result">
+        <p>Total federal tax savings with QSBS:</p>
+        <span class="big">$2,380,000 saved</span>
+        <p style="font-size:12px;color:rgba(255,255,255,0.5);margin-top:4px;">Note: State taxes may still apply. Savings shown are federal only.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ELIGIBILITY -->
+<section class="section" id="qualify">
+  <div class="container">
+    <div class="reveal">
+      <div class="sec-label">Chapter 03</div>
+      <h2 class="sec-title">Who & What Qualifies?<br/>The Checklist.</h2>
+      <p class="sec-intro">QSBS has specific rules — for both the investor and the company. Here's a detailed breakdown of every requirement you need to meet.</p>
+    </div>
+
+    <div class="reveal">
+      <div class="gold-rule"></div>
+      <h3 style="font-family:'Cormorant Garamond',serif;font-size:1.4rem;color:var(--navy);margin-bottom:1rem;">Company Requirements</h3>
+      <ul class="elig-list">
+        <li>
+          <div class="elig-icon yes">✓</div>
+          <div class="elig-content"><strong>Must be a U.S. C-Corporation</strong><span>Only C-Corps qualify. LLCs, S-Corps, partnerships, and sole proprietorships do NOT qualify for QSBS treatment — this is the #1 reason deals fail to qualify.</span></div>
+        </li>
+        <li>
+          <div class="elig-icon yes">✓</div>
+          <div class="elig-content"><strong>Gross Assets Under $50 Million</strong><span>At the time the stock is issued (and immediately after), the company's total gross assets must not exceed $50 million. This ensures only genuinely "small" businesses qualify.</span></div>
+        </li>
+        <li>
+          <div class="elig-icon yes">✓</div>
+          <div class="elig-content"><strong>Active Business Requirement</strong><span>At least 80% of the company's assets must be used in active conduct of a qualifying business. The company cannot be a passive holding company or investment vehicle.</span></div>
+        </li>
+        <li>
+          <div class="elig-icon no">✗</div>
+          <div class="elig-content"><strong>Not a Professional Service Business</strong><span>Companies in law, accounting, health, financial services, brokerage, insurance, engineering, architecture, consulting, athletics, performing arts, or hospitality are EXCLUDED.</span></div>
+        </li>
+        <li>
+          <div class="elig-icon no">✗</div>
+          <div class="elig-content"><strong>Not a Hotel, Restaurant, or Farm</strong><span>Certain businesses like hotels, motels, restaurants, and farming operations are specifically excluded from QSBS qualification.</span></div>
+        </li>
+      </ul>
+    </div>
+
+    <div class="reveal" style="margin-top:2rem;">
+      <div class="gold-rule"></div>
+      <h3 style="font-family:'Cormorant Garamond',serif;font-size:1.4rem;color:var(--navy);margin-bottom:1rem;">Investor Requirements</h3>
+      <ul class="elig-list">
+        <li>
+          <div class="elig-icon yes">✓</div>
+          <div class="elig-content"><strong>Must Be a Non-Corporate Taxpayer</strong><span>The exclusion is available to individual investors, trusts, and estates. C-Corporations buying stock in other C-Corps do NOT get the QSBS benefit.</span></div>
+        </li>
+        <li>
+          <div class="elig-icon yes">✓</div>
+          <div class="elig-content"><strong>Original Issuance Only</strong><span>You must acquire stock directly from the company (original issuance), not by purchasing shares from another investor on a secondary market.</span></div>
+        </li>
+        <li>
+          <div class="elig-icon yes">✓</div>
+          <div class="elig-content"><strong>Acquired for Cash, Property, or Services</strong><span>Stock received as compensation for services rendered (like employee stock options) can qualify, as can stock purchased for cash or contributed property.</span></div>
+        </li>
+        <li>
+          <div class="elig-icon yes">✓</div>
+          <div class="elig-content"><strong>Hold for 5+ Years Continuously</strong><span>The holding period must be continuous. If you gift, transfer, or sell even a portion, it can affect the holding period for that portion of shares.</span></div>
+        </li>
+      </ul>
+    </div>
+
+    <div class="highlight reveal">
+      <p><strong>Pro Tip from a CPA Perspective:</strong> Always verify QSBS eligibility BEFORE investing — not after. Once you invest in the wrong type of entity (like an LLC), you cannot retroactively qualify for QSBS. This is one of the most common and costly mistakes early-stage investors make.</p>
+    </div>
+  </div>
+</section>
+
+<!-- QSBS CALCULATOR -->
+<section class="calc-section" id="calculator">
+  <div class="container">
+    <div class="calc-box">
+      <div class="calc-title">QSBS Tax Savings Calculator</div>
+      <div class="calc-subtitle">Find out exactly how much federal tax you could save with QSBS — instantly.</div>
+      <div class="calc-rate-tag">📅 Based on 2025 Federal Tax Rates — IRS Tax Year 2025 (Long-Term Capital Gains)</div>
+      <div class="calc-grid">
+        <div class="calc-field">
+          <label>Your Investment Amount ($)</label>
+          <input type="number" id="calc-investment" placeholder="e.g. 100000" min="1"/>
+        </div>
+        <div class="calc-field">
+          <label>Expected Exit Value ($)</label>
+          <input type="number" id="calc-exit" placeholder="e.g. 2000000" min="1"/>
+        </div>
+        <div class="calc-field">
+          <label>Your Annual Income ($)</label>
+          <input type="number" id="calc-income" placeholder="e.g. 150000" min="0"/>
+        </div>
+        <div class="calc-field">
+          <label>Filing Status</label>
+          <select id="calc-filing" style="width:100%;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.12);border-radius:8px;padding:12px 14px;color:#fff;font-size:15px;font-family:'Jost',sans-serif;outline:none;">
+            <option value="single">Single</option>
+            <option value="married">Married Filing Jointly</option>
+            <option value="hoh">Head of Household</option>
+          </select>
+        </div>
+      </div>
+      <button class="calc-btn" onclick="calculateQSBS()">Calculate My Tax Savings</button>
+      <div class="calc-results" id="calc-results">
+        <div class="calc-results-grid">
+          <div class="calc-stat">
+            <div class="cs-label">Capital Gain</div>
+            <div class="cs-val" id="r-gain" style="color:var(--gold-light);"></div>
+            <div class="cs-sub">Exit value minus investment</div>
+          </div>
+          <div class="calc-stat">
+            <div class="cs-label">Tax WITHOUT QSBS</div>
+            <div class="cs-val" id="r-tax-without" style="color:#f87171;"></div>
+            <div class="cs-sub">Federal CGT at your rate</div>
+          </div>
+          <div class="calc-stat">
+            <div class="cs-label">Tax WITH QSBS</div>
+            <div class="cs-val" id="r-tax-with" style="color:#4ade80;"></div>
+            <div class="cs-sub">After Section 1202 exclusion</div>
+          </div>
+        </div>
+        <div class="calc-savings-box">
+          <div>
+            <div class="cs-title">Your estimated federal tax savings with QSBS</div>
+            <div style="font-size:11px;color:rgba(255,255,255,0.35);margin-top:3px;" id="r-rate-note"></div>
+          </div>
+          <div class="cs-amount" id="r-savings"></div>
+        </div>
+        <div class="calc-eligibility" id="r-eligibility"></div>
+        <div class="calc-note">
+          <strong style="color:rgba(255,255,255,0.5);">Rate basis:</strong> 2025 IRS long-term capital gains tax rates — 0% (income up to $48,350 single / $96,700 married), 15% ($48,351–$533,400 single / $96,701–$600,050 married), 20% (above $533,400 single / $600,050 married). Net Investment Income Tax (NIIT) of 3.8% applies above $200,000 single / $250,000 married. QSBS exclusion applies to the lesser of the gain or the greater of $10M or 10x adjusted basis. <strong style="color:rgba(255,255,255,0.5);">This is an estimate for educational purposes only. State taxes not included. Always consult a qualified CPA before making investment decisions.</strong>
+        </div>
+        <button class="calc-reset" onclick="resetCalc()">Reset Calculator</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA BANNER -->
+<div class="container">
+  <div class="cta-banner reveal">
+    <h2>Your QSBS Action Plan</h2>
+    <p>If you're an investor, founder, or someone advising clients on startup investments — here's exactly what to do next.</p>
+    <div class="cta-steps-row">
+      <div class="cta-step"><div class="sn">1</div><p>Confirm any existing startup investments are held in a C-Corp</p></div>
+      <div class="cta-step"><div class="sn">2</div><p>Get written QSBS eligibility confirmation from portfolio companies</p></div>
+      <div class="cta-step"><div class="sn">3</div><p>Track your 5-year holding period start date for each investment</p></div>
+      <div class="cta-step"><div class="sn">4</div><p>Work with a CPA who understands Section 1202 before your next deal</p></div>
+    </div>
+    <div class="tag-row">
+      <span class="htag">#QSBS</span>
+      <span class="htag">#Section1202</span>
+      <span class="htag">#TaxPlanning</span>
+      <span class="htag">#StartupInvesting</span>
+      <span class="htag">#CPALife</span>
+      <span class="htag">#AngelInvesting</span>
+      <span class="htag">#CapitalGains</span>
+      <span class="htag">#VentureCapital</span>
+    </div>
+  </div>
+</div>
+
+<!-- ABOUT THE AUTHOR -->
+<section style="background:var(--navy);padding:5rem 0;">
+  <div class="container">
+    <div class="reveal" style="max-width:680px;margin:0 auto;text-align:center;">
+      <div class="sec-label" style="text-align:center;">About the Author</div>
+      <div style="width:48px;height:2px;background:var(--gold);margin:0 auto 2rem;border-radius:2px;"></div>
+      <div style="width:84px;height:84px;border-radius:50%;background:linear-gradient(135deg,var(--gold),var(--gold-light));display:flex;align-items:center;justify-content:center;margin:0 auto 1.5rem;font-family:'Cormorant Garamond',serif;font-size:30px;font-weight:700;color:var(--navy);">RA</div>
+      <h2 style="font-family:'Cormorant Garamond',serif;font-size:2.2rem;color:#fff;font-weight:700;margin-bottom:0.4rem;">Rithikka Anusmathi</h2>
+      <p style="font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:2rem;font-weight:500;">CA Finalist &nbsp;·&nbsp; US CPA Student &nbsp;·&nbsp; Global Taxation Enthusiast</p>
+      <p style="font-size:14.5px;color:rgba(255,255,255,0.72);line-height:1.95;margin-bottom:1.25rem;">I'm a <strong style="color:#fff;">CA Finalist & US CPA Student</strong> from Coimbatore, Tamil Nadu, India — building dual expertise across the Indian and US tax systems. Having cleared CA Foundation and Intermediate from ICAI, I'm simultaneously pursuing the US CPA qualification, driven by a genuine passion for global taxation and cross-border advisory.</p>
+      <p style="font-size:14.5px;color:rgba(255,255,255,0.72);line-height:1.95;margin-bottom:1.25rem;">Currently in my <strong style="color:#fff;">CA Industrial Training</strong> at a well-established industry in Coimbatore, I get hands-on exposure to real-world accounting, compliance, and advisory work every day. On the side, I study US tax law, cross-border taxation, NRI planning, and startup advisory topics — and share what I learn publicly so everyone can benefit.</p>
+      <p style="font-size:14.5px;color:rgba(255,255,255,0.72);line-height:1.95;margin-bottom:2.5rem;">My mission is to make complex tax topics <strong style="color:#fff;">simple, accessible, and actionable</strong> — whether you're a startup founder, an NRI navigating two tax systems, a small business owner, or a first-time investor. I believe great tax knowledge shouldn't be locked behind jargon, and I'm on this journey to change that.</p>
+      <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;margin-bottom:1.75rem;">
+        <a href="https://www.linkedin.com/in/rithikka-anusmathi-s-009163241" target="_blank" style="display:inline-flex;align-items:center;gap:9px;background:rgba(10,102,194,0.15);border:1px solid rgba(10,102,194,0.45);color:#7ab3f5;padding:13px 26px;border-radius:6px;font-size:13px;font-weight:600;letter-spacing:0.5px;text-decoration:none;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+          Connect on LinkedIn
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>Written by <span>Rithikka Anusmathi</span> &nbsp;·&nbsp; CA & CPA Student &nbsp;·&nbsp; Coimbatore, India</p>
+  <p style="margin-top:0.5rem;">This is educational content, not tax or investment advice. Always consult a qualified tax professional before making investment decisions.</p>
+</footer>
+
+<script>
+// ── PROGRESS BAR ──────────────────────────────────
+window.addEventListener('scroll', function() {
+  const scrollTop = window.scrollY;
+  const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+  const pct = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+  document.getElementById('progress-bar').style.width = pct + '%';
+});
+
+// ── DARK / LIGHT MODE TOGGLE ──────────────────────
+const toggle = document.getElementById('theme-toggle');
+const savedTheme = localStorage.getItem('qsbs-theme');
+if (savedTheme === 'dark') {
+  document.body.classList.add('dark-mode');
+  toggle.textContent = '☀️';
+}
+toggle.addEventListener('click', function() {
+  document.body.classList.toggle('dark-mode');
+  const isDark = document.body.classList.contains('dark-mode');
+  toggle.textContent = isDark ? '☀️' : '🌙';
+  localStorage.setItem('qsbs-theme', isDark ? 'dark' : 'light');
+});
+
+// ── QSBS CALCULATOR ───────────────────────────────
+function fmt(n) {
+  return '$' + Math.round(n).toLocaleString('en-US');
+}
+
+function getLTCGRate(income, filing) {
+  // 2025 IRS Long-Term Capital Gains Brackets (inflation-adjusted)
+  if (filing === 'single') {
+    if (income <= 48350) return 0;
+    if (income <= 533400) return 0.15;
+    return 0.20;
+  } else if (filing === 'married') {
+    if (income <= 96700) return 0;
+    if (income <= 600050) return 0.15;
+    return 0.20;
+  } else { // head of household
+    if (income <= 64750) return 0;
+    if (income <= 566700) return 0.15;
+    return 0.20;
+  }
+}
+
+function getNIIT(income, filing) {
+  // 3.8% Net Investment Income Tax threshold
+  const threshold = filing === 'married' ? 250000 : 200000;
+  return income > threshold ? 0.038 : 0;
+}
+
+function calculateQSBS() {
+  const investment = parseFloat(document.getElementById('calc-investment').value);
+  const exitVal    = parseFloat(document.getElementById('calc-exit').value);
+  const income     = parseFloat(document.getElementById('calc-income').value) || 0;
+  const filing     = document.getElementById('calc-filing').value;
+
+  if (!investment || !exitVal || isNaN(investment) || isNaN(exitVal)) {
+    alert('Please enter your investment amount and expected exit value.');
+    return;
+  }
+  if (exitVal <= investment) {
+    alert('Exit value must be greater than your investment amount to show a gain.');
+    return;
+  }
+
+  const gain         = exitVal - investment;
+  const ltcgRate     = getLTCGRate(income, filing);
+  const niitRate     = getNIIT(income, filing);
+  const totalRate    = ltcgRate + niitRate;
+
+  // Tax WITHOUT QSBS
+  const taxWithout   = gain * totalRate;
+
+  // QSBS exclusion: greater of $10M or 10x basis
+  const qsbsLimit    = Math.max(10000000, investment * 10);
+  const excludedGain = Math.min(gain, qsbsLimit);
+  const taxableGain  = Math.max(0, gain - excludedGain);
+  const taxWith      = taxableGain * totalRate;
+
+  const savings      = taxWithout - taxWith;
+  const rateLabel    = (ltcgRate * 100).toFixed(0) + '%' + (niitRate > 0 ? ' + 3.8% NIIT' : '') + ' federal rate';
+
+  // Populate results
+  document.getElementById('r-gain').textContent        = fmt(gain);
+  document.getElementById('r-tax-without').textContent = fmt(taxWithout);
+  document.getElementById('r-tax-with').textContent    = fmt(taxWith);
+  document.getElementById('r-savings').textContent     = fmt(savings);
+  document.getElementById('r-rate-note').textContent   = 'Applied rate: ' + rateLabel + ' · 2025 IRS rates';
+
+  // Eligibility message
+  let eligMsg = '';
+  if (gain <= qsbsLimit) {
+    eligMsg = '✅ Your entire gain of ' + fmt(gain) + ' falls within the QSBS exclusion limit of ' + fmt(qsbsLimit) + ' (greater of $10M or 10× your investment). Full exclusion applies — federal tax = $0 if all QSBS conditions are met.';
+  } else {
+    eligMsg = '⚠️ Your gain of ' + fmt(gain) + ' exceeds the QSBS exclusion limit of ' + fmt(qsbsLimit) + '. The first ' + fmt(excludedGain) + ' is excluded. The remaining ' + fmt(taxableGain) + ' is taxable at your federal rate.';
+  }
+  document.getElementById('r-eligibility').textContent = eligMsg;
+
+  document.getElementById('calc-results').classList.add('show');
+}
+
+function resetCalc() {
+  document.getElementById('calc-investment').value = '';
+  document.getElementById('calc-exit').value = '';
+  document.getElementById('calc-income').value = '';
+  document.getElementById('calc-filing').value = 'single';
+  document.getElementById('calc-results').classList.remove('show');
+}
+</script>
+</body>
+</html>
