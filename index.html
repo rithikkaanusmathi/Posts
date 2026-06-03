@@ -248,6 +248,7 @@ footer{text-align:center;padding:1.6rem;font-size:12px;color:var(--muted);border
     </div>
     <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
       <button class="tb-btn btn-export" onclick="openExport()" style="font-size:13px;padding:8px 16px;border-radius:8px;">&#8659; Export</button>
+      <button class="tb-btn" onclick="openImport()" style="font-size:13px;padding:8px 16px;border-radius:8px;background:#fff;color:var(--accent);border:1px solid rgba(255,255,255,.5);">&#8657; Import Excel</button>
       <button class="tb-btn btn-add" onclick="openAddForm()" style="font-size:13px;padding:8px 16px;border-radius:8px;">&#43; Add Event</button>
       <div class="view-toggle">
         <button class="view-btn active" id="btnCal" onclick="setView('calendar')">&#128197; Calendar</button>
@@ -414,6 +415,38 @@ footer{text-align:center;padding:1.6rem;font-size:12px;color:var(--muted);border
           <div class="exp-desc">Plain comma-separated file — opens in any spreadsheet app</div>
         </div>
       </div>
+    </div>
+  </div>
+</div>
+
+<!-- IMPORT MODAL -->
+<div class="exp-overlay" id="importOverlay" onclick="closeImport(event)">
+  <div class="exp-modal" style="max-width:500px;">
+    <div class="exp-hdr" style="border-radius:16px 16px 0 0;">
+      <h2>&#8657; Import Events from Excel</h2>
+      <button class="form-close" onclick="closeImport()">&times;</button>
+    </div>
+    <div class="exp-body">
+      <!-- Step 1: Download template -->
+      <div style="background:#EDF5F0;border:1px solid #B8DFC4;border-radius:10px;padding:1rem 1.1rem;margin-bottom:14px;">
+        <div style="font-size:13px;font-weight:600;color:#1A5C2A;margin-bottom:6px;">Step 1 — Download the template</div>
+        <div style="font-size:12px;color:#2D6B52;margin-bottom:10px;">Use our official Excel template so your data imports correctly. Fill in your events and save the file.</div>
+        <button onclick="downloadImportTemplate()" style="font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;padding:8px 16px;border:none;border-radius:8px;background:#1E4D3B;color:#fff;cursor:pointer;display:flex;align-items:center;gap:7px;">&#128202; Download Excel Template</button>
+      </div>
+      <!-- Step 2: Upload -->
+      <div style="font-size:13px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.8px;margin-bottom:8px;">Step 2 — Upload your filled file</div>
+      <div id="importDropZone" onclick="document.getElementById('importFileInput').click()"
+        style="border:2px dashed var(--border);border-radius:12px;padding:2rem;text-align:center;cursor:pointer;transition:all .2s;background:var(--bg);"
+        ondragover="event.preventDefault();this.style.borderColor='var(--accent)';this.style.background='#EDF5F0';"
+        ondragleave="this.style.borderColor='var(--border)';this.style.background='var(--bg)';"
+        ondrop="handleImportDrop(event)">
+        <div style="font-size:28px;margin-bottom:8px;">📂</div>
+        <div style="font-size:14px;font-weight:500;color:var(--text);">Click or drag & drop your Excel file here</div>
+        <div style="font-size:12px;color:var(--muted);margin-top:4px;">.xlsx files only</div>
+      </div>
+      <input type="file" id="importFileInput" accept=".xlsx" style="display:none" onchange="handleImportFile(this.files[0])">
+      <!-- Preview / result -->
+      <div id="importPreview" style="display:none;margin-top:14px;"></div>
     </div>
   </div>
 </div>
@@ -1010,8 +1043,228 @@ document.addEventListener('keydown',e=>{
     document.getElementById('dayOverlay').classList.remove('open');
     document.getElementById('formOverlay').classList.remove('open');
     document.getElementById('expOverlay').classList.remove('open');
+    document.getElementById('importOverlay').classList.remove('open');
   }
 });
+
+// ══════════════════════════════════════════════
+//  IMPORT
+// ══════════════════════════════════════════════
+function openImport(){
+  document.getElementById('importPreview').style.display='none';
+  document.getElementById('importPreview').innerHTML='';
+  document.getElementById('importFileInput').value='';
+  document.getElementById('importOverlay').classList.add('open');
+}
+function closeImport(e){
+  if(!e||e.target===document.getElementById('importOverlay'))
+    document.getElementById('importOverlay').classList.remove('open');
+}
+
+function downloadImportTemplate(){
+  // Build a fresh template workbook in-browser using SheetJS
+  const wb = XLSX.utils.book_new();
+  const headers = ['Date *','Category *','Event Title *','Description / Notes','Priority *','Status','Filed On','Type'];
+  const hint    = ['YYYY-MM-DD e.g. 2026-07-15','federal / payroll / sales / state / labor / license / insurance / custom','Full event name','Additional details (optional)','high / med / low','pending / done (blank = pending)','Leave blank','Leave blank'];
+  const sample1 = ['2026-07-15','payroll','Monthly payroll tax deposit (June 2026)','EFTPS deposit','high','pending','',''];
+  const sample2 = ['2026-08-01','custom','Quarterly safety briefing','Review OSHA updates with staff','med','pending','',''];
+
+  const wsData = [headers, hint, sample1, sample2];
+  // Add 20 blank rows
+  for(let i=0;i<20;i++) wsData.push(['','','','','','','','']);
+
+  const ws = XLSX.utils.aoa_to_sheet(wsData);
+  ws['!cols'] = [{wch:14},{wch:16},{wch:45},{wch:45},{wch:12},{wch:12},{wch:22},{wch:10}];
+  XLSX.utils.book_append_sheet(wb, ws, 'Events Template');
+
+  // Reference sheet
+  const refData = [
+    ['Column','Valid Values','Notes'],
+    ['Date *','Any date','Format: YYYY-MM-DD'],
+    ['Category *','federal','Federal IRS tax events'],
+    ['','payroll','Payroll / TDS deposits & returns'],
+    ['','sales','Sales tax filings'],
+    ['','state','State income tax'],
+    ['','labor','Labor / OSHA compliance'],
+    ['','license','Business licenses & permits'],
+    ['','insurance','Insurance reviews & audits'],
+    ['','custom','Any custom / internal event'],
+    ['Priority *','high','Critical — must not miss'],
+    ['','med','Important — plan ahead'],
+    ['','low','Routine — good to track'],
+    ['Status','pending','Not yet completed (default)'],
+    ['','done','Already completed'],
+  ];
+  const ws2 = XLSX.utils.aoa_to_sheet(refData);
+  ws2['!cols'] = [{wch:14},{wch:16},{wch:38}];
+  XLSX.utils.book_append_sheet(wb, ws2, 'Reference');
+
+  XLSX.writeFile(wb,'Compliance_Import_Template.xlsx');
+}
+
+function handleImportDrop(e){
+  e.preventDefault();
+  document.getElementById('importDropZone').style.borderColor='var(--border)';
+  document.getElementById('importDropZone').style.background='var(--bg)';
+  const file = e.dataTransfer.files[0];
+  if(file) handleImportFile(file);
+}
+
+function handleImportFile(file){
+  if(!file) return;
+  if(!file.name.endsWith('.xlsx')){
+    showImportResult('error','Please upload an .xlsx file.');
+    return;
+  }
+  const reader = new FileReader();
+  reader.onload = function(e){
+    try{
+      const data = new Uint8Array(e.target.result);
+      const wb = XLSX.read(data, {type:'array'});
+      // Find first sheet that has event data
+      const sheetName = wb.SheetNames.find(n=>n.toLowerCase().includes('event')||n.toLowerCase().includes('template')) || wb.SheetNames[0];
+      const ws = wb.Sheets[sheetName];
+      const rows = XLSX.utils.sheet_to_json(ws, {header:1, defval:''});
+
+      // Find header row (look for "Date" in first 5 rows)
+      let headerRow = -1;
+      for(let i=0;i<Math.min(5,rows.length);i++){
+        const r = rows[i].map(c=>String(c).toLowerCase());
+        if(r.some(c=>c.includes('date'))&&r.some(c=>c.includes('title')||c.includes('event'))){
+          headerRow=i; break;
+        }
+      }
+      if(headerRow===-1){showImportResult('error','Could not find header row. Make sure your file has "Date" and "Event Title" columns.');return;}
+
+      const hdr = rows[headerRow].map(c=>String(c).toLowerCase().replace(/[^a-z]/g,''));
+      const idx = {
+        date:    hdr.findIndex(h=>h.includes('date')),
+        cat:     hdr.findIndex(h=>h.includes('cat')||h.includes('type')&&h.includes('cat')),
+        title:   hdr.findIndex(h=>h.includes('title')||h.includes('event')&&h.includes('title')),
+        sub:     hdr.findIndex(h=>h.includes('desc')||h.includes('note')),
+        urgency: hdr.findIndex(h=>h.includes('prior')||h.includes('urg')),
+        status:  hdr.findIndex(h=>h.includes('status')||h.includes('complet')),
+      };
+      // fallback indices
+      if(idx.cat===-1) idx.cat=1;
+      if(idx.title===-1) idx.title=2;
+
+      const VALID_CATS = ['federal','payroll','sales','state','labor','license','insurance','custom'];
+      const VALID_URG  = ['high','med','low'];
+
+      let imported=0, skipped=0, errors=[];
+      const newEvents=[];
+
+      for(let r=headerRow+2; r<rows.length; r++){
+        const row = rows[r];
+        if(!row || row.every(c=>c===''||c===null||c===undefined)) continue;
+
+        let dateVal = idx.date>=0 ? String(row[idx.date]||'').trim() : '';
+        // Handle Excel serial date numbers
+        if(dateVal && !isNaN(Number(dateVal))){
+          const serial = Number(dateVal);
+          const jsDate = new Date(Math.round((serial - 25569)*86400*1000));
+          dateVal = jsDate.toISOString().slice(0,10);
+        }
+        // Normalise date separators
+        dateVal = dateVal.replace(/\//g,'-').replace(/\./g,'-');
+        if(!/^\d{4}-\d{2}-\d{2}$/.test(dateVal)){
+          if(dateVal) errors.push(`Row ${r+1}: invalid date "${dateVal}" — skipped`);
+          skipped++; continue;
+        }
+
+        let cat = idx.cat>=0 ? String(row[idx.cat]||'').trim().toLowerCase() : 'custom';
+        if(!VALID_CATS.includes(cat)) cat='custom';
+
+        let title = idx.title>=0 ? String(row[idx.title]||'').trim() : '';
+        if(!title){ skipped++; continue; }
+
+        let sub = idx.sub>=0 ? String(row[idx.sub]||'').trim() : '';
+        let urgRaw = idx.urgency>=0 ? String(row[idx.urgency]||'').trim().toLowerCase() : 'med';
+        let urgency = VALID_URG.includes(urgRaw) ? urgRaw : (urgRaw.includes('high')||urgRaw.includes('crit'))?'high':(urgRaw.includes('low')||urgRaw.includes('rout'))?'low':'med';
+
+        let statusRaw = idx.status>=0 ? String(row[idx.status]||'').trim().toLowerCase() : 'pending';
+        let status = statusRaw==='done'||statusRaw.includes('complet') ? 'done' : 'pending';
+
+        const id = 'imp_'+Date.now()+'_'+r;
+        newEvents.push({id, date:dateVal, cat, title, sub, urgency, _base:false, _modified:false});
+        if(status==='done') eventStatus[id]={status:'done', filedAt:new Date().toISOString()};
+        imported++;
+      }
+
+      if(imported===0){
+        showImportResult('error', `No valid events found. ${errors.length?'Errors: '+errors.slice(0,3).join('; '):'Check your file format.'}`);
+        return;
+      }
+
+      // Show preview before confirming
+      showImportPreview(newEvents, imported, skipped, errors);
+
+    }catch(err){
+      showImportResult('error','Failed to read the file: '+err.message);
+    }
+  };
+  reader.readAsArrayBuffer(file);
+}
+
+function showImportPreview(newEvents, imported, skipped, errors){
+  const CAT_LABELS_L = {federal:'Federal IRS',payroll:'Payroll/TDS',sales:'Sales Tax',state:'State Income',labor:'Labor/OSHA',license:'Licenses',insurance:'Insurance',custom:'Custom'};
+  const URG_L = {high:'Critical',med:'Important',low:'Routine'};
+  let html = `
+    <div style="background:#EDF5F0;border:1px solid #B8DFC4;border-radius:10px;padding:1rem;margin-bottom:10px;">
+      <div style="font-size:14px;font-weight:600;color:#1A5C2A;">&#10003; Ready to import ${imported} event${imported>1?'s':''}</div>
+      ${skipped?`<div style="font-size:12px;color:#8A4D0C;margin-top:3px;">${skipped} row(s) skipped (missing date or title)</div>`:''}
+      ${errors.length?`<div style="font-size:11px;color:#9B2A2A;margin-top:3px;">${errors.slice(0,2).join('<br>')}</div>`:''}
+    </div>
+    <div style="max-height:180px;overflow-y:auto;border:1px solid var(--border);border-radius:8px;margin-bottom:12px;">
+      <table style="width:100%;border-collapse:collapse;font-size:12px;">
+        <thead><tr style="background:var(--surface2);">
+          <th style="padding:6px 8px;text-align:left;font-weight:600;color:var(--muted);">Date</th>
+          <th style="padding:6px 8px;text-align:left;font-weight:600;color:var(--muted);">Category</th>
+          <th style="padding:6px 8px;text-align:left;font-weight:600;color:var(--muted);">Title</th>
+          <th style="padding:6px 8px;text-align:left;font-weight:600;color:var(--muted);">Priority</th>
+        </tr></thead>
+        <tbody>`;
+  newEvents.slice(0,10).forEach(ev=>{
+    html+=`<tr style="border-top:1px solid var(--border);">
+      <td style="padding:5px 8px;color:var(--muted);">${ev.date}</td>
+      <td style="padding:5px 8px;"><span class="ev-badge badge-${ev.cat}" style="font-size:10px;">${CAT_LABELS_L[ev.cat]||ev.cat}</span></td>
+      <td style="padding:5px 8px;color:var(--text);">${ev.title.slice(0,40)}${ev.title.length>40?'…':''}</td>
+      <td style="padding:5px 8px;"><span class="urg-pill urg-${ev.urgency}" style="font-size:10px;">${URG_L[ev.urgency]}</span></td>
+    </tr>`;
+  });
+  if(newEvents.length>10) html+=`<tr><td colspan="4" style="padding:5px 8px;color:var(--muted);font-style:italic;">… and ${newEvents.length-10} more</td></tr>`;
+  html+=`</tbody></table></div>
+    <div style="display:flex;gap:8px;justify-content:flex-end;">
+      <button onclick="closeImport()" style="font-family:'DM Sans',sans-serif;font-size:13px;padding:8px 15px;border:1px solid var(--border);border-radius:8px;background:transparent;color:var(--muted);cursor:pointer;">Cancel</button>
+      <button onclick="confirmImport(${JSON.stringify(newEvents).replace(/"/g,'&quot;')})" style="font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;padding:8px 18px;border:none;border-radius:8px;background:var(--accent);color:#fff;cursor:pointer;">&#10003; Import ${imported} Event${imported>1?'s':''}</button>
+    </div>`;
+  const preview = document.getElementById('importPreview');
+  preview.innerHTML = html;
+  preview.style.display = 'block';
+}
+
+function confirmImport(newEvents){
+  newEvents.forEach(ev=>{ customEvents.push(ev); });
+  saveAll();
+  closeImport();
+  render();
+  // Show toast
+  const toast = document.createElement('div');
+  toast.textContent = `✓ ${newEvents.length} event${newEvents.length>1?'s':''} imported successfully`;
+  toast.style.cssText='position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#1E4D3B;color:#fff;padding:12px 22px;border-radius:10px;font-size:14px;font-weight:600;z-index:9999;box-shadow:0 4px 20px rgba(0,0,0,.2);';
+  document.body.appendChild(toast);
+  setTimeout(()=>toast.remove(), 3200);
+}
+
+function showImportResult(type, msg){
+  const preview = document.getElementById('importPreview');
+  const bg = type==='error'?'#FDECEA':'#EDF5F0';
+  const border = type==='error'?'#F5C6C5':'#B8DFC4';
+  const color = type==='error'?'#9B2A2A':'#1A5C2A';
+  preview.innerHTML=`<div style="background:${bg};border:1px solid ${border};border-radius:10px;padding:1rem;font-size:13px;color:${color};">${type==='error'?'⚠ ':'✓ '}${msg}</div>`;
+  preview.style.display='block';
+}
 
 render();
 </script>
