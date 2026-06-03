@@ -1,1009 +1,842 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-<title>QSBS — The Complete Guide</title>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Roots Multiclean Inc — 2026 Compliance Calendar</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --navy: #0d1b2a;
-    --navy2: #162032;
-    --gold: #c9a84c;
-    --gold-light: #e0c97f;
-    --gold-pale: #f9f3e3;
-    --cream: #fdfaf4;
-    --cream2: #f4efe3;
-    --text: #1a1a1a;
-    --muted: #6b6b6b;
-    --border: #e8e0cc;
-    --bg: #fdfaf4;
-    --card-bg: #ffffff;
-    --section-alt: #f4efe3;
-  }
-  body.dark-mode {
-    --cream: #0d1b2a;
-    --cream2: #0a1520;
-    --text: #e8e0cc;
-    --muted: #9aacba;
-    --border: #1e3248;
-    --bg: #0d1b2a;
-    --card-bg: #122032;
-    --section-alt: #0a1520;
-    --gold-pale: #1a2e44;
-  }
-  body.dark-mode{background:var(--cream);}
-  body.dark-mode .icard{background:var(--card-bg);border-color:var(--border);}
-  body.dark-mode .icard h4{color:var(--gold-light);}
-  body.dark-mode .sec-title{color:var(--gold-light);}
-  body.dark-mode .t-body h4{color:#fff;}
-  body.dark-mode .elig-content strong{color:#fff;}
-  body.dark-mode .section{background:var(--cream);}
-  body.dark-mode .divider{background:var(--border);}
-  body.dark-mode .elig-list li{border-color:var(--border);}
-  body.dark-mode footer{background:#060e18;}
-  body.dark-mode .comp-table tr:nth-child(even) td{background:rgba(255,255,255,0.03);}
+:root{
+  --bg:#F5F3EE;--surface:#FFF;--surface2:#EFECE6;--border:#DDD9D0;
+  --text:#1A1916;--muted:#6B6760;--accent:#1E4D3B;--accent2:#C4882B;
+  --federal:#1A3A6B;--federal-bg:#EAF0FA;
+  --payroll:#3B1F6B;--payroll-bg:#F0EAFA;
+  --sales:#6B3A00;--sales-bg:#FAF0E0;
+  --state:#1A5C2A;--state-bg:#E8F5EC;
+  --labor:#6B1F1A;--labor-bg:#FAE8E8;
+  --license:#6B1A4A;--license-bg:#FAE8F2;
+  --insurance:#0F5248;--insurance-bg:#E3F2F0;
+  --custom:#4A3500;--custom-bg:#FFF8E6;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;font-size:15px;line-height:1.6;}
 
-  /* PROGRESS BAR */
-  #progress-bar{
-    position:fixed;top:0;left:0;z-index:999;
-    height:3px;width:0%;
-    background:linear-gradient(90deg,var(--gold),var(--gold-light));
-    transition:width .1s linear;
-    border-radius:0 2px 2px 0;
-  }
+/* ── MASTHEAD ── */
+.masthead{background:var(--accent);color:#fff;padding:2.2rem 2.5rem 1.8rem;position:relative;overflow:hidden;}
+.masthead::before{content:'';position:absolute;right:-60px;top:-60px;width:260px;height:260px;border-radius:50%;background:rgba(255,255,255,.05);}
+.masthead::after{content:'';position:absolute;right:60px;bottom:-70px;width:170px;height:170px;border-radius:50%;background:rgba(255,255,255,.04);}
+.masthead-inner{max-width:1200px;margin:0 auto;position:relative;z-index:1;display:flex;align-items:flex-end;justify-content:space-between;gap:1rem;flex-wrap:wrap;}
+.co-label{font-size:11px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.6);margin-bottom:6px;}
+.masthead h1{font-family:'DM Serif Display',serif;font-size:clamp(1.5rem,4vw,2.4rem);font-weight:400;line-height:1.1;color:#fff;margin-bottom:8px;}
+.masthead-meta{display:flex;flex-wrap:wrap;gap:12px;font-size:12px;color:rgba(255,255,255,.7);}
+.masthead-meta span{display:flex;align-items:center;gap:5px;}
+.dot{width:4px;height:4px;border-radius:50%;background:var(--accent2);display:inline-block;}
+.view-toggle{display:flex;gap:6px;}
+.view-btn{font-family:'DM Sans',sans-serif;font-size:12px;font-weight:500;padding:7px 15px;border:1px solid rgba(255,255,255,.35);border-radius:8px;background:transparent;color:rgba(255,255,255,.8);cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:5px;}
+.view-btn:hover{background:rgba(255,255,255,.12);}
+.view-btn.active{background:rgba(255,255,255,.22);color:#fff;border-color:rgba(255,255,255,.6);}
 
-  /* DARK MODE TOGGLE */
-  #theme-toggle{
-    position:fixed;bottom:2rem;right:2rem;z-index:500;
-    width:48px;height:48px;border-radius:50%;
-    background:var(--navy);border:2px solid var(--gold);
-    color:var(--gold-light);font-size:20px;
-    cursor:pointer;display:flex;align-items:center;justify-content:center;
-    box-shadow:0 4px 16px rgba(0,0,0,0.3);
-    transition:background .3s,transform .2s;
-  }
-  #theme-toggle:hover{transform:scale(1.1);}
-  body.dark-mode #theme-toggle{background:var(--gold);color:var(--navy);}
+/* ── STATS ── */
+.stats-row{max-width:1200px;margin:0 auto;padding:1.25rem 2.5rem 0;display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;}
+.stat-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:.85rem 1rem;}
+.stat-card .lbl{font-size:10px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--muted);}
+.stat-card .val{font-family:'DM Serif Display',serif;font-size:1.7rem;color:var(--text);line-height:1.1;}
+.stat-card .sub{font-size:10px;color:var(--muted);}
 
-  /* CALCULATOR */
-  .calc-section{
-    background:var(--navy);
-    padding:4rem 0;
-    margin:0;
-  }
-  .calc-box{
-    background:rgba(255,255,255,0.04);
-    border:1px solid rgba(201,168,76,0.2);
-    border-radius:16px;
-    padding:2.5rem;
-    max-width:740px;
-    margin:0 auto;
-  }
-  .calc-title{
-    font-family:'Cormorant Garamond',serif;
-    font-size:2.2rem;color:#fff;font-weight:700;
-    margin-bottom:0.5rem;
-  }
-  .calc-subtitle{font-size:15px;color:rgba(255,255,255,0.5);margin-bottom:2rem;line-height:1.7;}
-  .calc-rate-tag{
-    display:inline-block;font-size:13px;
-    background:rgba(201,168,76,0.12);
-    border:1px solid rgba(201,168,76,0.3);
-    color:var(--gold-light);padding:6px 16px;
-    border-radius:20px;margin-bottom:1.75rem;font-weight:500;
-  }
-  .calc-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.25rem;margin-bottom:1.5rem;}
-  .calc-field label{
-    display:block;font-size:12px;letter-spacing:2px;
-    text-transform:uppercase;color:rgba(255,255,255,0.45);
-    font-weight:600;margin-bottom:0.5rem;
-  }
-  .calc-field input{
-    width:100%;background:rgba(255,255,255,0.07);
-    border:1px solid rgba(255,255,255,0.12);
-    border-radius:8px;padding:13px 16px;
-    color:#fff;font-size:16px;font-family:'Jost',sans-serif;
-    transition:border-color .2s;outline:none;
-  }
-  .calc-field input:focus{border-color:var(--gold);}
-  .calc-field input::placeholder{color:rgba(255,255,255,0.2);}
-  .calc-btn{
-    width:100%;background:var(--gold);color:var(--navy);
-    border:none;border-radius:8px;padding:16px;
-    font-size:15px;font-weight:700;letter-spacing:1.5px;
-    text-transform:uppercase;cursor:pointer;
-    font-family:'Jost',sans-serif;transition:background .2s;
-    margin-bottom:1.5rem;
-  }
-  .calc-btn:hover{background:var(--gold-light);}
-  .calc-results{display:none;}
-  .calc-results.show{display:block;}
-  .calc-results-grid{
-    display:grid;grid-template-columns:repeat(3,1fr);
-    gap:1px;background:rgba(201,168,76,0.1);
-    border-radius:12px;overflow:hidden;margin-bottom:1.25rem;
-  }
-  .calc-stat{
-    background:rgba(255,255,255,0.04);
-    padding:1.25rem 1rem;text-align:center;
-  }
-  .calc-stat .cs-label{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.4);margin-bottom:6px;}
-  .calc-stat .cs-val{font-family:'Cormorant Garamond',serif;font-size:1.9rem;font-weight:700;}
-  .calc-stat .cs-sub{font-size:11px;color:rgba(255,255,255,0.35);margin-top:4px;}
-  .calc-savings-box{
-    background:rgba(22,163,74,0.1);
-    border:1px solid rgba(22,163,74,0.3);
-    border-radius:10px;padding:1.25rem 1.5rem;
-    display:flex;align-items:center;justify-content:space-between;
-    flex-wrap:wrap;gap:1rem;margin-bottom:1rem;
-  }
-  .calc-savings-box .cs-title{font-size:15px;color:rgba(255,255,255,0.7);}
-  .calc-savings-box .cs-amount{font-family:'Cormorant Garamond',serif;font-size:2.4rem;color:#4ade80;font-weight:700;}
-  .calc-note{font-size:12px;color:rgba(255,255,255,0.3);line-height:1.8;border-top:1px solid rgba(255,255,255,0.07);padding-top:1rem;}
-  .calc-eligibility{
-    background:rgba(201,168,76,0.08);
-    border:1px solid rgba(201,168,76,0.2);
-    border-radius:8px;padding:1rem 1.25rem;
-    font-size:13.5px;color:rgba(255,255,255,0.55);
-    margin-bottom:1rem;line-height:1.8;
-  }
-  .calc-reset{
-    background:transparent;border:1px solid rgba(255,255,255,0.15);
-    color:rgba(255,255,255,0.5);border-radius:8px;
-    padding:9px 22px;font-size:13px;cursor:pointer;
-    font-family:'Jost',sans-serif;transition:border-color .2s;
-  }
-  .calc-reset:hover{border-color:var(--gold);color:var(--gold);}
-  @media(max-width:600px){
-    .calc-grid{grid-template-columns:1fr;}
-    .calc-results-grid{grid-template-columns:1fr;}
-  }
-  *{box-sizing:border-box;margin:0;padding:0;}
-  html{scroll-behavior:smooth;}
-  body{
-    font-family:'Jost',sans-serif;
-    background:var(--cream);
-    color:var(--text);
-    font-size:18px;
-    line-height:1.8;
-  }
+/* ── TOOLBAR ── */
+.toolbar{max-width:1200px;margin:1rem auto 0;padding:0 2.5rem;display:flex;flex-wrap:wrap;gap:8px;align-items:center;}
+.filter-btn{font-family:'DM Sans',sans-serif;font-size:12px;font-weight:500;padding:5px 12px;border:1px solid var(--border);border-radius:20px;background:transparent;color:var(--muted);cursor:pointer;transition:all .2s;}
+.filter-btn:hover{border-color:var(--accent);color:var(--accent);}
+.filter-btn.active{background:var(--accent);color:#fff;border-color:var(--accent);}
+.search-wrap{position:relative;flex:1;min-width:140px;}
+.search-wrap input{font-family:'DM Sans',sans-serif;font-size:13px;width:100%;padding:6px 12px 6px 30px;border:1px solid var(--border);border-radius:20px;background:#fff;color:var(--text);outline:none;}
+.search-wrap input:focus{border-color:var(--accent);}
+.search-icon{position:absolute;left:10px;top:50%;transform:translateY(-50%);color:var(--muted);font-size:13px;pointer-events:none;}
+.tb-btn{font-family:'DM Sans',sans-serif;font-size:12px;font-weight:500;padding:7px 14px;border-radius:8px;cursor:pointer;display:flex;align-items:center;gap:5px;white-space:nowrap;transition:opacity .2s;}
+.btn-add{background:var(--accent2);color:#fff;border:none;}
+.btn-add:hover{opacity:.88;}
+.btn-export{background:var(--surface);color:var(--accent);border:1px solid var(--accent);}
+.btn-export:hover{background:var(--accent);color:#fff;}
 
-  /* NAV */
-  nav{
-    position:sticky;top:0;z-index:100;
-    background:var(--navy);
-    border-bottom:1px solid rgba(201,168,76,0.3);
-    display:flex;align-items:center;justify-content:space-between;
-    padding:0 2rem;height:56px;
-  }
-  .nav-brand{font-family:'Cormorant Garamond',serif;font-size:24px;color:var(--gold-light);letter-spacing:1px;font-weight:600;}
-  .nav-links{display:flex;gap:1.5rem;}
-  .nav-links a{font-size:13px;color:rgba(255,255,255,0.6);text-decoration:none;letter-spacing:1.5px;text-transform:uppercase;font-weight:500;transition:color .2s;}
-  .nav-links a:hover{color:var(--gold-light);}
+/* ── MAIN ── */
+.main{max-width:1200px;margin:0 auto;padding:1.25rem 2.5rem 4rem;}
 
-  /* HERO */
-  .hero{
-    background:var(--navy);
-    padding:5rem 2rem 4rem;
-    text-align:center;
-    position:relative;
-    overflow:hidden;
-  }
-  .hero::before{
-    content:'§ 1202';
-    position:absolute;
-    font-family:'Cormorant Garamond',serif;
-    font-size:22vw;
-    font-weight:700;
-    color:rgba(201,168,76,0.04);
-    top:50%;left:50%;
-    transform:translate(-50%,-50%);
-    white-space:nowrap;
-    pointer-events:none;
-  }
-  .hero-tag{
-    display:inline-block;
-    font-size:13px;letter-spacing:3px;text-transform:uppercase;
-    color:var(--gold);border:1px solid rgba(201,168,76,0.4);
-    padding:6px 20px;border-radius:20px;margin-bottom:1.5rem;
-    font-weight:500;
-  }
-  .hero h1{
-    font-family:'Cormorant Garamond',serif;
-    font-size:clamp(3.2rem,8vw,6.5rem);
-    color:#fff;
-    font-weight:700;
-    line-height:1.05;
-    margin-bottom:1.25rem;
-  }
-  .hero h1 em{color:var(--gold-light);font-style:italic;}
-  .hero-sub{
-    max-width:640px;margin:0 auto 2.5rem;
-    font-size:1.2rem;color:rgba(255,255,255,0.65);
-    font-weight:300;line-height:1.9;
-  }
-  .hero-stats{
-    display:flex;gap:1px;justify-content:center;flex-wrap:wrap;
-    max-width:760px;margin:0 auto;
-  }
-  .hstat{
-    flex:1;min-width:160px;
-    background:rgba(255,255,255,0.04);
-    border:1px solid rgba(201,168,76,0.15);
-    padding:1.75rem 1.25rem;
-  }
-  .hstat:first-child{border-radius:12px 0 0 12px;}
-  .hstat:last-child{border-radius:0 12px 12px 0;}
-  .hstat .num{
-    font-family:'Cormorant Garamond',serif;
-    font-size:3rem;color:var(--gold-light);font-weight:700;
-    line-height:1;display:block;
-  }
-  .hstat .lbl{font-size:13px;color:rgba(255,255,255,0.5);margin-top:8px;letter-spacing:1px;text-transform:uppercase;}
+/* ── CALENDAR ── */
+.cal-nav{display:flex;align-items:center;gap:10px;margin-bottom:1rem;}
+.cal-nav-btn{font-family:'DM Sans',sans-serif;font-size:13px;padding:6px 14px;border:1px solid var(--border);border-radius:8px;background:var(--surface);color:var(--text);cursor:pointer;transition:all .2s;}
+.cal-nav-btn:hover{background:var(--surface2);}
+.cal-month-label{font-family:'DM Serif Display',serif;font-size:1.35rem;flex:1;text-align:center;}
+.cal-today-btn{font-size:12px;padding:5px 12px;border:1px solid var(--accent);border-radius:8px;background:transparent;color:var(--accent);cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s;}
+.cal-today-btn:hover{background:var(--accent);color:#fff;}
+.cal-grid{background:var(--surface);border:1px solid var(--border);border-radius:14px;overflow:hidden;}
+.cal-weekdays{display:grid;grid-template-columns:repeat(7,1fr);background:var(--surface2);}
+.cal-wd{text-align:center;font-size:10px;font-weight:600;letter-spacing:.8px;text-transform:uppercase;color:var(--muted);padding:9px 4px;}
+.cal-days{display:grid;grid-template-columns:repeat(7,1fr);}
+.cal-cell{min-height:96px;border-right:1px solid var(--border);border-bottom:1px solid var(--border);padding:5px;cursor:pointer;transition:background .15s;}
+.cal-cell:nth-child(7n){border-right:none;}
+.cal-cell:hover{background:#F8F6F0;}
+.cal-cell.other-month{background:var(--bg);}
+.cal-cell.other-month .cal-day-num{color:var(--border);}
+.cal-cell.today{background:#EDF5F0;}
+.cal-cell.today .cal-day-num{background:var(--accent);color:#fff;border-radius:50%;}
+.cal-cell.past-cell{opacity:.65;}
+.cal-day-num{font-size:12px;font-weight:600;width:22px;height:22px;display:flex;align-items:center;justify-content:center;margin-bottom:3px;}
+.cal-event-dot{font-size:9.5px;font-weight:500;padding:2px 5px;border-radius:4px;margin-bottom:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;line-height:1.3;}
+.cat-federal{background:var(--federal-bg);color:var(--federal);}
+.cat-payroll{background:var(--payroll-bg);color:var(--payroll);}
+.cat-sales{background:var(--sales-bg);color:var(--sales);}
+.cat-state{background:var(--state-bg);color:var(--state);}
+.cat-labor{background:var(--labor-bg);color:var(--labor);}
+.cat-license{background:var(--license-bg);color:var(--license);}
+.cat-insurance{background:var(--insurance-bg);color:var(--insurance);}
+.cat-custom{background:var(--custom-bg);color:var(--custom);}
+.cal-more{font-size:9px;color:var(--muted);font-weight:600;padding:1px 4px;}
 
-  /* MAIN LAYOUT */
-  .container{max-width:900px;margin:0 auto;padding:0 1.5rem;}
+/* ── LIST VIEW ── */
+.month-block{margin-bottom:2rem;}
+.month-hdr{display:flex;align-items:baseline;gap:10px;margin-bottom:8px;padding-bottom:7px;border-bottom:2px solid var(--accent);}
+.month-name{font-family:'DM Serif Display',serif;font-size:1.3rem;color:var(--text);}
+.month-ct{font-size:11px;color:var(--muted);font-weight:500;}
+.past-month .month-hdr{border-bottom-color:var(--border);}
+.past-month .month-name{color:var(--muted);}
+.ev-list{display:flex;flex-direction:column;gap:5px;}
+.ev-row{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:.7rem .9rem;display:grid;grid-template-columns:50px 100px 1fr auto;align-items:center;gap:10px;transition:box-shadow .2s,transform .15s;cursor:pointer;}
+.ev-row:hover{box-shadow:0 3px 14px rgba(0,0,0,.07);transform:translateY(-1px);}
+.ev-row.past-ev{opacity:.45;}
+.ev-row.modified{border-left:3px solid var(--accent2);}
+.ev-date-col{font-size:11px;font-weight:600;color:var(--muted);}
+.ev-badge{font-size:10px;font-weight:600;letter-spacing:.3px;text-transform:uppercase;padding:3px 8px;border-radius:6px;text-align:center;white-space:nowrap;}
+.badge-federal{background:var(--federal-bg);color:var(--federal);}
+.badge-payroll{background:var(--payroll-bg);color:var(--payroll);}
+.badge-sales{background:var(--sales-bg);color:var(--sales);}
+.badge-state{background:var(--state-bg);color:var(--state);}
+.badge-labor{background:var(--labor-bg);color:var(--labor);}
+.badge-license{background:var(--license-bg);color:var(--license);}
+.badge-insurance{background:var(--insurance-bg);color:var(--insurance);}
+.badge-custom{background:var(--custom-bg);color:var(--custom);}
+.ev-info .ev-title{font-size:13px;font-weight:500;color:var(--text);line-height:1.3;}
+.ev-info .ev-sub{font-size:11px;color:var(--muted);margin-top:1px;}
+.ev-actions{display:flex;align-items:center;gap:6px;}
+.urg-pill{font-size:10px;font-weight:600;padding:3px 8px;border-radius:20px;white-space:nowrap;}
+.urg-high{background:#FDECEA;color:#9B2A2A;border:1px solid #F5C6C5;}
+.urg-med{background:#FEF3E2;color:#8A4D0C;border:1px solid #F9D9A8;}
+.urg-low{background:#EBF5EE;color:#2A6B3C;border:1px solid #B8DFC4;}
+.edit-btn-row{background:none;border:1px solid var(--border);color:var(--muted);font-size:11px;padding:3px 9px;border-radius:5px;cursor:pointer;font-family:'DM Sans',sans-serif;white-space:nowrap;transition:all .2s;display:none;}
+.ev-row:hover .edit-btn-row{display:inline-flex;}
+.edit-btn-row:hover{border-color:var(--accent);color:var(--accent);background:var(--surface2);}
+.empty-state{text-align:center;padding:3rem;color:var(--muted);font-size:14px;background:var(--surface);border:1px solid var(--border);border-radius:12px;}
 
-  /* SECTION TITLES */
-  .section{padding:4rem 0;}
-  .sec-label{
-    font-size:12px;letter-spacing:3px;text-transform:uppercase;
-    color:var(--gold);font-weight:600;margin-bottom:0.75rem;
-  }
-  .sec-title{
-    font-family:'Cormorant Garamond',serif;
-    font-size:clamp(2.2rem,5vw,3.4rem);
-    font-weight:700;color:var(--navy);
-    line-height:1.15;margin-bottom:1rem;
-  }
-  .sec-intro{
-    font-size:1.2rem;color:var(--muted);
-    max-width:680px;line-height:1.9;margin-bottom:2.5rem;
-  }
+/* ── DAY POPUP ── */
+.overlay{position:fixed;inset:0;background:rgba(26,25,22,.55);z-index:1000;display:none;align-items:center;justify-content:center;padding:1rem;}
+.overlay.open{display:flex;}
+.modal{background:var(--surface);border-radius:16px;max-width:540px;width:100%;box-shadow:0 24px 60px rgba(0,0,0,.18);max-height:90vh;overflow-y:auto;}
+.modal-hdr{padding:1.3rem 1.5rem .9rem;border-bottom:1px solid var(--border);display:flex;align-items:flex-start;justify-content:space-between;gap:1rem;}
+.modal-hdr h2{font-family:'DM Serif Display',serif;font-size:1.25rem;font-weight:400;color:var(--text);}
+.modal-close{background:none;border:none;font-size:22px;cursor:pointer;color:var(--muted);line-height:1;padding:2px 6px;border-radius:6px;}
+.modal-close:hover{background:var(--surface2);}
+.modal-body{padding:1.1rem 1.5rem 1.5rem;}
+.modal-dl{font-size:11px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--accent2);margin-bottom:10px;}
+.modal-ev-card{background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:.85rem 1rem;margin-bottom:8px;}
+.modal-ev-card .mc-title{font-size:13.5px;font-weight:500;color:var(--text);}
+.modal-ev-card .mc-sub{font-size:12px;color:var(--muted);margin-top:3px;}
+.modal-ev-card .mc-meta{display:flex;align-items:center;gap:7px;margin-top:8px;flex-wrap:wrap;}
+.modal-ev-card.modified-card{border-left:3px solid var(--accent2);}
+.modal-empty{font-size:13px;color:var(--muted);padding:.4rem 0;font-style:italic;}
+.modal-add-hint{padding:.9rem 0 0;border-top:1px solid var(--border);margin-top:12px;}
 
-  /* DIVIDER */
-  .divider{height:1px;background:var(--border);margin:0;}
-  .gold-rule{height:2px;width:60px;background:var(--gold);margin-bottom:1.5rem;}
+/* ── EDIT/ADD FORM ── */
+.form-overlay{position:fixed;inset:0;background:rgba(26,25,22,.55);z-index:1100;display:none;align-items:center;justify-content:center;padding:1rem;}
+.form-overlay.open{display:flex;}
+.form-modal{background:var(--surface);border-radius:16px;max-width:500px;width:100%;box-shadow:0 24px 60px rgba(0,0,0,.18);max-height:92vh;overflow-y:auto;}
+.form-hdr{background:var(--accent);padding:1.1rem 1.5rem;display:flex;align-items:center;justify-content:space-between;}
+.form-hdr h2{font-family:'DM Serif Display',serif;font-size:1.15rem;font-weight:400;color:#fff;}
+.form-close{background:none;border:none;font-size:22px;cursor:pointer;color:rgba(255,255,255,.7);line-height:1;padding:2px 6px;}
+.form-close:hover{color:#fff;}
+.form-body{padding:1.35rem 1.5rem;}
+.form-notice{font-size:11px;color:var(--accent2);background:#FFF8E6;border:1px solid #F9D9A8;border-radius:7px;padding:8px 12px;margin-bottom:14px;line-height:1.5;}
+.f-group{margin-bottom:1rem;}
+.f-label{font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.7px;margin-bottom:5px;display:block;}
+.f-ctrl{font-family:'DM Sans',sans-serif;font-size:13px;width:100%;padding:8px 11px;border:1px solid var(--border);border-radius:8px;background:var(--bg);color:var(--text);outline:none;transition:border .2s;}
+.f-ctrl:focus{border-color:var(--accent);}
+select.f-ctrl{cursor:pointer;}
+textarea.f-ctrl{resize:vertical;min-height:65px;}
+.f-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.form-footer{display:flex;gap:9px;justify-content:flex-end;padding-top:.5rem;align-items:center;}
+.btn-cancel{font-family:'DM Sans',sans-serif;font-size:13px;padding:7px 16px;border:1px solid var(--border);border-radius:8px;background:transparent;color:var(--muted);cursor:pointer;}
+.btn-cancel:hover{background:var(--surface2);}
+.btn-save{font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;padding:7px 18px;border:none;border-radius:8px;background:var(--accent);color:#fff;cursor:pointer;transition:opacity .2s;}
+.btn-save:hover{opacity:.88;}
+.btn-reset{font-family:'DM Sans',sans-serif;font-size:11px;padding:5px 11px;border:1px solid #DDD9D0;border-radius:6px;background:transparent;color:var(--muted);cursor:pointer;margin-right:auto;}
+.btn-reset:hover{background:#F5C6C5;color:#9B2A2A;border-color:#F5C6C5;}
+.btn-delete{font-family:'DM Sans',sans-serif;font-size:11px;padding:5px 11px;border:1px solid #F5C6C5;border-radius:6px;background:#FDECEA;color:#9B2A2A;cursor:pointer;}
+.btn-delete:hover{background:#F5C6C5;}
 
-  /* ANALOGY BOX */
-  .analogy{
-    background:var(--navy);
-    border-radius:16px;
-    padding:2rem 2.5rem;
-    margin:2rem 0;
-    position:relative;
-    overflow:hidden;
-  }
-  .analogy::before{
-    content:'"';
-    font-family:'Cormorant Garamond',serif;
-    font-size:10rem;color:rgba(201,168,76,0.08);
-    position:absolute;top:-1rem;left:1rem;
-    line-height:1;pointer-events:none;
-  }
-  .analogy p{
-    font-family:'Cormorant Garamond',serif;
-    font-size:1.7rem;color:#fff;
-    font-style:italic;line-height:1.65;
-    position:relative;
-  }
-  .analogy .src{
-    font-size:14px;color:var(--gold);
-    margin-top:1rem;font-style:normal;
-    font-family:'Jost',sans-serif;letter-spacing:1px;
-    text-transform:uppercase;
-  }
+/* ── EXPORT MODAL ── */
+.exp-overlay{position:fixed;inset:0;background:rgba(26,25,22,.55);z-index:1200;display:none;align-items:center;justify-content:center;padding:1rem;}
+.exp-overlay.open{display:flex;}
+.exp-modal{background:var(--surface);border-radius:16px;max-width:420px;width:100%;box-shadow:0 24px 60px rgba(0,0,0,.18);}
+.exp-hdr{background:var(--accent);padding:1.1rem 1.5rem;display:flex;align-items:center;justify-content:space-between;border-radius:16px 16px 0 0;}
+.exp-hdr h2{font-family:'DM Serif Display',serif;font-size:1.15rem;font-weight:400;color:#fff;}
+.exp-body{padding:1.5rem;}
+.exp-option{background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:1rem 1.1rem;margin-bottom:10px;cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:14px;}
+.exp-option:hover{border-color:var(--accent);background:var(--surface2);}
+.exp-icon{width:40px;height:40px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;}
+.exp-icon.xl{background:#E8F5EC;}
+.exp-icon.csv{background:#EAF0FA;}
+.exp-info .exp-title{font-size:13px;font-weight:500;color:var(--text);}
+.exp-info .exp-desc{font-size:11px;color:var(--muted);}
+.exp-scope{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px;}
+.exp-scope label{display:flex;align-items:center;gap:5px;font-size:12px;color:var(--muted);background:var(--bg);border:1px solid var(--border);border-radius:6px;padding:4px 10px;cursor:pointer;transition:all .2s;}
+.exp-scope label:hover{border-color:var(--accent);}
+.exp-scope input[type=radio]:checked+span{color:var(--accent);font-weight:500;}
 
-  /* INFO CARDS GRID */
-  .cards-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin:2rem 0;}
-  .icard{
-    background:#fff;
-    border:1px solid var(--border);
-    border-radius:12px;
-    padding:1.5rem;
-    transition:border-color .2s,transform .2s;
-  }
-  .icard:hover{border-color:var(--gold);transform:translateY(-2px);}
-  .icard .icon-wrap{
-    width:40px;height:40px;border-radius:10px;
-    background:var(--gold-pale);
-    display:flex;align-items:center;justify-content:center;
-    font-size:18px;margin-bottom:1rem;
-  }
-  .icard h4{font-size:16px;font-weight:600;color:var(--navy);margin-bottom:0.6rem;}
-  .icard p{font-size:14.5px;color:var(--muted);line-height:1.7;}
+/* ── LEGEND ── */
+.legend{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:1.1rem;font-size:11px;color:var(--muted);}
+.leg{display:flex;align-items:center;gap:5px;}
+.leg-pip{width:9px;height:9px;border-radius:2px;flex-shrink:0;}
 
-  /* TIMELINE / STEPS */
-  .timeline{margin:2rem 0;}
-  .t-step{display:flex;gap:1.25rem;margin-bottom:2rem;position:relative;}
-  .t-left{display:flex;flex-direction:column;align-items:center;gap:0;}
-  .t-circle{
-    width:42px;height:42px;border-radius:50%;
-    background:var(--navy);
-    color:var(--gold-light);
-    font-family:'Cormorant Garamond',serif;
-    font-size:18px;font-weight:700;
-    display:flex;align-items:center;justify-content:center;
-    flex-shrink:0;
-  }
-  .t-line{flex:1;width:2px;background:var(--border);margin:4px 0;}
-  .t-body{padding-top:8px;padding-bottom:1rem;}
-  .t-body h4{font-size:17px;font-weight:600;color:var(--navy);margin-bottom:0.5rem;}
-  .t-body p{font-size:15px;color:var(--muted);line-height:1.8;}
-  .t-body .t-tag{
-    display:inline-block;margin-top:0.5rem;
-    font-size:12px;padding:4px 12px;border-radius:20px;
-    background:var(--gold-pale);color:#8a6500;font-weight:500;
-  }
-
-  /* COMPARISON TABLE */
-  .comp-table{width:100%;border-collapse:collapse;margin:2rem 0;border-radius:12px;overflow:hidden;border:1px solid var(--border);}
-  .comp-table th{
-    background:var(--navy);color:var(--gold-light);
-    font-size:12px;letter-spacing:1.5px;text-transform:uppercase;
-    font-weight:500;padding:1rem 1.25rem;text-align:left;
-  }
-  .comp-table td{
-    padding:0.9rem 1.25rem;font-size:13.5px;
-    border-bottom:1px solid var(--border);
-    vertical-align:top;
-  }
-  .comp-table tr:last-child td{border-bottom:none;}
-  .comp-table tr:nth-child(even) td{background:#faf7f0;}
-  .comp-table .good{color:#1a7f4e;font-weight:500;}
-  .comp-table .bad{color:#b91c1c;font-weight:500;}
-  .comp-table .label{color:var(--navy);font-weight:600;}
-
-  /* DARK SECTION */
-  .dark-section{
-    background:var(--navy2);
-    padding:4rem 0;
-    margin:0;
-  }
-  .dark-section .sec-title{color:#fff;}
-  .dark-section .sec-intro{color:rgba(255,255,255,0.6);}
-  .dark-section .sec-label{color:var(--gold);}
-
-  /* HIGHLIGHT BOX */
-  .highlight{
-    background:var(--gold-pale);
-    border-left:4px solid var(--gold);
-    border-radius:0 8px 8px 0;
-    padding:1.25rem 1.5rem;
-    margin:1.5rem 0;
-  }
-  .highlight p{font-size:15.5px;color:#5a4200;line-height:1.8;}
-  .highlight strong{color:#3a2a00;}
-
-  /* CPA PERSPECTIVE */
-  .cpa-card{
-    background:#fff;border:1px solid var(--border);
-    border-radius:16px;padding:2rem;margin:1.5rem 0;
-  }
-  .cpa-header{display:flex;align-items:center;gap:1rem;margin-bottom:1.25rem;}
-  .cpa-avatar{
-    width:52px;height:52px;border-radius:50%;
-    background:var(--navy);
-    color:var(--gold-light);
-    font-family:'Cormorant Garamond',serif;
-    font-size:20px;font-weight:700;
-    display:flex;align-items:center;justify-content:center;
-  }
-  .cpa-meta h4{font-size:15px;font-weight:600;color:var(--navy);}
-  .cpa-meta p{font-size:12px;color:var(--muted);}
-  .cpa-text{font-size:14px;color:var(--text);line-height:1.8;}
-  .cpa-insight-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:0.75rem;margin-top:1.5rem;}
-  .cpa-ins{
-    background:var(--cream2);
-    border-radius:10px;padding:1rem;
-    border:1px solid var(--border);
-  }
-  .cpa-ins .ins-title{font-size:12px;font-weight:600;color:var(--navy);margin-bottom:4px;text-transform:uppercase;letter-spacing:0.5px;}
-  .cpa-ins p{font-size:12px;color:var(--muted);line-height:1.6;}
-
-  /* RISK CARDS */
-  .risk-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1rem;margin:2rem 0;}
-  .risk-card{background:#fff;border:1px solid var(--border);border-radius:12px;padding:1.25rem;border-top:3px solid transparent;}
-  .risk-card.high{border-top-color:#dc2626;}
-  .risk-card.med{border-top-color:#d97706;}
-  .risk-card.low{border-top-color:#16a34a;}
-  .risk-card .risk-level{font-size:10px;letter-spacing:2px;text-transform:uppercase;font-weight:600;margin-bottom:0.5rem;}
-  .risk-card.high .risk-level{color:#dc2626;}
-  .risk-card.med .risk-level{color:#d97706;}
-  .risk-card.low .risk-level{color:#16a34a;}
-  .risk-card h4{font-size:14px;font-weight:600;color:var(--navy);margin-bottom:0.5rem;}
-  .risk-card p{font-size:12.5px;color:var(--muted);line-height:1.6;}
-
-  /* EXAMPLE SCENARIO */
-  .scenario{
-    background:var(--navy);border-radius:16px;
-    padding:2rem 2.5rem;margin:2rem 0;
-  }
-  .scenario h3{
-    font-family:'Cormorant Garamond',serif;
-    font-size:1.9rem;color:var(--gold-light);margin-bottom:1.5rem;
-  }
-  .scenario-row{display:flex;gap:2rem;flex-wrap:wrap;margin-bottom:1rem;}
-  .s-item{flex:1;min-width:150px;}
-  .s-item .s-label{font-size:12px;color:rgba(255,255,255,0.4);letter-spacing:2px;text-transform:uppercase;margin-bottom:4px;}
-  .s-item .s-val{font-size:1.7rem;font-family:'Cormorant Garamond',serif;color:#fff;font-weight:700;}
-  .s-item .s-sub{font-size:13px;color:rgba(255,255,255,0.5);margin-top:2px;}
-  .s-divider{height:1px;background:rgba(255,255,255,0.1);margin:1.25rem 0;}
-  .s-result{
-    background:rgba(201,168,76,0.1);
-    border:1px solid rgba(201,168,76,0.3);
-    border-radius:10px;padding:1rem 1.25rem;
-  }
-  .s-result p{font-size:15px;color:rgba(255,255,255,0.85);line-height:1.8;}
-  .s-result .big{font-size:2.4rem;font-family:'Cormorant Garamond',serif;color:var(--gold-light);font-weight:700;display:block;margin-top:6px;}
-
-  /* ELIGIBILITY CHECKLIST */
-  .elig-list{list-style:none;margin:1.5rem 0;}
-  .elig-list li{
-    display:flex;gap:1rem;align-items:flex-start;
-    padding:1rem 0;border-bottom:1px solid var(--border);
-    font-size:16px;
-  }
-  .elig-list li:last-child{border-bottom:none;}
-  .elig-icon{
-    width:30px;height:30px;border-radius:50%;
-    display:flex;align-items:center;justify-content:center;
-    font-size:13px;flex-shrink:0;margin-top:1px;
-  }
-  .elig-icon.yes{background:#dcfce7;color:#16a34a;}
-  .elig-icon.no{background:#fee2e2;color:#dc2626;}
-  .elig-content strong{font-weight:600;color:var(--navy);display:block;margin-bottom:4px;font-size:16px;}
-  .elig-content span{color:var(--muted);font-size:14px;}
-
-  /* STATE TABLE */
-  .state-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:0.5rem;margin:1.5rem 0;}
-  .state-pill{
-    border-radius:8px;padding:0.6rem 0.9rem;
-    font-size:12px;font-weight:500;
-    display:flex;align-items:center;gap:6px;
-  }
-  .state-pill.conform{background:#dcfce7;color:#14532d;}
-  .state-pill.no-conform{background:#fee2e2;color:#7f1d1d;}
-  .state-pill .dot{width:7px;height:7px;border-radius:50%;flex-shrink:0;}
-  .state-pill.conform .dot{background:#16a34a;}
-  .state-pill.no-conform .dot{background:#dc2626;}
-
-  /* FAQ */
-  .faq-item{border-bottom:1px solid var(--border);padding:1.25rem 0;}
-  .faq-q{font-size:15px;font-weight:600;color:var(--navy);cursor:pointer;display:flex;justify-content:space-between;align-items:center;}
-  .faq-q::after{content:'+';font-size:20px;color:var(--gold);font-weight:300;}
-  .faq-a{font-size:13.5px;color:var(--muted);line-height:1.8;margin-top:0.75rem;}
-
-  /* CTA BANNER */
-  .cta-banner{
-    background:var(--navy);
-    border-radius:16px;
-    padding:3rem 2.5rem;
-    text-align:center;
-    margin:3rem 0;
-    position:relative;overflow:hidden;
-  }
-  .cta-banner::after{
-    content:'';
-    position:absolute;top:0;left:0;right:0;bottom:0;
-    background:radial-gradient(circle at 50% 0%,rgba(201,168,76,0.12),transparent 70%);
-    pointer-events:none;
-  }
-  .cta-banner h2{
-    font-family:'Cormorant Garamond',serif;
-    font-size:2.6rem;color:#fff;margin-bottom:0.75rem;font-weight:700;
-  }
-  .cta-banner p{font-size:16px;color:rgba(255,255,255,0.6);margin-bottom:2rem;max-width:500px;margin-left:auto;margin-right:auto;}
-  .cta-steps-row{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;margin-bottom:2rem;}
-  .cta-step{
-    background:rgba(255,255,255,0.07);border:1px solid rgba(201,168,76,0.2);
-    border-radius:10px;padding:1rem;
-    flex:1;min-width:160px;max-width:200px;
-    text-align:center;
-  }
-  .cta-step .sn{
-    font-family:'Cormorant Garamond',serif;
-    font-size:2.4rem;color:var(--gold-light);font-weight:700;
-  }
-  .cta-step p{font-size:13.5px;color:rgba(255,255,255,0.65);margin-top:4px;line-height:1.6;}
-  .tag-row{display:flex;flex-wrap:wrap;gap:0.5rem;justify-content:center;}
-  .htag{
-    font-size:13px;padding:6px 14px;border-radius:20px;
-    background:rgba(201,168,76,0.1);color:var(--gold-light);
-    border:1px solid rgba(201,168,76,0.2);
-  }
-
-  /* FOOTER */
-  footer{
-    background:var(--navy);
-    padding:2rem;text-align:center;
-    font-size:14px;color:rgba(255,255,255,0.3);
-    border-top:1px solid rgba(201,168,76,0.1);
-  }
-  footer span{color:var(--gold);font-weight:500;}
-
-  /* RESPONSIVE */
-  @media(max-width:600px){
-    nav{padding:0 1rem;}
-    .nav-links{gap:0.75rem;}
-    .hero{padding:3rem 1.25rem 2.5rem;}
-    .container{padding:0 1.25rem;}
-    .section{padding:2.5rem 0;}
-    .analogy{padding:1.5rem;}
-    .scenario{padding:1.5rem;}
-    .cta-banner{padding:2rem 1.5rem;}
-  }
-
-  /* SCROLL ANIMATION */
-  .reveal{opacity:1;transform:none;}
+footer{text-align:center;padding:1.5rem;font-size:11px;color:var(--muted);border-top:1px solid var(--border);}
+@media(max-width:680px){
+  .masthead,.stats-row,.toolbar,.main{padding-left:1rem;padding-right:1rem;}
+  .ev-row{grid-template-columns:1fr;gap:4px;}
+  .f-row{grid-template-columns:1fr;}
+  .cal-cell{min-height:60px;}
+  .masthead-inner{flex-direction:column;align-items:flex-start;}
+}
 </style>
 </head>
 <body>
-<div id="progress-bar"></div>
-<button id="theme-toggle" title="Toggle dark/light mode">🌙</button>
-<section class="hero">
-  <div class="hero-tag">Section 1202 · Internal Revenue Code</div>
-  <h1>The <em>Tax Break</em> That Can<br/>Save You Millions</h1>
-  <p class="hero-sub">QSBS — Qualified Small Business Stock — is one of the most generous and least-known tax benefits in the U.S. tax code. Here's everything you need to know, explained simply.</p>
-  <div class="hero-stats">
-    <div class="hstat"><span class="num">$10M</span><div class="lbl">Max exclusion per investor</div></div>
-    <div class="hstat"><span class="num">100%</span><div class="lbl">Federal gains excluded</div></div>
-    <div class="hstat"><span class="num">5 yrs</span><div class="lbl">Minimum holding period</div></div>
-    <div class="hstat"><span class="num">$50M</span><div class="lbl">Company asset limit</div></div>
-  </div>
-</section>
 
-<!-- WHAT IS IT -->
-<section class="section" id="what">
-  <div class="container">
-    <div class="reveal">
-      <div class="sec-label">Chapter 01</div>
-      <h2 class="sec-title">What Is QSBS?<br/>Let's Start Simple.</h2>
-      <p class="sec-intro">Imagine the government saying: "Invest in small startups, take the risk — and if it pays off, you can keep the profits completely tax-free." That is essentially what QSBS is.</p>
+<header class="masthead">
+  <div class="masthead-inner">
+    <div>
+      <div class="co-label">Compliance Calendar</div>
+      <h1>Roots Multiclean Inc &mdash; 2026</h1>
+      <div class="masthead-meta">
+        <span><span class="dot"></span>Alabama, USA</span>
+        <span><span class="dot"></span>Federal · State · Payroll · Labor · Licenses · Insurance</span>
+      </div>
     </div>
-
-    <div class="analogy reveal">
-      <p>"Think of QSBS as a golden reward for backing the little guy. You bet on a small company early, hold your stake for 5 years, and if it grows — the IRS steps aside and lets you keep up to $10 million of that win, completely free of federal tax."</p>
-      <div class="src">— Simple Analogy for New Investors</div>
-    </div>
-
-    <div class="reveal">
-      <p style="font-size:14px;color:var(--muted);line-height:1.9;margin-bottom:1.5rem;">QSBS stands for <strong style="color:var(--navy);">Qualified Small Business Stock</strong>. It is governed by <strong style="color:var(--navy);">Section 1202 of the Internal Revenue Code (IRC)</strong>, a law originally passed in 1993 and significantly strengthened in 2010 when Congress increased the exclusion to 100%. The core idea is simple: to encourage investment into small, growing U.S. businesses by offering extraordinary tax benefits to investors who take the early risk.</p>
-    </div>
-
-    <div class="cards-grid reveal">
-      <div class="icard">
-        <div class="icon-wrap">📜</div>
-        <h4>The Law Behind It</h4>
-        <p>Section 1202 of the U.S. Internal Revenue Code. Enacted in 1993, enhanced in 2010. It specifically rewards patient, long-term investors in small startups.</p>
-      </div>
-      <div class="icard">
-        <div class="icon-wrap">🎯</div>
-        <h4>The Purpose</h4>
-        <p>Congress created QSBS to funnel private investment into small businesses — the engine of the U.S. economy — by making early-stage investing extremely tax-efficient.</p>
-      </div>
-      <div class="icard">
-        <div class="icon-wrap">💡</div>
-        <h4>Who Benefits</h4>
-        <p>Angel investors, startup founders, early employees with stock options, and venture capital investors. Anyone who invests in qualifying startups at an early stage.</p>
-      </div>
-      <div class="icard">
-        <div class="icon-wrap">🏛️</div>
-        <h4>Federal vs. State</h4>
-        <p>The 100% exclusion applies to federal taxes. Individual states have their own rules — some follow the federal law, others do not (like California).</p>
-      </div>
-      <div class="icard">
-        <div class="icon-wrap">💰</div>
-        <h4>The $10M Rule</h4>
-        <p>You can exclude the <strong>greater of $10 million</strong> in gains OR 10 times your original investment from federal tax. The more you invest early, the bigger your potential exclusion.</p>
-      </div>
-      <div class="icard">
-        <div class="icon-wrap">🌍</div>
-        <h4>Who Can Invest</h4>
-        <p>Any individual, trust, or estate that buys original stock directly from a qualifying U.S. C-Corporation. Corporate investors do not qualify — this benefit is for people, not companies.</p>
-      </div>
+    <div class="view-toggle">
+      <button class="view-btn active" id="btnCal" onclick="setView('calendar')">&#128197; Calendar</button>
+      <button class="view-btn" id="btnList" onclick="setView('list')">&#9776; List</button>
     </div>
   </div>
-</section>
+</header>
 
-<div class="divider"></div>
+<div class="stats-row">
+  <div class="stat-card"><div class="lbl">Total Events</div><div class="val" id="statTotal">—</div><div class="sub">all categories</div></div>
+  <div class="stat-card"><div class="lbl">Critical</div><div class="val" id="statHigh" style="color:#9B2A2A">—</div><div class="sub">high-priority</div></div>
+  <div class="stat-card"><div class="lbl">Upcoming</div><div class="val" id="statUpcoming">—</div><div class="sub">remaining 2026</div></div>
+  <div class="stat-card"><div class="lbl">Modified</div><div class="val" id="statModified" style="color:var(--accent2)">—</div><div class="sub">edited events</div></div>
+  <div class="stat-card"><div class="lbl">Next Deadline</div><div class="val" id="statNext" style="font-size:1rem;padding-top:6px;">—</div><div class="sub" id="statNextSub" style="font-size:10px;">—</div></div>
+</div>
 
-<!-- HOW IT WORKS -->
-<section class="section" id="how">
-  <div class="container">
-    <div class="reveal">
-      <div class="sec-label">Chapter 02</div>
-      <h2 class="sec-title">How Does QSBS Work?<br/>Step by Step.</h2>
-      <p class="sec-intro">The process has four distinct stages — from investing to collecting your tax-free gains. Here's how it unfolds in real life.</p>
+<div class="toolbar">
+  <span style="font-size:10px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:1px;">Filter</span>
+  <button class="filter-btn active" data-cat="all">All</button>
+  <button class="filter-btn" data-cat="federal">Federal IRS</button>
+  <button class="filter-btn" data-cat="payroll">Payroll/TDS</button>
+  <button class="filter-btn" data-cat="sales">Sales Tax</button>
+  <button class="filter-btn" data-cat="state">State Income</button>
+  <button class="filter-btn" data-cat="labor">Labor/OSHA</button>
+  <button class="filter-btn" data-cat="license">Licenses</button>
+  <button class="filter-btn" data-cat="insurance">Insurance</button>
+  <button class="filter-btn" data-cat="custom">Custom</button>
+  <div class="search-wrap">
+    <span class="search-icon">&#128269;</span>
+    <input type="text" id="searchInput" placeholder="Search events…">
+  </div>
+  <button class="tb-btn btn-export" onclick="openExport()">&#8659; Export</button>
+  <button class="tb-btn btn-add" onclick="openAddForm()">&#43; Add Event</button>
+</div>
+
+<div class="main">
+  <div class="legend">
+    <div class="leg"><div class="leg-pip" style="background:var(--federal-bg);border:1px solid var(--federal)"></div>Federal IRS</div>
+    <div class="leg"><div class="leg-pip" style="background:var(--payroll-bg);border:1px solid var(--payroll)"></div>Payroll/TDS</div>
+    <div class="leg"><div class="leg-pip" style="background:var(--sales-bg);border:1px solid var(--sales)"></div>Sales Tax</div>
+    <div class="leg"><div class="leg-pip" style="background:var(--state-bg);border:1px solid var(--state)"></div>State Income</div>
+    <div class="leg"><div class="leg-pip" style="background:var(--labor-bg);border:1px solid var(--labor)"></div>Labor/OSHA</div>
+    <div class="leg"><div class="leg-pip" style="background:var(--license-bg);border:1px solid var(--license)"></div>Licenses</div>
+    <div class="leg"><div class="leg-pip" style="background:var(--insurance-bg);border:1px solid var(--insurance)"></div>Insurance</div>
+    <div class="leg"><div class="leg-pip" style="background:var(--custom-bg);border:1px solid var(--custom)"></div>Custom</div>
+    <div class="leg" style="margin-left:auto"><div class="leg-pip" style="background:#FDECEA;border:1px solid #F5C6C5"></div>Critical</div>
+    <div class="leg"><div class="leg-pip" style="background:#FEF3E2;border:1px solid #F9D9A8"></div>Important</div>
+    <div class="leg"><div class="leg-pip" style="background:#EBF5EE;border:1px solid #B8DFC4"></div>Routine</div>
+  </div>
+
+  <div id="calendarView">
+    <div class="cal-nav">
+      <button class="cal-nav-btn" onclick="changeMonth(-1)">&#8592; Prev</button>
+      <div class="cal-month-label" id="calLabel">—</div>
+      <button class="cal-today-btn" onclick="goToday()">Today</button>
+      <button class="cal-nav-btn" onclick="changeMonth(1)">Next &#8594;</button>
     </div>
-
-    <div class="timeline reveal">
-      <div class="t-step">
-        <div class="t-left">
-          <div class="t-circle">1</div>
-          <div class="t-line"></div>
-        </div>
-        <div class="t-body">
-          <h4>You Invest in a Small Business (C-Corp)</h4>
-          <p>You purchase original stock (not on a secondary market) in a U.S. C-Corporation. The company must have gross assets of $50 million or less at the time you invest. You can invest as an individual or through certain pass-through entities like partnerships. The stock must be acquired for cash, property, or services — not purchased from another shareholder.</p>
-          <div class="t-tag">Key requirement: Must be an original issuance</div>
-        </div>
+    <div class="cal-grid">
+      <div class="cal-weekdays">
+        <div class="cal-wd">Sun</div><div class="cal-wd">Mon</div><div class="cal-wd">Tue</div>
+        <div class="cal-wd">Wed</div><div class="cal-wd">Thu</div><div class="cal-wd">Fri</div><div class="cal-wd">Sat</div>
       </div>
-      <div class="t-step">
-        <div class="t-left">
-          <div class="t-circle">2</div>
-          <div class="t-line"></div>
-        </div>
-        <div class="t-body">
-          <h4>The Company Operates in a Qualifying Industry</h4>
-          <p>Not all businesses qualify. QSBS applies to startups in technology, retail, manufacturing, scientific research, and most general industries. It does NOT apply to professional service firms (law, accounting, consulting, financial services, health services, hospitality, or entertainment). The company must also be an active business — not a holding company.</p>
-          <div class="t-tag">Excluded: law, finance, health, hospitality, consulting</div>
-        </div>
-      </div>
-      <div class="t-step">
-        <div class="t-left">
-          <div class="t-circle">3</div>
-          <div class="t-line"></div>
-        </div>
-        <div class="t-body">
-          <h4>You Hold the Stock for at Least 5 Years</h4>
-          <p>This is the patience test. You must hold the stock for a minimum of 5 years without selling. If you sell even a day before the 5-year mark, you lose the entire benefit. There is a partial exclusion for earlier sales (50% for stock acquired before Feb 2009, 75% between Feb 2009 and Sept 2010), but the full 100% exclusion only kicks in after 5 years of continuous ownership.</p>
-          <div class="t-tag">Partial exclusions exist for pre-2010 acquisitions</div>
-        </div>
-      </div>
-      <div class="t-step">
-        <div class="t-left">
-          <div class="t-circle">4</div>
-        </div>
-        <div class="t-body">
-          <h4>You Sell and Claim the Exclusion</h4>
-          <p>When you sell after 5+ years, you can exclude from federal income tax the greater of: $10 million in gain, OR 10 times your original investment (adjusted basis). You report the sale on your tax return but exclude the qualifying gain. The gain that is excluded does NOT appear in your taxable income for federal purposes. Your CPA reports this on Form 8949 and Schedule D.</p>
-          <div class="t-tag">Greater of: $10M or 10x adjusted basis</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- REAL WORLD EXAMPLE -->
-    <div class="scenario reveal">
-      <h3>Real-World Example: The $1M Investment</h3>
-      <div class="scenario-row">
-        <div class="s-item">
-          <div class="s-label">Investment</div>
-          <div class="s-val">$1,000,000</div>
-          <div class="s-sub">Invested in qualifying C-Corp startup</div>
-        </div>
-        <div class="s-item">
-          <div class="s-label">Exit Value (after 6 years)</div>
-          <div class="s-val">$11,000,000</div>
-          <div class="s-sub">Company acquired or IPO</div>
-        </div>
-        <div class="s-item">
-          <div class="s-label">Capital Gain</div>
-          <div class="s-val">$10,000,000</div>
-          <div class="s-sub">Profit on the investment</div>
-        </div>
-      </div>
-      <div class="s-divider"></div>
-      <div class="scenario-row">
-        <div class="s-item">
-          <div class="s-label">QSBS Exclusion Limit</div>
-          <div class="s-val" style="color:var(--gold-light);">$10,000,000</div>
-          <div class="s-sub">Greater of $10M or 10x basis ($10M)</div>
-        </div>
-        <div class="s-item">
-          <div class="s-label">Tax WITHOUT QSBS</div>
-          <div class="s-val" style="color:#f87171;">~$2,380,000</div>
-          <div class="s-sub">At 23.8% federal long-term CGT rate</div>
-        </div>
-        <div class="s-item">
-          <div class="s-label">Tax WITH QSBS</div>
-          <div class="s-val" style="color:#4ade80;">$0</div>
-          <div class="s-sub">Full exclusion applies at federal level</div>
-        </div>
-      </div>
-      <div class="s-result">
-        <p>Total federal tax savings with QSBS:</p>
-        <span class="big">$2,380,000 saved</span>
-        <p style="font-size:12px;color:rgba(255,255,255,0.5);margin-top:4px;">Note: State taxes may still apply. Savings shown are federal only.</p>
-      </div>
+      <div class="cal-days" id="calDays"></div>
     </div>
   </div>
-</section>
 
-<div class="divider"></div>
+  <div id="listView" style="display:none"><div id="listBody"></div></div>
+</div>
 
-<!-- ELIGIBILITY -->
-<section class="section" id="qualify">
-  <div class="container">
-    <div class="reveal">
-      <div class="sec-label">Chapter 03</div>
-      <h2 class="sec-title">Who & What Qualifies?<br/>The Checklist.</h2>
-      <p class="sec-intro">QSBS has specific rules — for both the investor and the company. Here's a detailed breakdown of every requirement you need to meet.</p>
+<!-- DAY POPUP -->
+<div class="overlay" id="dayOverlay" onclick="closeDayModal(event)">
+  <div class="modal">
+    <div class="modal-hdr">
+      <div><div class="modal-dl" id="modalDayName">—</div><h2 id="modalDateTitle">Events</h2></div>
+      <button class="modal-close" onclick="closeDayModal()">&times;</button>
     </div>
-
-    <div class="reveal">
-      <div class="gold-rule"></div>
-      <h3 style="font-family:'Cormorant Garamond',serif;font-size:1.4rem;color:var(--navy);margin-bottom:1rem;">Company Requirements</h3>
-      <ul class="elig-list">
-        <li>
-          <div class="elig-icon yes">✓</div>
-          <div class="elig-content"><strong>Must be a U.S. C-Corporation</strong><span>Only C-Corps qualify. LLCs, S-Corps, partnerships, and sole proprietorships do NOT qualify for QSBS treatment — this is the #1 reason deals fail to qualify.</span></div>
-        </li>
-        <li>
-          <div class="elig-icon yes">✓</div>
-          <div class="elig-content"><strong>Gross Assets Under $50 Million</strong><span>At the time the stock is issued (and immediately after), the company's total gross assets must not exceed $50 million. This ensures only genuinely "small" businesses qualify.</span></div>
-        </li>
-        <li>
-          <div class="elig-icon yes">✓</div>
-          <div class="elig-content"><strong>Active Business Requirement</strong><span>At least 80% of the company's assets must be used in active conduct of a qualifying business. The company cannot be a passive holding company or investment vehicle.</span></div>
-        </li>
-        <li>
-          <div class="elig-icon no">✗</div>
-          <div class="elig-content"><strong>Not a Professional Service Business</strong><span>Companies in law, accounting, health, financial services, brokerage, insurance, engineering, architecture, consulting, athletics, performing arts, or hospitality are EXCLUDED.</span></div>
-        </li>
-        <li>
-          <div class="elig-icon no">✗</div>
-          <div class="elig-content"><strong>Not a Hotel, Restaurant, or Farm</strong><span>Certain businesses like hotels, motels, restaurants, and farming operations are specifically excluded from QSBS qualification.</span></div>
-        </li>
-      </ul>
-    </div>
-
-    <div class="reveal" style="margin-top:2rem;">
-      <div class="gold-rule"></div>
-      <h3 style="font-family:'Cormorant Garamond',serif;font-size:1.4rem;color:var(--navy);margin-bottom:1rem;">Investor Requirements</h3>
-      <ul class="elig-list">
-        <li>
-          <div class="elig-icon yes">✓</div>
-          <div class="elig-content"><strong>Must Be a Non-Corporate Taxpayer</strong><span>The exclusion is available to individual investors, trusts, and estates. C-Corporations buying stock in other C-Corps do NOT get the QSBS benefit.</span></div>
-        </li>
-        <li>
-          <div class="elig-icon yes">✓</div>
-          <div class="elig-content"><strong>Original Issuance Only</strong><span>You must acquire stock directly from the company (original issuance), not by purchasing shares from another investor on a secondary market.</span></div>
-        </li>
-        <li>
-          <div class="elig-icon yes">✓</div>
-          <div class="elig-content"><strong>Acquired for Cash, Property, or Services</strong><span>Stock received as compensation for services rendered (like employee stock options) can qualify, as can stock purchased for cash or contributed property.</span></div>
-        </li>
-        <li>
-          <div class="elig-icon yes">✓</div>
-          <div class="elig-content"><strong>Hold for 5+ Years Continuously</strong><span>The holding period must be continuous. If you gift, transfer, or sell even a portion, it can affect the holding period for that portion of shares.</span></div>
-        </li>
-      </ul>
-    </div>
-
-    <div class="highlight reveal">
-      <p><strong>Pro Tip from a CPA Perspective:</strong> Always verify QSBS eligibility BEFORE investing — not after. Once you invest in the wrong type of entity (like an LLC), you cannot retroactively qualify for QSBS. This is one of the most common and costly mistakes early-stage investors make.</p>
-    </div>
-  </div>
-</section>
-
-<!-- QSBS CALCULATOR -->
-<section class="calc-section" id="calculator">
-  <div class="container">
-    <div class="calc-box">
-      <div class="calc-title">QSBS Tax Savings Calculator</div>
-      <div class="calc-subtitle">Find out exactly how much federal tax you could save with QSBS — instantly.</div>
-      <div class="calc-rate-tag">📅 Based on 2025 Federal Tax Rates — IRS Tax Year 2025 (Long-Term Capital Gains)</div>
-      <div class="calc-grid">
-        <div class="calc-field">
-          <label>Your Investment Amount ($)</label>
-          <input type="number" id="calc-investment" placeholder="e.g. 100000" min="1"/>
-        </div>
-        <div class="calc-field">
-          <label>Expected Exit Value ($)</label>
-          <input type="number" id="calc-exit" placeholder="e.g. 2000000" min="1"/>
-        </div>
-        <div class="calc-field">
-          <label>Your Annual Income ($)</label>
-          <input type="number" id="calc-income" placeholder="e.g. 150000" min="0"/>
-        </div>
-        <div class="calc-field">
-          <label>Filing Status</label>
-          <select id="calc-filing" style="width:100%;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.12);border-radius:8px;padding:12px 14px;color:#fff;font-size:15px;font-family:'Jost',sans-serif;outline:none;">
-            <option value="single">Single</option>
-            <option value="married">Married Filing Jointly</option>
-            <option value="hoh">Head of Household</option>
-          </select>
-        </div>
+    <div class="modal-body">
+      <div id="modalEvents"></div>
+      <div class="modal-add-hint">
+        <button class="tb-btn btn-add" style="font-size:12px;padding:6px 13px;" onclick="openAddFormDate()">&#43; Add event on this date</button>
       </div>
-      <button class="calc-btn" onclick="calculateQSBS()">Calculate My Tax Savings</button>
-      <div class="calc-results" id="calc-results">
-        <div class="calc-results-grid">
-          <div class="calc-stat">
-            <div class="cs-label">Capital Gain</div>
-            <div class="cs-val" id="r-gain" style="color:var(--gold-light);"></div>
-            <div class="cs-sub">Exit value minus investment</div>
-          </div>
-          <div class="calc-stat">
-            <div class="cs-label">Tax WITHOUT QSBS</div>
-            <div class="cs-val" id="r-tax-without" style="color:#f87171;"></div>
-            <div class="cs-sub">Federal CGT at your rate</div>
-          </div>
-          <div class="calc-stat">
-            <div class="cs-label">Tax WITH QSBS</div>
-            <div class="cs-val" id="r-tax-with" style="color:#4ade80;"></div>
-            <div class="cs-sub">After Section 1202 exclusion</div>
-          </div>
-        </div>
-        <div class="calc-savings-box">
-          <div>
-            <div class="cs-title">Your estimated federal tax savings with QSBS</div>
-            <div style="font-size:11px;color:rgba(255,255,255,0.35);margin-top:3px;" id="r-rate-note"></div>
-          </div>
-          <div class="cs-amount" id="r-savings"></div>
-        </div>
-        <div class="calc-eligibility" id="r-eligibility"></div>
-        <div class="calc-note">
-          <strong style="color:rgba(255,255,255,0.5);">Rate basis:</strong> 2025 IRS long-term capital gains tax rates — 0% (income up to $48,350 single / $96,700 married), 15% ($48,351–$533,400 single / $96,701–$600,050 married), 20% (above $533,400 single / $600,050 married). Net Investment Income Tax (NIIT) of 3.8% applies above $200,000 single / $250,000 married. QSBS exclusion applies to the lesser of the gain or the greater of $10M or 10x adjusted basis. <strong style="color:rgba(255,255,255,0.5);">This is an estimate for educational purposes only. State taxes not included. Always consult a qualified CPA before making investment decisions.</strong>
-        </div>
-        <button class="calc-reset" onclick="resetCalc()">Reset Calculator</button>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- CTA BANNER -->
-<div class="container">
-  <div class="cta-banner reveal">
-    <h2>Your QSBS Action Plan</h2>
-    <p>If you're an investor, founder, or someone advising clients on startup investments — here's exactly what to do next.</p>
-    <div class="cta-steps-row">
-      <div class="cta-step"><div class="sn">1</div><p>Confirm any existing startup investments are held in a C-Corp</p></div>
-      <div class="cta-step"><div class="sn">2</div><p>Get written QSBS eligibility confirmation from portfolio companies</p></div>
-      <div class="cta-step"><div class="sn">3</div><p>Track your 5-year holding period start date for each investment</p></div>
-      <div class="cta-step"><div class="sn">4</div><p>Work with a CPA who understands Section 1202 before your next deal</p></div>
-    </div>
-    <div class="tag-row">
-      <span class="htag">#QSBS</span>
-      <span class="htag">#Section1202</span>
-      <span class="htag">#TaxPlanning</span>
-      <span class="htag">#StartupInvesting</span>
-      <span class="htag">#CPALife</span>
-      <span class="htag">#AngelInvesting</span>
-      <span class="htag">#CapitalGains</span>
-      <span class="htag">#VentureCapital</span>
     </div>
   </div>
 </div>
 
-<!-- ABOUT THE AUTHOR -->
-<section style="background:var(--navy);padding:5rem 0;">
-  <div class="container">
-    <div class="reveal" style="max-width:680px;margin:0 auto;text-align:center;">
-      <div class="sec-label" style="text-align:center;">About the Author</div>
-      <div style="width:48px;height:2px;background:var(--gold);margin:0 auto 2rem;border-radius:2px;"></div>
-      <div style="width:84px;height:84px;border-radius:50%;background:linear-gradient(135deg,var(--gold),var(--gold-light));display:flex;align-items:center;justify-content:center;margin:0 auto 1.5rem;font-family:'Cormorant Garamond',serif;font-size:30px;font-weight:700;color:var(--navy);">RA</div>
-      <h2 style="font-family:'Cormorant Garamond',serif;font-size:2.2rem;color:#fff;font-weight:700;margin-bottom:0.4rem;">Rithikka Anusmathi</h2>
-      <p style="font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:2rem;font-weight:500;">CA Finalist &nbsp;·&nbsp; US CPA Student &nbsp;·&nbsp; Global Taxation Enthusiast</p>
-      <p style="font-size:14.5px;color:rgba(255,255,255,0.72);line-height:1.95;margin-bottom:1.25rem;">I'm a <strong style="color:#fff;">CA Finalist & US CPA Student</strong> from Coimbatore, Tamil Nadu, India — building dual expertise across the Indian and US tax systems. Having cleared CA Foundation and Intermediate from ICAI, I'm simultaneously pursuing the US CPA qualification, driven by a genuine passion for global taxation and cross-border advisory.</p>
-      <p style="font-size:14.5px;color:rgba(255,255,255,0.72);line-height:1.95;margin-bottom:1.25rem;">Currently in my <strong style="color:#fff;">CA Industrial Training</strong> at a well-established industry in Coimbatore, I get hands-on exposure to real-world accounting, compliance, and advisory work every day. On the side, I study US tax law, cross-border taxation, NRI planning, and startup advisory topics — and share what I learn publicly so everyone can benefit.</p>
-      <p style="font-size:14.5px;color:rgba(255,255,255,0.72);line-height:1.95;margin-bottom:2.5rem;">My mission is to make complex tax topics <strong style="color:#fff;">simple, accessible, and actionable</strong> — whether you're a startup founder, an NRI navigating two tax systems, a small business owner, or a first-time investor. I believe great tax knowledge shouldn't be locked behind jargon, and I'm on this journey to change that.</p>
-      <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;margin-bottom:1.75rem;">
-        <a href="https://www.linkedin.com/in/rithikka-anusmathi-s-009163241" target="_blank" style="display:inline-flex;align-items:center;gap:9px;background:rgba(10,102,194,0.15);border:1px solid rgba(10,102,194,0.45);color:#7ab3f5;padding:13px 26px;border-radius:6px;font-size:13px;font-weight:600;letter-spacing:0.5px;text-decoration:none;">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
-          Connect on LinkedIn
-        </a>
+<!-- EDIT / ADD FORM -->
+<div class="form-overlay" id="formOverlay" onclick="closeFormModal(event)">
+  <div class="form-modal">
+    <div class="form-hdr">
+      <h2 id="formTitle">Edit Event</h2>
+      <button class="form-close" onclick="closeFormModal()">&times;</button>
+    </div>
+    <div class="form-body">
+      <div class="form-notice" id="formNotice" style="display:none">&#9432; You are editing a built-in compliance event. Your changes are saved locally and won't affect other users.</div>
+      <div class="f-row">
+        <div class="f-group">
+          <label class="f-label">Date *</label>
+          <input type="date" class="f-ctrl" id="fDate">
+        </div>
+        <div class="f-group">
+          <label class="f-label">Category *</label>
+          <select class="f-ctrl" id="fCat">
+            <option value="federal">Federal IRS</option>
+            <option value="payroll">Payroll / TDS</option>
+            <option value="sales">Sales Tax</option>
+            <option value="state">State Income</option>
+            <option value="labor">Labor / OSHA</option>
+            <option value="license">Licenses</option>
+            <option value="insurance">Insurance</option>
+            <option value="custom">Custom</option>
+          </select>
+        </div>
+      </div>
+      <div class="f-group">
+        <label class="f-label">Event Title *</label>
+        <input type="text" class="f-ctrl" id="fTitle" placeholder="e.g. State permit renewal">
+      </div>
+      <div class="f-group">
+        <label class="f-label">Description / Notes</label>
+        <textarea class="f-ctrl" id="fSub" placeholder="Additional details…"></textarea>
+      </div>
+      <div class="f-group">
+        <label class="f-label">Priority</label>
+        <select class="f-ctrl" id="fUrg">
+          <option value="high">Critical — must not miss</option>
+          <option value="med">Important — plan ahead</option>
+          <option value="low">Routine — good to track</option>
+        </select>
+      </div>
+      <input type="hidden" id="fEditId">
+      <input type="hidden" id="fIsBase">
+      <div class="form-footer">
+        <button class="btn-reset" id="fResetBtn" style="display:none" onclick="resetBaseEvent()">&#8635; Reset to original</button>
+        <button class="btn-delete" id="fDelBtn" style="display:none" onclick="deleteEvent()">&#128465; Delete</button>
+        <button class="btn-cancel" onclick="closeFormModal()">Cancel</button>
+        <button class="btn-save" onclick="saveEvent()">Save</button>
       </div>
     </div>
   </div>
-</section>
+</div>
 
-<!-- FOOTER -->
-<footer>
-  <p>Written by <span>Rithikka Anusmathi</span> &nbsp;·&nbsp; CA & CPA Student &nbsp;·&nbsp; Coimbatore, India</p>
-  <p style="margin-top:0.5rem;">This is educational content, not tax or investment advice. Always consult a qualified tax professional before making investment decisions.</p>
-</footer>
+<!-- EXPORT MODAL -->
+<div class="exp-overlay" id="expOverlay" onclick="closeExport(event)">
+  <div class="exp-modal">
+    <div class="exp-hdr">
+      <h2>Export Compliance Calendar</h2>
+      <button class="form-close" onclick="closeExport()">&times;</button>
+    </div>
+    <div class="exp-body">
+      <div style="font-size:12px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.8px;margin-bottom:8px;">Scope</div>
+      <div class="exp-scope">
+        <label><input type="radio" name="expScope" value="all" checked><span>All events</span></label>
+        <label><input type="radio" name="expScope" value="upcoming"><span>Upcoming only</span></label>
+        <label><input type="radio" name="expScope" value="filtered"><span>Current filter</span></label>
+      </div>
+      <div style="font-size:12px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.8px;margin-bottom:8px;">Format</div>
+      <div class="exp-option" onclick="doExport('xlsx')">
+        <div class="exp-icon xl">&#128202;</div>
+        <div class="exp-info">
+          <div class="exp-title">Excel (.xlsx)</div>
+          <div class="exp-desc">Full spreadsheet with colour-coded categories, ready for Excel or Google Sheets</div>
+        </div>
+      </div>
+      <div class="exp-option" onclick="doExport('csv')">
+        <div class="exp-icon csv">&#128196;</div>
+        <div class="exp-info">
+          <div class="exp-title">CSV (.csv)</div>
+          <div class="exp-desc">Plain comma-separated file — opens in any spreadsheet app</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
+<footer>Roots Multiclean Inc &mdash; Alabama, USA &mdash; 2026 Compliance Calendar &mdash; Sources: IRS Pub 509, Alabama DOR, Alabama DOL &mdash; <strong>Consult a licensed CPA/attorney for entity-specific advice.</strong></footer>
+
+<!-- SheetJS for Excel export -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 <script>
-// ── PROGRESS BAR ──────────────────────────────────
-window.addEventListener('scroll', function() {
-  const scrollTop = window.scrollY;
-  const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-  const pct = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
-  document.getElementById('progress-bar').style.width = pct + '%';
-});
+// ══════════════════════════════════════════════
+//  BASE DATA
+// ══════════════════════════════════════════════
+const BASE = [
+  {id:'b1',date:'2026-01-15',cat:'payroll',title:'Monthly payroll tax deposit (Dec 2025)',sub:'EFTPS — federal income, Social Security, Medicare',urgency:'high'},
+  {id:'b2',date:'2026-01-20',cat:'sales',title:'Alabama sales tax return & payment',sub:'Monthly filers: December 2025 sales — MAT portal',urgency:'high'},
+  {id:'b3',date:'2026-01-31',cat:'payroll',title:'W-2 forms distributed to all employees',sub:'Also issue 1099-NEC to all independent contractors',urgency:'high'},
+  {id:'b4',date:'2026-02-02',cat:'payroll',title:'Form 941 — Q4 2025 payroll tax return',sub:'Federal employer quarterly return (IRS)',urgency:'high'},
+  {id:'b5',date:'2026-02-02',cat:'federal',title:'Form 940 — Annual FUTA return (2025)',sub:'Federal unemployment tax; deposit if balance >$500',urgency:'high'},
+  {id:'b6',date:'2026-02-02',cat:'payroll',title:'Form 945 — Non-payroll withholding 2025',sub:'Pensions, gambling winnings, backup withholding',urgency:'med'},
+  {id:'b7',date:'2026-02-02',cat:'payroll',title:'W-2 / W-3 filed with Social Security Administration',sub:'Electronic filing required if 10+ forms',urgency:'high'},
+  {id:'b8',date:'2026-02-17',cat:'payroll',title:'Monthly payroll tax deposit (January 2026)',sub:'EFTPS — federal income, SS & Medicare',urgency:'high'},
+  {id:'b9',date:'2026-02-20',cat:'sales',title:'Alabama sales tax return & payment',sub:'Monthly filers: January 2026 sales — MAT portal',urgency:'high'},
+  {id:'b10',date:'2026-02-20',cat:'state',title:'Deadline to elect quarterly/annual AL sales tax filing',sub:'Request quarterly filing if annual liability <$2,400',urgency:'med'},
+  {id:'b11',date:'2026-03-16',cat:'state',title:'Alabama corporate / S-corp / partnership return',sub:'Form 20C / 20S / 65 for FY2025 — or request extension',urgency:'high'},
+  {id:'b12',date:'2026-03-16',cat:'federal',title:'Federal S-corp & partnership return',sub:'Form 1120-S / 1065 — file or request 6-month extension',urgency:'high'},
+  {id:'b13',date:'2026-03-17',cat:'payroll',title:'Monthly payroll tax deposit (February 2026)',sub:'EFTPS deposit',urgency:'high'},
+  {id:'b14',date:'2026-03-20',cat:'sales',title:'Alabama sales tax return & payment',sub:'Monthly filers: February 2026 sales',urgency:'high'},
+  {id:'b15',date:'2026-03-31',cat:'labor',title:'OSHA 300A Summary — posting period active (Feb 1–Apr 30)',sub:'Must be visibly posted at all worksites',urgency:'med'},
+  {id:'b16',date:'2026-04-15',cat:'federal',title:'Federal corporate income tax return (C-Corp)',sub:'Form 1120 for FY2025 — or request 6-month extension',urgency:'high'},
+  {id:'b17',date:'2026-04-15',cat:'federal',title:'Q1 2026 federal estimated tax payment',sub:'Form 1040-ES / 1120-W',urgency:'high'},
+  {id:'b18',date:'2026-04-15',cat:'state',title:'Alabama state income tax return due',sub:'Form 20C or applicable entity form; extension available',urgency:'high'},
+  {id:'b19',date:'2026-04-15',cat:'state',title:'Alabama Q1 estimated tax payment',sub:'Follows federal schedule — ALDOR',urgency:'med'},
+  {id:'b20',date:'2026-04-15',cat:'payroll',title:'Monthly payroll tax deposit (March 2026)',sub:'EFTPS deposit',urgency:'high'},
+  {id:'b21',date:'2026-04-20',cat:'sales',title:'Alabama sales tax — Q1 return (quarterly filers)',sub:'January–March 2026 sales — MAT portal',urgency:'high'},
+  {id:'b22',date:'2026-04-20',cat:'sales',title:'Alabama sales tax return (monthly filers)',sub:'March 2026 sales',urgency:'high'},
+  {id:'b23',date:'2026-04-30',cat:'payroll',title:'Form 941 — Q1 2026 federal payroll return',sub:'January–March 2026 wages, SS, Medicare, FIT',urgency:'high'},
+  {id:'b24',date:'2026-04-30',cat:'state',title:'Alabama SUI — Q1 quarterly report',sub:'File via AL Dept of Labor eGov; $8,000 taxable wage base',urgency:'high'},
+  {id:'b25',date:'2026-05-15',cat:'payroll',title:'Monthly payroll tax deposit (April 2026)',sub:'EFTPS deposit',urgency:'high'},
+  {id:'b26',date:'2026-05-20',cat:'sales',title:'Alabama sales tax return & payment',sub:'Monthly filers: April 2026 sales',urgency:'high'},
+  {id:'b27',date:'2026-05-31',cat:'labor',title:'Verify OSHA injury & illness log is current',sub:'Form 300 — update Q1 incidents before mid-year',urgency:'low'},
+  {id:'b28',date:'2026-06-15',cat:'federal',title:'Q2 2026 federal estimated tax payment',sub:'Form 1040-ES / 1120-W',urgency:'high'},
+  {id:'b29',date:'2026-06-15',cat:'state',title:'Alabama Q2 estimated tax payment',sub:'ALDOR quarterly estimated payment',urgency:'med'},
+  {id:'b30',date:'2026-06-15',cat:'payroll',title:'Monthly payroll tax deposit (May 2026)',sub:'EFTPS deposit',urgency:'high'},
+  {id:'b31',date:'2026-06-20',cat:'sales',title:'Alabama sales tax — Q2 return (quarterly filers)',sub:'April–June 2026 sales — MAT portal',urgency:'high'},
+  {id:'b32',date:'2026-06-20',cat:'sales',title:'Alabama sales tax return (monthly filers)',sub:'May 2026 sales',urgency:'high'},
+  {id:'b33',date:'2026-06-30',cat:'labor',title:'Mid-year workers compensation coverage review',sub:'Verify coverage limits match current payroll exposure',urgency:'med'},
+  {id:'b34',date:'2026-07-01',cat:'license',title:'Annual business license renewal (city / county)',sub:'Most AL municipalities renew July 1 — check local office',urgency:'high'},
+  {id:'b35',date:'2026-07-15',cat:'payroll',title:'Monthly payroll tax deposit (June 2026)',sub:'EFTPS deposit',urgency:'high'},
+  {id:'b36',date:'2026-07-20',cat:'sales',title:'Alabama sales tax return (monthly filers)',sub:'June 2026 sales — MAT portal',urgency:'high'},
+  {id:'b37',date:'2026-07-31',cat:'payroll',title:'Form 941 — Q2 2026 federal payroll return',sub:'April–June 2026 wages',urgency:'high'},
+  {id:'b38',date:'2026-07-31',cat:'state',title:'Alabama SUI — Q2 quarterly report',sub:'AL Dept of Labor eGov portal',urgency:'high'},
+  {id:'b39',date:'2026-08-15',cat:'payroll',title:'Monthly payroll tax deposit (July 2026)',sub:'EFTPS deposit',urgency:'high'},
+  {id:'b40',date:'2026-08-20',cat:'sales',title:'Alabama sales tax return (monthly filers)',sub:'July 2026 sales',urgency:'high'},
+  {id:'b41',date:'2026-08-31',cat:'labor',title:'Annual OSHA safety training review',sub:'GHS/SDS refresher for cleaning chemicals; update training records',urgency:'med'},
+  {id:'b42',date:'2026-09-15',cat:'federal',title:'Q3 2026 federal estimated tax payment',sub:'Form 1040-ES / 1120-W',urgency:'high'},
+  {id:'b43',date:'2026-09-15',cat:'state',title:'Alabama Q3 estimated tax payment',sub:'ALDOR quarterly estimated payment',urgency:'med'},
+  {id:'b44',date:'2026-09-15',cat:'federal',title:'Extended S-corp / partnership return deadline',sub:'Form 1120-S / 1065 — if extension filed in March',urgency:'high'},
+  {id:'b45',date:'2026-09-15',cat:'payroll',title:'Monthly payroll tax deposit (August 2026)',sub:'EFTPS deposit',urgency:'high'},
+  {id:'b46',date:'2026-09-20',cat:'sales',title:'Alabama sales tax — Q3 return (quarterly filers)',sub:'July–September 2026 sales',urgency:'high'},
+  {id:'b47',date:'2026-09-20',cat:'sales',title:'Alabama sales tax return (monthly filers)',sub:'August 2026 sales',urgency:'high'},
+  {id:'b48',date:'2026-09-30',cat:'insurance',title:'General liability insurance renewal review',sub:'Initiate renewal 60 days before policy expiry; confirm limits',urgency:'med'},
+  {id:'b49',date:'2026-10-15',cat:'federal',title:'Extended federal corporate / individual return deadline',sub:'Form 1120 / 1040 — if extension filed April 15',urgency:'high'},
+  {id:'b50',date:'2026-10-15',cat:'state',title:'Extended Alabama income tax return deadline',sub:'6-month extension from April 15 original due date',urgency:'high'},
+  {id:'b51',date:'2026-10-15',cat:'payroll',title:'Monthly payroll tax deposit (September 2026)',sub:'EFTPS deposit',urgency:'high'},
+  {id:'b52',date:'2026-10-20',cat:'sales',title:'Alabama sales tax return (monthly filers)',sub:'September 2026 sales',urgency:'high'},
+  {id:'b53',date:'2026-10-31',cat:'payroll',title:'Form 941 — Q3 2026 federal payroll return',sub:'July–September 2026 wages',urgency:'high'},
+  {id:'b54',date:'2026-10-31',cat:'state',title:'Alabama SUI — Q3 quarterly report',sub:'AL Dept of Labor eGov portal',urgency:'high'},
+  {id:'b55',date:'2026-11-01',cat:'insurance',title:'Workers compensation annual payroll audit',sub:'Gather payroll records; insurer audit typically Nov–Dec',urgency:'med'},
+  {id:'b56',date:'2026-11-15',cat:'payroll',title:'Monthly payroll tax deposit (October 2026)',sub:'EFTPS deposit',urgency:'high'},
+  {id:'b57',date:'2026-11-20',cat:'sales',title:'Alabama sales tax return (monthly filers)',sub:'October 2026 sales',urgency:'high'},
+  {id:'b58',date:'2026-12-15',cat:'federal',title:'Q4 2026 estimated tax payment (C-Corp)',sub:'Form 1120-W — corporations only',urgency:'high'},
+  {id:'b59',date:'2026-12-15',cat:'payroll',title:'Monthly payroll tax deposit (November 2026)',sub:'EFTPS deposit',urgency:'high'},
+  {id:'b60',date:'2026-12-20',cat:'sales',title:'Alabama sales tax return (monthly filers)',sub:'November 2026 sales — MAT portal',urgency:'high'},
+  {id:'b61',date:'2026-12-31',cat:'labor',title:'New-hire reporting compliance review',sub:'AL requires each new hire reported within 7 days of hire date',urgency:'low'},
+  {id:'b62',date:'2026-12-31',cat:'license',title:'Verify all occupational & local permits before year-end',sub:'Renew any licenses expiring Dec 31',urgency:'med'},
+  {id:'b63',date:'2026-12-31',cat:'insurance',title:'Year-end insurance policy review',sub:'Commercial auto, umbrella, property — confirm 2027 renewals',urgency:'med'},
+  {id:'b64',date:'2026-12-31',cat:'labor',title:'Update labor law posters for 2027',sub:'State, federal & OSHA notices — all must be current by Jan 1',urgency:'med'},
+];
 
-// ── DARK / LIGHT MODE TOGGLE ──────────────────────
-const toggle = document.getElementById('theme-toggle');
-const savedTheme = localStorage.getItem('qsbs-theme');
-if (savedTheme === 'dark') {
-  document.body.classList.add('dark-mode');
-  toggle.textContent = '☀️';
+const CAT_LABELS = {federal:'Federal IRS',payroll:'Payroll/TDS',sales:'Sales Tax',state:'State Income',labor:'Labor/OSHA',license:'Licenses',insurance:'Insurance',custom:'Custom'};
+const URG_LABELS = {high:'Critical',med:'Important',low:'Routine'};
+const MONTHS = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+const WDAYS = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+const TODAY = new Date(2026,5,3);
+
+// ══════════════════════════════════════════════
+//  PERSISTENCE
+// ══════════════════════════════════════════════
+// overrides: {id -> {date,cat,title,sub,urgency}}  (for base events)
+// customEvents: [{id,date,cat,title,sub,urgency}]
+
+let overrides = JSON.parse(localStorage.getItem('mc_overrides') || '{}');
+let customEvents = JSON.parse(localStorage.getItem('mc_custom') || '[]');
+
+function saveAll(){ localStorage.setItem('mc_overrides',JSON.stringify(overrides)); localStorage.setItem('mc_custom',JSON.stringify(customEvents)); }
+
+function allEvents(){
+  const base = BASE.map(e => overrides[e.id] ? {...e,...overrides[e.id],id:e.id,_base:true,_modified:true} : {...e,_base:true,_modified:false});
+  return [...base,...customEvents.map(e=>({...e,_base:false,_modified:false}))];
 }
-toggle.addEventListener('click', function() {
-  document.body.classList.toggle('dark-mode');
-  const isDark = document.body.classList.contains('dark-mode');
-  toggle.textContent = isDark ? '☀️' : '🌙';
-  localStorage.setItem('qsbs-theme', isDark ? 'dark' : 'light');
-});
 
-// ── QSBS CALCULATOR ───────────────────────────────
-function fmt(n) {
-  return '$' + Math.round(n).toLocaleString('en-US');
+// ══════════════════════════════════════════════
+//  STATE
+// ══════════════════════════════════════════════
+let activeFilter='all', searchQuery='', currentView='calendar';
+let calYear=2026, calMonth=5, selDate=null, editingId=null;
+
+function isPast(ds){ return new Date(ds+'T00:00:00') < TODAY; }
+function fmtShort(ds){ const d=new Date(ds+'T00:00:00'); return (d.getMonth()+1)+'/'+d.getDate(); }
+function fmtFull(ds){ const d=new Date(ds+'T00:00:00'); return MONTHS[d.getMonth()]+' '+d.getDate()+', '+d.getFullYear(); }
+
+function getFiltered(){
+  return allEvents().filter(e=>{
+    const catOk = activeFilter==='all'||e.cat===activeFilter;
+    const q=searchQuery.toLowerCase();
+    const txtOk = !q||e.title.toLowerCase().includes(q)||(e.sub||'').toLowerCase().includes(q)||(CAT_LABELS[e.cat]||'').toLowerCase().includes(q);
+    return catOk&&txtOk;
+  });
 }
 
-function getLTCGRate(income, filing) {
-  // 2025 IRS Long-Term Capital Gains Brackets (inflation-adjusted)
-  if (filing === 'single') {
-    if (income <= 48350) return 0;
-    if (income <= 533400) return 0.15;
-    return 0.20;
-  } else if (filing === 'married') {
-    if (income <= 96700) return 0;
-    if (income <= 600050) return 0.15;
-    return 0.20;
-  } else { // head of household
-    if (income <= 64750) return 0;
-    if (income <= 566700) return 0.15;
-    return 0.20;
+// ══════════════════════════════════════════════
+//  STATS
+// ══════════════════════════════════════════════
+function updateStats(){
+  const all=allEvents(), f=getFiltered();
+  document.getElementById('statTotal').textContent=all.length;
+  document.getElementById('statHigh').textContent=all.filter(e=>e.urgency==='high').length;
+  document.getElementById('statUpcoming').textContent=all.filter(e=>!isPast(e.date)).length;
+  document.getElementById('statModified').textContent=Object.keys(overrides).length+customEvents.length;
+  const future=f.filter(e=>!isPast(e.date)).sort((a,b)=>a.date.localeCompare(b.date));
+  if(future.length){
+    const n=future[0],d=new Date(n.date+'T00:00:00');
+    document.getElementById('statNext').textContent=MONTHS[d.getMonth()].slice(0,3)+' '+d.getDate();
+    document.getElementById('statNextSub').textContent=n.title.slice(0,40)+(n.title.length>40?'…':'');
+  }else{document.getElementById('statNext').textContent='All done!';document.getElementById('statNextSub').textContent='';}
+}
+
+// ══════════════════════════════════════════════
+//  VIEW TOGGLE
+// ══════════════════════════════════════════════
+function setView(v){
+  currentView=v;
+  document.getElementById('calendarView').style.display=v==='calendar'?'block':'none';
+  document.getElementById('listView').style.display=v==='list'?'block':'none';
+  document.getElementById('btnCal').classList.toggle('active',v==='calendar');
+  document.getElementById('btnList').classList.toggle('active',v==='list');
+  render();
+}
+
+// ══════════════════════════════════════════════
+//  CALENDAR RENDER
+// ══════════════════════════════════════════════
+function changeMonth(d){calMonth+=d;if(calMonth>11){calMonth=0;calYear++;}if(calMonth<0){calMonth=11;calYear--;}renderCalendar();}
+function goToday(){calYear=2026;calMonth=5;renderCalendar();}
+
+function renderCalendar(){
+  updateStats();
+  const evts=getFiltered();
+  const byDate={};
+  evts.forEach(e=>{if(!byDate[e.date])byDate[e.date]=[];byDate[e.date].push(e);});
+  document.getElementById('calLabel').textContent=MONTHS[calMonth]+' '+calYear;
+  const firstDay=new Date(calYear,calMonth,1).getDay();
+  const dim=new Date(calYear,calMonth+1,0).getDate();
+  const dip=new Date(calYear,calMonth,0).getDate();
+  const container=document.getElementById('calDays');
+  container.innerHTML='';
+  let cells=[];
+  for(let i=firstDay-1;i>=0;i--)cells.push({day:dip-i,cur:false});
+  for(let d=1;d<=dim;d++)cells.push({day:d,cur:true});
+  while(cells.length%7!==0)cells.push({day:cells.length-firstDay-dim+1,cur:false});
+  cells.forEach(({day,cur})=>{
+    const ds=cur?`${calYear}-${String(calMonth+1).padStart(2,'0')}-${String(day).padStart(2,'0')}`:null;
+    const de=ds&&byDate[ds]?byDate[ds]:[];
+    const isToday=ds==='2026-06-03';
+    const cell=document.createElement('div');
+    cell.className='cal-cell'+(cur?'':' other-month')+(isToday?' today':'')+(cur&&isPast(ds)&&ds!=='2026-06-03'?' past-cell':'');
+    if(cur)cell.onclick=()=>openDayModal(ds);
+    const num=document.createElement('div');num.className='cal-day-num';num.textContent=day;cell.appendChild(num);
+    de.slice(0,3).forEach(ev=>{
+      const dot=document.createElement('div');
+      dot.className='cal-event-dot cat-'+ev.cat;
+      dot.textContent=(ev._modified?'✎ ':'')+ev.title;
+      dot.onclick=e=>{e.stopPropagation();openDayModal(ds);};
+      cell.appendChild(dot);
+    });
+    if(de.length>3){const m=document.createElement('div');m.className='cal-more';m.textContent='+' +(de.length-3)+' more';cell.appendChild(m);}
+    container.appendChild(cell);
+  });
+}
+
+// ══════════════════════════════════════════════
+//  LIST RENDER
+// ══════════════════════════════════════════════
+function renderList(){
+  updateStats();
+  const evts=getFiltered().sort((a,b)=>a.date.localeCompare(b.date));
+  const grouped={};
+  evts.forEach(e=>{const m=e.date.slice(0,7);if(!grouped[m])grouped[m]=[];grouped[m].push(e);});
+  const body=document.getElementById('listBody');body.innerHTML='';
+  if(!evts.length){body.innerHTML='<div class="empty-state">No events match your filter or search.</div>';return;}
+  Object.keys(grouped).sort().forEach(ym=>{
+    const [yr,mo]=ym.split('-');
+    const es=grouped[ym],allPast=es.every(e=>isPast(e.date));
+    const block=document.createElement('div');block.className='month-block'+(allPast?' past-month':'');
+    block.innerHTML=`<div class="month-hdr"${allPast?' style="border-bottom-color:var(--border)"':''}><span class="month-name">${MONTHS[parseInt(mo)-1]} ${yr}</span><span class="month-ct">${es.length} event${es.length>1?'s':''}${allPast?' — completed':''}</span></div>`;
+    const list=document.createElement('div');list.className='ev-list';
+    es.forEach(ev=>{
+      const row=document.createElement('div');
+      row.className='ev-row'+(isPast(ev.date)?' past-ev':'')+(ev._modified?' modified':'')+(ev.cat==='custom'?' modified':'');
+      row.innerHTML=`
+        <div class="ev-date-col">${fmtShort(ev.date)}</div>
+        <div class="ev-badge badge-${ev.cat}">${CAT_LABELS[ev.cat]||ev.cat}</div>
+        <div class="ev-info"><div class="ev-title">${ev._modified?'<span style="color:var(--accent2);font-size:10px;">✎ edited &nbsp;</span>':''}${ev.title}</div><div class="ev-sub">${ev.sub||''}</div></div>
+        <div class="ev-actions">
+          <div class="urg-pill urg-${ev.urgency}">${URG_LABELS[ev.urgency]}</div>
+          <button class="edit-btn-row" onclick="event.stopPropagation();openEditForm('${ev.id}',${ev._base})">&#9998; Edit</button>
+        </div>`;
+      row.onclick=()=>openDayModal(ev.date);
+      list.appendChild(row);
+    });
+    block.appendChild(list);body.appendChild(block);
+  });
+}
+
+function render(){if(currentView==='calendar')renderCalendar();else renderList();}
+
+// ══════════════════════════════════════════════
+//  DAY MODAL
+// ══════════════════════════════════════════════
+function openDayModal(ds){
+  selDate=ds;
+  const d=new Date(ds+'T00:00:00');
+  document.getElementById('modalDayName').textContent=WDAYS[d.getDay()];
+  document.getElementById('modalDateTitle').textContent=fmtFull(ds);
+  const de=getFiltered().filter(e=>e.date===ds);
+  const cont=document.getElementById('modalEvents');cont.innerHTML='';
+  if(!de.length){cont.innerHTML='<div class="modal-empty">No compliance events on this date.</div>';}
+  else de.forEach(ev=>{
+    const card=document.createElement('div');
+    card.className='modal-ev-card'+(ev._modified?' modified-card':'');
+    card.innerHTML=`
+      <div class="mc-title">${ev._modified?'<span style="font-size:10px;color:var(--accent2);">✎ edited &nbsp;</span>':''}${ev.title}</div>
+      ${ev.sub?`<div class="mc-sub">${ev.sub}</div>`:''}
+      <div class="mc-meta">
+        <span class="ev-badge badge-${ev.cat}" style="font-size:10px">${CAT_LABELS[ev.cat]||ev.cat}</span>
+        <span class="urg-pill urg-${ev.urgency}" style="font-size:10px">${URG_LABELS[ev.urgency]}</span>
+        <button style="margin-left:auto;font-size:11px;padding:3px 10px;border:1px solid var(--border);border-radius:5px;background:transparent;cursor:pointer;color:var(--accent);font-family:'DM Sans',sans-serif;" onclick="openEditForm('${ev.id}',${ev._base})">&#9998; Edit</button>
+      </div>`;
+    cont.appendChild(card);
+  });
+  document.getElementById('dayOverlay').classList.add('open');
+}
+function closeDayModal(e){if(!e||e.target===document.getElementById('dayOverlay'))document.getElementById('dayOverlay').classList.remove('open');}
+function openAddFormDate(){document.getElementById('dayOverlay').classList.remove('open');openAddForm(selDate);}
+
+// ══════════════════════════════════════════════
+//  FORM — ADD
+// ══════════════════════════════════════════════
+function openAddForm(dateStr){
+  editingId=null;
+  document.getElementById('formTitle').textContent='Add New Event';
+  document.getElementById('formNotice').style.display='none';
+  document.getElementById('fDate').value=dateStr||'2026-06-15';
+  document.getElementById('fCat').value='custom';
+  document.getElementById('fTitle').value='';
+  document.getElementById('fSub').value='';
+  document.getElementById('fUrg').value='med';
+  document.getElementById('fEditId').value='';
+  document.getElementById('fIsBase').value='0';
+  document.getElementById('fResetBtn').style.display='none';
+  document.getElementById('fDelBtn').style.display='none';
+  document.getElementById('formOverlay').classList.add('open');
+}
+
+// ══════════════════════════════════════════════
+//  FORM — EDIT (works for BOTH base & custom)
+// ══════════════════════════════════════════════
+function openEditForm(id, isBase){
+  document.getElementById('dayOverlay').classList.remove('open');
+  editingId=id;
+  let ev;
+  if(isBase){
+    const base=BASE.find(e=>e.id===id);
+    ev=overrides[id]?{...base,...overrides[id]}:{...base};
+  }else{
+    ev=customEvents.find(e=>e.id===id);
   }
+  if(!ev)return;
+  document.getElementById('formTitle').textContent='Edit Event';
+  document.getElementById('formNotice').style.display=isBase?'block':'none';
+  document.getElementById('fDate').value=ev.date;
+  document.getElementById('fCat').value=ev.cat;
+  document.getElementById('fTitle').value=ev.title;
+  document.getElementById('fSub').value=ev.sub||'';
+  document.getElementById('fUrg').value=ev.urgency;
+  document.getElementById('fEditId').value=id;
+  document.getElementById('fIsBase').value=isBase?'1':'0';
+  document.getElementById('fResetBtn').style.display=isBase&&overrides[id]?'inline-flex':'none';
+  document.getElementById('fDelBtn').style.display=isBase?'none':'inline-flex';
+  document.getElementById('formOverlay').classList.add('open');
 }
 
-function getNIIT(income, filing) {
-  // 3.8% Net Investment Income Tax threshold
-  const threshold = filing === 'married' ? 250000 : 200000;
-  return income > threshold ? 0.038 : 0;
+function closeFormModal(e){if(!e||e.target===document.getElementById('formOverlay'))document.getElementById('formOverlay').classList.remove('open');}
+
+function saveEvent(){
+  const date=document.getElementById('fDate').value;
+  const cat=document.getElementById('fCat').value;
+  const title=document.getElementById('fTitle').value.trim();
+  const sub=document.getElementById('fSub').value.trim();
+  const urgency=document.getElementById('fUrg').value;
+  const id=document.getElementById('fEditId').value;
+  const isBase=document.getElementById('fIsBase').value==='1';
+  if(!date||!title){alert('Please fill in Date and Event Title.');return;}
+  if(isBase){
+    // Save as override — only store changed fields
+    overrides[id]={date,cat,title,sub,urgency};
+  }else if(id){
+    const idx=customEvents.findIndex(e=>e.id===id);
+    if(idx>-1)customEvents[idx]={id,date,cat,title,sub,urgency};
+  }else{
+    customEvents.push({id:'c'+Date.now(),date,cat,title,sub,urgency});
+  }
+  saveAll();
+  closeFormModal();
+  render();
+  // show fResetBtn if now modified
+  if(isBase)document.getElementById('fResetBtn').style.display='inline-flex';
 }
 
-function calculateQSBS() {
-  const investment = parseFloat(document.getElementById('calc-investment').value);
-  const exitVal    = parseFloat(document.getElementById('calc-exit').value);
-  const income     = parseFloat(document.getElementById('calc-income').value) || 0;
-  const filing     = document.getElementById('calc-filing').value;
+function resetBaseEvent(){
+  if(!editingId)return;
+  if(!confirm('Reset this event to its original values?'))return;
+  delete overrides[editingId];
+  saveAll();
+  closeFormModal();
+  render();
+}
 
-  if (!investment || !exitVal || isNaN(investment) || isNaN(exitVal)) {
-    alert('Please enter your investment amount and expected exit value.');
-    return;
-  }
-  if (exitVal <= investment) {
-    alert('Exit value must be greater than your investment amount to show a gain.');
-    return;
-  }
+function deleteEvent(){
+  if(!editingId)return;
+  if(!confirm('Delete this custom event?'))return;
+  customEvents=customEvents.filter(e=>e.id!==editingId);
+  saveAll();
+  closeFormModal();
+  render();
+}
 
-  const gain         = exitVal - investment;
-  const ltcgRate     = getLTCGRate(income, filing);
-  const niitRate     = getNIIT(income, filing);
-  const totalRate    = ltcgRate + niitRate;
+// ══════════════════════════════════════════════
+//  EXPORT
+// ══════════════════════════════════════════════
+function openExport(){document.getElementById('expOverlay').classList.add('open');}
+function closeExport(e){if(!e||e.target===document.getElementById('expOverlay'))document.getElementById('expOverlay').classList.remove('open');}
 
-  // Tax WITHOUT QSBS
-  const taxWithout   = gain * totalRate;
+function getExportData(){
+  const scope=document.querySelector('input[name="expScope"]:checked').value;
+  let evts=allEvents().sort((a,b)=>a.date.localeCompare(b.date));
+  if(scope==='upcoming')evts=evts.filter(e=>!isPast(e.date));
+  if(scope==='filtered')evts=getFiltered().sort((a,b)=>a.date.localeCompare(b.date));
+  return evts;
+}
 
-  // QSBS exclusion: greater of $10M or 10x basis
-  const qsbsLimit    = Math.max(10000000, investment * 10);
-  const excludedGain = Math.min(gain, qsbsLimit);
-  const taxableGain  = Math.max(0, gain - excludedGain);
-  const taxWith      = taxableGain * totalRate;
+function doExport(fmt){
+  const evts=getExportData();
+  const rows=evts.map(e=>({
+    'Date':e.date,
+    'Day':WDAYS[new Date(e.date+'T00:00:00').getDay()],
+    'Category':CAT_LABELS[e.cat]||e.cat,
+    'Event Title':e.title,
+    'Description':e.sub||'',
+    'Priority':URG_LABELS[e.urgency],
+    'Status':isPast(e.date)?'Completed':'Upcoming',
+    'Modified':e._modified?'Yes':'No',
+    'Type':e._base?'Built-in':'Custom',
+  }));
 
-  const savings      = taxWithout - taxWith;
-  const rateLabel    = (ltcgRate * 100).toFixed(0) + '%' + (niitRate > 0 ? ' + 3.8% NIIT' : '') + ' federal rate';
-
-  // Populate results
-  document.getElementById('r-gain').textContent        = fmt(gain);
-  document.getElementById('r-tax-without').textContent = fmt(taxWithout);
-  document.getElementById('r-tax-with').textContent    = fmt(taxWith);
-  document.getElementById('r-savings').textContent     = fmt(savings);
-  document.getElementById('r-rate-note').textContent   = 'Applied rate: ' + rateLabel + ' · 2025 IRS rates';
-
-  // Eligibility message
-  let eligMsg = '';
-  if (gain <= qsbsLimit) {
-    eligMsg = '✅ Your entire gain of ' + fmt(gain) + ' falls within the QSBS exclusion limit of ' + fmt(qsbsLimit) + ' (greater of $10M or 10× your investment). Full exclusion applies — federal tax = $0 if all QSBS conditions are met.';
+  if(fmt==='csv'){
+    const headers=Object.keys(rows[0]);
+    const csv=[headers.join(','),...rows.map(r=>headers.map(h=>`"${(r[h]||'').toString().replace(/"/g,'""')}"`).join(','))].join('\n');
+    const blob=new Blob([csv],{type:'text/csv'});
+    const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='Roots_Multiclean_Compliance_2026.csv';a.click();
   } else {
-    eligMsg = '⚠️ Your gain of ' + fmt(gain) + ' exceeds the QSBS exclusion limit of ' + fmt(qsbsLimit) + '. The first ' + fmt(excludedGain) + ' is excluded. The remaining ' + fmt(taxableGain) + ' is taxable at your federal rate.';
+    const ws=XLSX.utils.json_to_sheet(rows);
+    // Column widths
+    ws['!cols']=[{wch:12},{wch:10},{wch:14},{wch:52},{wch:55},{wch:10},{wch:11},{wch:9},{wch:9}];
+    // Header row styling
+    const headerStyle={font:{bold:true,color:{rgb:'FFFFFF'}},fill:{fgColor:{rgb:'1E4D3B'}},alignment:{horizontal:'center'}};
+    const hRow=['A1','B1','C1','D1','E1','F1','G1','H1','I1'];
+    hRow.forEach(cell=>{if(ws[cell])ws[cell].s=headerStyle;});
+    // Category colour map for the Category column
+    const catColors={
+      'Federal IRS':'EAF0FA','Payroll/TDS':'F0EAFA','Sales Tax':'FAF0E0',
+      'State Income':'E8F5EC','Labor/OSHA':'FAE8E8','Licenses':'FAE8F2',
+      'Insurance':'E3F2F0','Custom':'FFF8E6'
+    };
+    const urgColors={'Critical':'FDECEA','Important':'FEF3E2','Routine':'EBF5EE'};
+    // Apply row colours (SheetJS free only partially supports cell styles but add them anyway)
+    const range=XLSX.utils.decode_range(ws['!ref']);
+    for(let r=range.s.r+1;r<=range.e.r;r++){
+      const catCell=ws[XLSX.utils.encode_cell({r,c:2})];
+      const urgCell=ws[XLSX.utils.encode_cell({r,c:5})];
+      if(catCell&&catColors[catCell.v])catCell.s={fill:{fgColor:{rgb:catColors[catCell.v]}}};
+      if(urgCell&&urgColors[urgCell.v])urgCell.s={fill:{fgColor:{rgb:urgColors[urgCell.v]}}};
+    }
+    const wb=XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb,ws,'Compliance Calendar 2026');
+    // Summary sheet
+    const cats=Object.entries(CAT_LABELS);
+    const summaryData=[
+      ['Roots Multiclean Inc — 2026 Compliance Calendar Summary',''],
+      ['Generated on',new Date().toLocaleDateString()],
+      ['',''],
+      ['Category','Event Count'],
+      ...cats.map(([k,v])=>[v,evts.filter(e=>e.cat===k).length]),
+      ['',''],
+      ['Priority','Count'],
+      ['Critical',evts.filter(e=>e.urgency==='high').length],
+      ['Important',evts.filter(e=>e.urgency==='med').length],
+      ['Routine',evts.filter(e=>e.urgency==='low').length],
+      ['',''],
+      ['Total Events Exported',evts.length],
+    ];
+    const ws2=XLSX.utils.aoa_to_sheet(summaryData);
+    ws2['!cols']=[{wch:38},{wch:18}];
+    XLSX.utils.book_append_sheet(wb,ws2,'Summary');
+    XLSX.writeFile(wb,'Roots_Multiclean_Compliance_2026.xlsx');
   }
-  document.getElementById('r-eligibility').textContent = eligMsg;
-
-  document.getElementById('calc-results').classList.add('show');
+  closeExport();
 }
 
-function resetCalc() {
-  document.getElementById('calc-investment').value = '';
-  document.getElementById('calc-exit').value = '';
-  document.getElementById('calc-income').value = '';
-  document.getElementById('calc-filing').value = 'single';
-  document.getElementById('calc-results').classList.remove('show');
-}
+// ══════════════════════════════════════════════
+//  FILTERS & SEARCH
+// ══════════════════════════════════════════════
+document.querySelectorAll('.filter-btn').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    activeFilter=btn.dataset.cat;
+    document.querySelectorAll('.filter-btn').forEach(b=>b.classList.toggle('active',b.dataset.cat===activeFilter));
+    render();
+  });
+});
+document.getElementById('searchInput').addEventListener('input',e=>{searchQuery=e.target.value;render();});
+document.addEventListener('keydown',e=>{
+  if(e.key==='Escape'){
+    document.getElementById('dayOverlay').classList.remove('open');
+    document.getElementById('formOverlay').classList.remove('open');
+    document.getElementById('expOverlay').classList.remove('open');
+  }
+});
+
+render();
 </script>
 </body>
 </html>
