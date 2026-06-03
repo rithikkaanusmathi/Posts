@@ -1,0 +1,1022 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Roots Multiclean Inc — 2026 Compliance Calendar</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#F5F3EE;--surface:#FFF;--surface2:#EFECE6;--border:#DDD9D0;
+  --text:#1A1916;--muted:#6B6760;--accent:#1E4D3B;--accent2:#C4882B;
+  --federal:#1A3A6B;--federal-bg:#EAF0FA;
+  --payroll:#3B1F6B;--payroll-bg:#F0EAFA;
+  --sales:#6B3A00;--sales-bg:#FAF0E0;
+  --state:#1A5C2A;--state-bg:#E8F5EC;
+  --labor:#6B1F1A;--labor-bg:#FAE8E8;
+  --license:#6B1A4A;--license-bg:#FAE8F2;
+  --insurance:#0F5248;--insurance-bg:#E3F2F0;
+  --custom:#4A3500;--custom-bg:#FFF8E6;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;font-size:16px;line-height:1.65;}
+
+/* ── MASTHEAD ── */
+.masthead{background:var(--accent);color:#fff;padding:2.4rem 2.5rem 2rem;position:relative;overflow:hidden;}
+.masthead::before{content:'';position:absolute;right:-60px;top:-60px;width:260px;height:260px;border-radius:50%;background:rgba(255,255,255,.05);}
+.masthead::after{content:'';position:absolute;right:60px;bottom:-70px;width:170px;height:170px;border-radius:50%;background:rgba(255,255,255,.04);}
+.masthead-inner{max-width:1200px;margin:0 auto;position:relative;z-index:1;display:flex;align-items:flex-end;justify-content:space-between;gap:1rem;flex-wrap:wrap;}
+.co-label{font-size:12px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.6);margin-bottom:6px;}
+.masthead h1{font-family:'DM Serif Display',serif;font-size:clamp(1.6rem,4vw,2.5rem);font-weight:400;line-height:1.1;color:#fff;margin-bottom:8px;}
+.masthead-meta{display:flex;flex-wrap:wrap;gap:12px;font-size:13px;color:rgba(255,255,255,.7);}
+.masthead-meta span{display:flex;align-items:center;gap:5px;}
+.dot{width:4px;height:4px;border-radius:50%;background:var(--accent2);display:inline-block;}
+.view-toggle{display:flex;gap:6px;}
+.view-btn{font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;padding:8px 17px;border:1px solid rgba(255,255,255,.35);border-radius:8px;background:transparent;color:rgba(255,255,255,.8);cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:5px;}
+.view-btn:hover{background:rgba(255,255,255,.12);}
+.view-btn.active{background:rgba(255,255,255,.22);color:#fff;border-color:rgba(255,255,255,.6);}
+
+/* ── STATS ── */
+.stats-row{max-width:1200px;margin:0 auto;padding:1.4rem 2.5rem 0;display:grid;grid-template-columns:repeat(auto-fit,minmax(155px,1fr));gap:10px;}
+.stat-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:.9rem 1rem;}
+.stat-card .lbl{font-size:11px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--muted);}
+.stat-card .val{font-family:'DM Serif Display',serif;font-size:1.9rem;color:var(--text);line-height:1.1;}
+.stat-card .sub{font-size:11px;color:var(--muted);}
+
+/* ── SEARCH ROW (above calendar/list) ── */
+.search-row{max-width:1200px;margin:.9rem auto 0;padding:0 2.5rem;}
+.search-wrap{position:relative;width:100%;}
+.search-wrap input{font-family:'DM Sans',sans-serif;font-size:15px;width:100%;padding:9px 14px 9px 36px;border:1px solid var(--border);border-radius:10px;background:#fff;color:var(--text);outline:none;transition:border .2s;}
+.search-wrap input:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(30,77,59,.09);}
+.search-icon{position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--muted);font-size:15px;pointer-events:none;}
+
+/* ── TOOLBAR ── */
+.toolbar{max-width:1200px;margin:.75rem auto 0;padding:0 2.5rem;display:flex;flex-wrap:wrap;gap:8px;align-items:center;}
+.filter-btn{font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;padding:6px 13px;border:1px solid var(--border);border-radius:20px;background:transparent;color:var(--muted);cursor:pointer;transition:all .2s;}
+.filter-btn:hover{border-color:var(--accent);color:var(--accent);}
+.filter-btn.active{background:var(--accent);color:#fff;border-color:var(--accent);}
+.tb-btn{font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;padding:8px 16px;border-radius:8px;cursor:pointer;display:flex;align-items:center;gap:5px;white-space:nowrap;transition:opacity .2s;}
+.btn-add{background:var(--accent2);color:#fff;border:none;}
+.btn-add:hover{opacity:.88;}
+.btn-export{background:var(--surface);color:var(--accent);border:1px solid var(--accent);}
+.btn-export:hover{background:var(--accent);color:#fff;}
+
+/* ── MAIN ── */
+.main{max-width:1200px;margin:0 auto;padding:1.25rem 2.5rem 4rem;}
+
+/* ── CALENDAR ── */
+.cal-nav{display:flex;align-items:center;gap:10px;margin-bottom:1rem;}
+.cal-nav-btn{font-family:'DM Sans',sans-serif;font-size:14px;padding:7px 15px;border:1px solid var(--border);border-radius:8px;background:var(--surface);color:var(--text);cursor:pointer;transition:all .2s;}
+.cal-nav-btn:hover{background:var(--surface2);}
+.cal-month-label{font-family:'DM Serif Display',serif;font-size:1.45rem;flex:1;text-align:center;}
+.cal-today-btn{font-size:13px;padding:6px 13px;border:1px solid var(--accent);border-radius:8px;background:transparent;color:var(--accent);cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s;}
+.cal-today-btn:hover{background:var(--accent);color:#fff;}
+.cal-grid{background:var(--surface);border:1px solid var(--border);border-radius:14px;overflow:hidden;}
+.cal-weekdays{display:grid;grid-template-columns:repeat(7,1fr);background:var(--surface2);}
+.cal-wd{text-align:center;font-size:11px;font-weight:600;letter-spacing:.8px;text-transform:uppercase;color:var(--muted);padding:10px 4px;}
+.cal-days{display:grid;grid-template-columns:repeat(7,1fr);}
+.cal-cell{min-height:115px;border-right:1px solid var(--border);border-bottom:1px solid var(--border);padding:6px;cursor:pointer;transition:background .15s;}
+.cal-cell:nth-child(7n){border-right:none;}
+.cal-cell:hover{background:#F8F6F0;}
+.cal-cell.other-month{background:var(--bg);}
+.cal-cell.other-month .cal-day-num{color:var(--border);}
+.cal-cell.today{background:#EDF5F0;}
+.cal-cell.today .cal-day-num{background:var(--accent);color:#fff;border-radius:50%;}
+.cal-cell.past-cell{opacity:.65;}
+.cal-day-num{font-size:13px;font-weight:600;width:26px;height:26px;display:flex;align-items:center;justify-content:center;margin-bottom:4px;}
+.cal-event-dot{font-size:11.5px;font-weight:500;padding:3px 7px;border-radius:4px;margin-bottom:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;line-height:1.4;display:flex;align-items:center;gap:4px;}
+.cal-event-dot .status-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0;}
+.status-dot.done{background:#2A6B3C;}
+.status-dot.pending{background:#E07B00;}
+.cat-federal{background:var(--federal-bg);color:var(--federal);}
+.cat-payroll{background:var(--payroll-bg);color:var(--payroll);}
+.cat-sales{background:var(--sales-bg);color:var(--sales);}
+.cat-state{background:var(--state-bg);color:var(--state);}
+.cat-labor{background:var(--labor-bg);color:var(--labor);}
+.cat-license{background:var(--license-bg);color:var(--license);}
+.cat-insurance{background:var(--insurance-bg);color:var(--insurance);}
+.cat-custom{background:var(--custom-bg);color:var(--custom);}
+.cal-more{font-size:10px;color:var(--muted);font-weight:600;padding:1px 4px;}
+
+/* ── LIST VIEW ── */
+.month-block{margin-bottom:2rem;}
+.month-hdr{display:flex;align-items:center;gap:10px;margin-bottom:8px;padding-bottom:8px;border-bottom:2px solid var(--accent);flex-wrap:wrap;}
+.month-name{font-family:'DM Serif Display',serif;font-size:1.35rem;color:var(--text);}
+.month-ct{font-size:12px;color:var(--muted);font-weight:500;}
+.month-status-btns{margin-left:auto;display:flex;gap:6px;}
+.month-stat-pill{font-size:11px;font-weight:600;padding:4px 11px;border-radius:20px;cursor:default;display:flex;align-items:center;gap:5px;}
+.month-stat-pill.done-pill{background:#EBF5EE;color:#1A5C2A;border:1px solid #B8DFC4;}
+.month-stat-pill.pending-pill{background:#FEF3E2;color:#8A4D0C;border:1px solid #F9D9A8;}
+.past-month .month-hdr{border-bottom-color:var(--border);}
+.past-month .month-name{color:var(--muted);}
+.ev-list{display:flex;flex-direction:column;gap:6px;}
+.ev-row{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:.8rem 1rem;display:grid;grid-template-columns:55px 110px 1fr auto;align-items:center;gap:10px;transition:box-shadow .2s,transform .15s;cursor:pointer;}
+.ev-row:hover{box-shadow:0 3px 14px rgba(0,0,0,.08);transform:translateY(-1px);}
+.ev-row.past-ev{opacity:.5;}
+.ev-row.modified{border-left:3px solid var(--accent2);}
+.ev-row.ev-done{border-left:3px solid #2A6B3C;background:#FAFFF8;}
+.ev-row.ev-pending{border-left:3px solid #E07B00;}
+.ev-date-col{font-size:12px;font-weight:600;color:var(--muted);}
+.ev-badge{font-size:11px;font-weight:600;letter-spacing:.3px;text-transform:uppercase;padding:4px 9px;border-radius:6px;text-align:center;white-space:nowrap;}
+.badge-federal{background:var(--federal-bg);color:var(--federal);}
+.badge-payroll{background:var(--payroll-bg);color:var(--payroll);}
+.badge-sales{background:var(--sales-bg);color:var(--sales);}
+.badge-state{background:var(--state-bg);color:var(--state);}
+.badge-labor{background:var(--labor-bg);color:var(--labor);}
+.badge-license{background:var(--license-bg);color:var(--license);}
+.badge-insurance{background:var(--insurance-bg);color:var(--insurance);}
+.badge-custom{background:var(--custom-bg);color:var(--custom);}
+.ev-info .ev-title{font-size:14px;font-weight:500;color:var(--text);line-height:1.35;}
+.ev-info .ev-sub{font-size:12px;color:var(--muted);margin-top:2px;}
+.ev-info .ev-filed-ts{font-size:11px;color:#2A6B3C;margin-top:3px;font-weight:500;}
+.ev-actions{display:flex;align-items:center;gap:6px;flex-wrap:wrap;justify-content:flex-end;}
+.urg-pill{font-size:11px;font-weight:600;padding:3px 9px;border-radius:20px;white-space:nowrap;}
+.urg-high{background:#FDECEA;color:#9B2A2A;border:1px solid #F5C6C5;}
+.urg-med{background:#FEF3E2;color:#8A4D0C;border:1px solid #F9D9A8;}
+.urg-low{background:#EBF5EE;color:#2A6B3C;border:1px solid #B8DFC4;}
+.status-btn{font-family:'DM Sans',sans-serif;font-size:11px;font-weight:600;padding:4px 10px;border-radius:6px;cursor:pointer;white-space:nowrap;transition:all .2s;}
+.status-btn.btn-done{background:#EBF5EE;color:#1A5C2A;border:1px solid #B8DFC4;}
+.status-btn.btn-done:hover,.status-btn.btn-done.active{background:#2A6B3C;color:#fff;border-color:#2A6B3C;}
+.status-btn.btn-pending{background:#FEF3E2;color:#8A4D0C;border:1px solid #F9D9A8;}
+.status-btn.btn-pending:hover,.status-btn.btn-pending.active{background:#E07B00;color:#fff;border-color:#E07B00;}
+.edit-btn-row{background:none;border:1px solid var(--border);color:var(--muted);font-size:12px;padding:4px 10px;border-radius:5px;cursor:pointer;font-family:'DM Sans',sans-serif;white-space:nowrap;transition:all .2s;display:none;}
+.ev-row:hover .edit-btn-row{display:inline-flex;}
+.ev-row:hover .del-btn-row{display:inline-flex!important;}
+.edit-btn-row:hover{border-color:var(--accent);color:var(--accent);background:var(--surface2);}
+.empty-state{text-align:center;padding:3rem;color:var(--muted);font-size:15px;background:var(--surface);border:1px solid var(--border);border-radius:12px;}
+
+/* ── DAY POPUP ── */
+.overlay{position:fixed;inset:0;background:rgba(26,25,22,.55);z-index:1000;display:none;align-items:center;justify-content:center;padding:1rem;}
+.overlay.open{display:flex;}
+.modal{background:var(--surface);border-radius:16px;max-width:560px;width:100%;box-shadow:0 24px 60px rgba(0,0,0,.18);max-height:90vh;overflow-y:auto;}
+.modal-hdr{padding:1.4rem 1.6rem 1rem;border-bottom:1px solid var(--border);display:flex;align-items:flex-start;justify-content:space-between;gap:1rem;}
+.modal-hdr h2{font-family:'DM Serif Display',serif;font-size:1.35rem;font-weight:400;color:var(--text);}
+.modal-close{background:none;border:none;font-size:24px;cursor:pointer;color:var(--muted);line-height:1;padding:2px 6px;border-radius:6px;}
+.modal-close:hover{background:var(--surface2);}
+.modal-body{padding:1.2rem 1.6rem 1.6rem;}
+.modal-dl{font-size:12px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--accent2);margin-bottom:10px;}
+.modal-ev-card{background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:.95rem 1.1rem;margin-bottom:10px;}
+.modal-ev-card.ev-card-done{border-left:3px solid #2A6B3C;background:#FAFFF8;}
+.modal-ev-card.ev-card-pending{border-left:3px solid #E07B00;}
+.modal-ev-card .mc-title{font-size:14px;font-weight:500;color:var(--text);}
+.modal-ev-card .mc-sub{font-size:13px;color:var(--muted);margin-top:3px;}
+.modal-ev-card .mc-meta{display:flex;align-items:center;gap:7px;margin-top:10px;flex-wrap:wrap;}
+.modal-ev-card .mc-filed{font-size:11px;color:#2A6B3C;font-weight:600;background:#EBF5EE;border:1px solid #B8DFC4;border-radius:5px;padding:3px 8px;margin-top:7px;}
+.modal-ev-card.modified-card{border-left:3px solid var(--accent2);}
+.modal-empty{font-size:14px;color:var(--muted);padding:.4rem 0;font-style:italic;}
+.modal-add-hint{padding:.9rem 0 0;border-top:1px solid var(--border);margin-top:12px;}
+.modal-status-row{display:flex;gap:8px;margin-top:10px;padding-top:8px;border-top:1px solid var(--border);}
+
+/* ── EDIT/ADD FORM ── */
+.form-overlay{position:fixed;inset:0;background:rgba(26,25,22,.55);z-index:1100;display:none;align-items:center;justify-content:center;padding:1rem;}
+.form-overlay.open{display:flex;}
+.form-modal{background:var(--surface);border-radius:16px;max-width:500px;width:100%;box-shadow:0 24px 60px rgba(0,0,0,.18);max-height:92vh;overflow-y:auto;}
+.form-hdr{background:var(--accent);padding:1.2rem 1.5rem;display:flex;align-items:center;justify-content:space-between;}
+.form-hdr h2{font-family:'DM Serif Display',serif;font-size:1.2rem;font-weight:400;color:#fff;}
+.form-close{background:none;border:none;font-size:24px;cursor:pointer;color:rgba(255,255,255,.7);line-height:1;padding:2px 6px;}
+.form-close:hover{color:#fff;}
+.form-body{padding:1.4rem 1.5rem;}
+.form-notice{font-size:12px;color:var(--accent2);background:#FFF8E6;border:1px solid #F9D9A8;border-radius:7px;padding:9px 13px;margin-bottom:14px;line-height:1.5;}
+.f-group{margin-bottom:1.1rem;}
+.f-label{font-size:12px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.7px;margin-bottom:5px;display:block;}
+.f-ctrl{font-family:'DM Sans',sans-serif;font-size:14px;width:100%;padding:9px 12px;border:1px solid var(--border);border-radius:8px;background:var(--bg);color:var(--text);outline:none;transition:border .2s;}
+.f-ctrl:focus{border-color:var(--accent);}
+select.f-ctrl{cursor:pointer;}
+textarea.f-ctrl{resize:vertical;min-height:70px;}
+.f-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.form-footer{display:flex;gap:9px;justify-content:flex-end;padding-top:.5rem;align-items:center;}
+.btn-cancel{font-family:'DM Sans',sans-serif;font-size:14px;padding:8px 16px;border:1px solid var(--border);border-radius:8px;background:transparent;color:var(--muted);cursor:pointer;}
+.btn-cancel:hover{background:var(--surface2);}
+.btn-save{font-family:'DM Sans',sans-serif;font-size:14px;font-weight:500;padding:8px 18px;border:none;border-radius:8px;background:var(--accent);color:#fff;cursor:pointer;transition:opacity .2s;}
+.btn-save:hover{opacity:.88;}
+.btn-reset{font-family:'DM Sans',sans-serif;font-size:12px;padding:6px 12px;border:1px solid #DDD9D0;border-radius:6px;background:transparent;color:var(--muted);cursor:pointer;margin-right:auto;}
+.btn-reset:hover{background:#F5C6C5;color:#9B2A2A;border-color:#F5C6C5;}
+.btn-delete{font-family:'DM Sans',sans-serif;font-size:12px;padding:6px 12px;border:1px solid #F5C6C5;border-radius:6px;background:#FDECEA;color:#9B2A2A;cursor:pointer;}
+.btn-delete:hover{background:#F5C6C5;}
+
+/* ── EXPORT MODAL ── */
+.exp-overlay{position:fixed;inset:0;background:rgba(26,25,22,.55);z-index:1200;display:none;align-items:center;justify-content:center;padding:1rem;}
+.exp-overlay.open{display:flex;}
+.exp-modal{background:var(--surface);border-radius:16px;max-width:440px;width:100%;box-shadow:0 24px 60px rgba(0,0,0,.18);}
+.exp-hdr{background:var(--accent);padding:1.2rem 1.5rem;display:flex;align-items:center;justify-content:space-between;border-radius:16px 16px 0 0;}
+.exp-hdr h2{font-family:'DM Serif Display',serif;font-size:1.2rem;font-weight:400;color:#fff;}
+.exp-body{padding:1.5rem;}
+.exp-option{background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:1rem 1.1rem;margin-bottom:10px;cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:14px;}
+.exp-option:hover{border-color:var(--accent);background:var(--surface2);}
+.exp-icon{width:42px;height:42px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;}
+.exp-icon.xl{background:#E8F5EC;}
+.exp-icon.csv{background:#EAF0FA;}
+.exp-info .exp-title{font-size:14px;font-weight:500;color:var(--text);}
+.exp-info .exp-desc{font-size:12px;color:var(--muted);}
+.exp-scope{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px;}
+.exp-scope label{display:flex;align-items:center;gap:5px;font-size:13px;color:var(--muted);background:var(--bg);border:1px solid var(--border);border-radius:6px;padding:5px 11px;cursor:pointer;transition:all .2s;}
+.exp-scope label:hover{border-color:var(--accent);}
+.exp-scope input[type=radio]:checked+span{color:var(--accent);font-weight:500;}
+
+/* ── LEGEND ── */
+.legend{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:1.2rem;font-size:12px;color:var(--muted);}
+.leg{display:flex;align-items:center;gap:5px;}
+.leg-pip{width:10px;height:10px;border-radius:2px;flex-shrink:0;}
+
+footer{text-align:center;padding:1.6rem;font-size:12px;color:var(--muted);border-top:1px solid var(--border);}
+@media(max-width:680px){
+  .masthead,.stats-row,.toolbar,.main,.search-row{padding-left:1rem;padding-right:1rem;}
+  .ev-row{grid-template-columns:1fr;gap:4px;}
+  .f-row{grid-template-columns:1fr;}
+  .cal-cell{min-height:65px;}
+  .masthead-inner{flex-direction:column;align-items:flex-start;}
+  .month-status-btns{margin-left:0;margin-top:6px;}
+}
+</style>
+</head>
+<body>
+
+<header class="masthead">
+  <div class="masthead-inner">
+    <div>
+      <div class="co-label">Compliance Calendar</div>
+      <h1>Roots Multiclean Inc &mdash; 2026</h1>
+      <div class="masthead-meta">
+        <span><span class="dot"></span>Alabama, USA</span>
+        <span><span class="dot"></span>Federal · State · Payroll · Labor · Licenses · Insurance</span>
+      </div>
+    </div>
+    <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
+      <button class="tb-btn btn-export" onclick="openExport()" style="font-size:13px;padding:8px 16px;border-radius:8px;">&#8659; Export</button>
+      <button class="tb-btn btn-add" onclick="openAddForm()" style="font-size:13px;padding:8px 16px;border-radius:8px;">&#43; Add Event</button>
+      <div class="view-toggle">
+        <button class="view-btn active" id="btnCal" onclick="setView('calendar')">&#128197; Calendar</button>
+        <button class="view-btn" id="btnList" onclick="setView('list')">&#9776; List</button>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="stats-row">
+  <div class="stat-card"><div class="lbl">Total Events</div><div class="val" id="statTotal">—</div><div class="sub">all categories</div></div>
+  <div class="stat-card"><div class="lbl">Critical</div><div class="val" id="statHigh" style="color:#9B2A2A">—</div><div class="sub">high-priority</div></div>
+  <div class="stat-card"><div class="lbl">Upcoming</div><div class="val" id="statUpcoming">—</div><div class="sub">remaining 2026</div></div>
+  <div class="stat-card"><div class="lbl">Completed</div><div class="val" id="statDone" style="color:#1A5C2A">—</div><div class="sub">filed / done</div></div>
+  <div class="stat-card"><div class="lbl">Next Deadline</div><div class="val" id="statNext" style="font-size:1.1rem;padding-top:5px;">—</div><div class="sub" id="statNextSub" style="font-size:11px;">—</div></div>
+</div>
+
+<!-- SEARCH above calendar -->
+<div class="search-row">
+  <div class="search-wrap">
+    <span class="search-icon">&#128269;</span>
+    <input type="text" id="searchInput" placeholder="Search compliance events by title, description or category…">
+  </div>
+</div>
+
+<div class="toolbar">
+  <span style="font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:1px;">Filter</span>
+  <button class="filter-btn active" data-cat="all">All</button>
+  <div style="width:1px;height:22px;background:var(--border);margin:0 4px;"></div>
+  <span style="font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:1px;">Status</span>
+  <button class="status-filter-btn" id="sfAll" data-sf="all" onclick="setStatusFilter('all')" style="font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;padding:6px 14px;border:1px solid var(--border);border-radius:20px;background:var(--accent);color:#fff;cursor:pointer;border-color:var(--accent);">All</button>
+  <button class="status-filter-btn" id="sfDone" data-sf="done" onclick="setStatusFilter('done')" style="font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;padding:6px 14px;border:1px solid #B8DFC4;border-radius:20px;background:#EBF5EE;color:#1A5C2A;cursor:pointer;transition:all .2s;">&#10003; Completed</button>
+  <button class="status-filter-btn" id="sfPending" data-sf="pending" onclick="setStatusFilter('pending')" style="font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;padding:6px 14px;border:1px solid #F9D9A8;border-radius:20px;background:#FEF3E2;color:#8A4D0C;cursor:pointer;transition:all .2s;">&#9679; Pending</button>
+</div>
+
+<div class="main">
+  <div class="legend">
+    <div class="leg"><div class="leg-pip" style="background:var(--federal-bg);border:1px solid var(--federal)"></div>Federal IRS</div>
+    <div class="leg"><div class="leg-pip" style="background:var(--payroll-bg);border:1px solid var(--payroll)"></div>Payroll/TDS</div>
+    <div class="leg"><div class="leg-pip" style="background:var(--sales-bg);border:1px solid var(--sales)"></div>Sales Tax</div>
+    <div class="leg"><div class="leg-pip" style="background:var(--state-bg);border:1px solid var(--state)"></div>State Income</div>
+    <div class="leg"><div class="leg-pip" style="background:var(--labor-bg);border:1px solid var(--labor)"></div>Labor/OSHA</div>
+    <div class="leg"><div class="leg-pip" style="background:var(--license-bg);border:1px solid var(--license)"></div>Licenses</div>
+    <div class="leg"><div class="leg-pip" style="background:var(--insurance-bg);border:1px solid var(--insurance)"></div>Insurance</div>
+    <div class="leg"><div class="leg-pip" style="background:var(--custom-bg);border:1px solid var(--custom)"></div>Custom</div>
+    <div class="leg" style="margin-left:auto"><div class="leg-pip" style="background:#FDECEA;border:1px solid #F5C6C5"></div>Critical</div>
+    <div class="leg"><div class="leg-pip" style="background:#FEF3E2;border:1px solid #F9D9A8"></div>Important</div>
+    <div class="leg"><div class="leg-pip" style="background:#EBF5EE;border:1px solid #B8DFC4"></div>Routine</div>
+    <div class="leg" style="border-left:1px solid var(--border);padding-left:8px"><span style="width:8px;height:8px;background:#2A6B3C;border-radius:50%;display:inline-block;margin-right:4px;"></span>Completed</div>
+    <div class="leg"><span style="width:8px;height:8px;background:#E07B00;border-radius:50%;display:inline-block;margin-right:4px;"></span>Pending</div>
+  </div>
+
+  <div id="calendarView">
+    <div class="cal-nav">
+      <button class="cal-nav-btn" onclick="changeMonth(-1)">&#8592; Prev</button>
+      <div class="cal-month-label" id="calLabel">—</div>
+      <button class="cal-today-btn" onclick="goToday()">Today</button>
+      <button class="cal-nav-btn" onclick="changeMonth(1)">Next &#8594;</button>
+    </div>
+    <div class="cal-grid">
+      <div class="cal-weekdays">
+        <div class="cal-wd">Sun</div><div class="cal-wd">Mon</div><div class="cal-wd">Tue</div>
+        <div class="cal-wd">Wed</div><div class="cal-wd">Thu</div><div class="cal-wd">Fri</div><div class="cal-wd">Sat</div>
+      </div>
+      <div class="cal-days" id="calDays"></div>
+    </div>
+  </div>
+
+  <div id="listView" style="display:none"><div id="listBody"></div></div>
+</div>
+
+<!-- DAY POPUP -->
+<div class="overlay" id="dayOverlay" onclick="closeDayModal(event)">
+  <div class="modal">
+    <div class="modal-hdr">
+      <div><div class="modal-dl" id="modalDayName">—</div><h2 id="modalDateTitle">Events</h2></div>
+      <button class="modal-close" onclick="closeDayModal()">&times;</button>
+    </div>
+    <div class="modal-body">
+      <div id="modalEvents"></div>
+      <div class="modal-add-hint">
+        <button class="tb-btn btn-add" style="font-size:13px;padding:7px 14px;" onclick="openAddFormDate()">&#43; Add event on this date</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- EDIT / ADD FORM -->
+<div class="form-overlay" id="formOverlay" onclick="closeFormModal(event)">
+  <div class="form-modal">
+    <div class="form-hdr">
+      <h2 id="formTitle">Edit Event</h2>
+      <button class="form-close" onclick="closeFormModal()">&times;</button>
+    </div>
+    <div class="form-body">
+      <div class="form-notice" id="formNotice" style="display:none">&#9432; You are editing a built-in compliance event. Your changes are saved locally and won't affect other users.</div>
+      <div class="f-row">
+        <div class="f-group">
+          <label class="f-label">Date *</label>
+          <input type="date" class="f-ctrl" id="fDate">
+        </div>
+        <div class="f-group">
+          <label class="f-label">Category *</label>
+          <select class="f-ctrl" id="fCat">
+            <option value="federal">Federal IRS</option>
+            <option value="payroll">Payroll / TDS</option>
+            <option value="sales">Sales Tax</option>
+            <option value="state">State Income</option>
+            <option value="labor">Labor / OSHA</option>
+            <option value="license">Licenses</option>
+            <option value="insurance">Insurance</option>
+            <option value="custom">Custom</option>
+          </select>
+        </div>
+      </div>
+      <div class="f-group">
+        <label class="f-label">Event Title *</label>
+        <input type="text" class="f-ctrl" id="fTitle" placeholder="e.g. State permit renewal">
+      </div>
+      <div class="f-group">
+        <label class="f-label">Description / Notes</label>
+        <textarea class="f-ctrl" id="fSub" placeholder="Additional details…"></textarea>
+      </div>
+      <div class="f-group">
+        <label class="f-label">Priority</label>
+        <select class="f-ctrl" id="fUrg">
+          <option value="high">Critical — must not miss</option>
+          <option value="med">Important — plan ahead</option>
+          <option value="low">Routine — good to track</option>
+        </select>
+      </div>
+      <input type="hidden" id="fEditId">
+      <input type="hidden" id="fIsBase">
+      <div class="form-footer">
+        <button class="btn-reset" id="fResetBtn" style="display:none" onclick="resetBaseEvent()">&#8635; Reset to original</button>
+        <button class="btn-delete" id="fDelBtn" style="display:none" onclick="deleteEvent()">&#128465; Delete</button>
+        <button class="btn-cancel" onclick="closeFormModal()">Cancel</button>
+        <button class="btn-save" onclick="saveEvent()">Save</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- EXPORT MODAL -->
+<div class="exp-overlay" id="expOverlay" onclick="closeExport(event)">
+  <div class="exp-modal">
+    <div class="exp-hdr">
+      <h2>Export Compliance Calendar</h2>
+      <button class="form-close" onclick="closeExport()">&times;</button>
+    </div>
+    <div class="exp-body">
+      <div style="font-size:13px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.8px;margin-bottom:8px;">Scope</div>
+      <div class="exp-scope">
+        <label><input type="radio" name="expScope" value="all" checked><span>All events</span></label>
+        <label><input type="radio" name="expScope" value="upcoming"><span>Upcoming only</span></label>
+        <label><input type="radio" name="expScope" value="filtered"><span>Current filter</span></label>
+      </div>
+      <div style="font-size:13px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.8px;margin-bottom:8px;">Format</div>
+      <div class="exp-option" onclick="doExport('xlsx')">
+        <div class="exp-icon xl">&#128202;</div>
+        <div class="exp-info">
+          <div class="exp-title">Excel (.xlsx)</div>
+          <div class="exp-desc">Full spreadsheet with colour-coded categories, ready for Excel or Google Sheets</div>
+        </div>
+      </div>
+      <div class="exp-option" onclick="doExport('csv')">
+        <div class="exp-icon csv">&#128196;</div>
+        <div class="exp-info">
+          <div class="exp-title">CSV (.csv)</div>
+          <div class="exp-desc">Plain comma-separated file — opens in any spreadsheet app</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer>Roots Multiclean Inc &mdash; Alabama, USA &mdash; 2026 Compliance Calendar</footer>
+
+<!-- SheetJS for Excel export -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<script>
+// ══════════════════════════════════════════════
+//  BASE DATA
+// ══════════════════════════════════════════════
+const BASE = [
+  {id:'b1',date:'2026-01-15',cat:'payroll',title:'Monthly payroll tax deposit (Dec 2025)',sub:'EFTPS — federal income, Social Security, Medicare',urgency:'high'},
+  {id:'b2',date:'2026-01-20',cat:'sales',title:'Alabama sales tax return & payment',sub:'Monthly filers: December 2025 sales — MAT portal',urgency:'high'},
+  {id:'b3',date:'2026-01-31',cat:'payroll',title:'W-2 forms distributed to all employees',sub:'Also issue 1099-NEC to all independent contractors',urgency:'high'},
+  {id:'b4',date:'2026-02-02',cat:'payroll',title:'Form 941 — Q4 2025 payroll tax return',sub:'Federal employer quarterly return (IRS)',urgency:'high'},
+  {id:'b5',date:'2026-02-02',cat:'federal',title:'Form 940 — Annual FUTA return (2025)',sub:'Federal unemployment tax; deposit if balance >$500',urgency:'high'},
+  {id:'b6',date:'2026-02-02',cat:'payroll',title:'Form 945 — Non-payroll withholding 2025',sub:'Pensions, gambling winnings, backup withholding',urgency:'med'},
+  {id:'b7',date:'2026-02-02',cat:'payroll',title:'W-2 / W-3 filed with Social Security Administration',sub:'Electronic filing required if 10+ forms',urgency:'high'},
+  {id:'b8',date:'2026-02-17',cat:'payroll',title:'Monthly payroll tax deposit (January 2026)',sub:'EFTPS — federal income, SS & Medicare',urgency:'high'},
+  {id:'b9',date:'2026-02-20',cat:'sales',title:'Alabama sales tax return & payment',sub:'Monthly filers: January 2026 sales — MAT portal',urgency:'high'},
+  {id:'b10',date:'2026-02-20',cat:'state',title:'Deadline to elect quarterly/annual AL sales tax filing',sub:'Request quarterly filing if annual liability <$2,400',urgency:'med'},
+  {id:'b11',date:'2026-03-16',cat:'state',title:'Alabama corporate / S-corp / partnership return',sub:'Form 20C / 20S / 65 for FY2025 — or request extension',urgency:'high'},
+  {id:'b12',date:'2026-03-16',cat:'federal',title:'Federal S-corp & partnership return',sub:'Form 1120-S / 1065 — file or request 6-month extension',urgency:'high'},
+  {id:'b13',date:'2026-03-17',cat:'payroll',title:'Monthly payroll tax deposit (February 2026)',sub:'EFTPS deposit',urgency:'high'},
+  {id:'b14',date:'2026-03-20',cat:'sales',title:'Alabama sales tax return & payment',sub:'Monthly filers: February 2026 sales',urgency:'high'},
+  {id:'b15',date:'2026-03-31',cat:'labor',title:'OSHA 300A Summary — posting period active (Feb 1–Apr 30)',sub:'Must be visibly posted at all worksites',urgency:'med'},
+  {id:'b16',date:'2026-04-15',cat:'federal',title:'Federal corporate income tax return (C-Corp)',sub:'Form 1120 for FY2025 — or request 6-month extension',urgency:'high'},
+  {id:'b17',date:'2026-04-15',cat:'federal',title:'Q1 2026 federal estimated tax payment',sub:'Form 1040-ES / 1120-W',urgency:'high'},
+  {id:'b18',date:'2026-04-15',cat:'state',title:'Alabama state income tax return due',sub:'Form 20C or applicable entity form; extension available',urgency:'high'},
+  {id:'b19',date:'2026-04-15',cat:'state',title:'Alabama Q1 estimated tax payment',sub:'Follows federal schedule — ALDOR',urgency:'med'},
+  {id:'b20',date:'2026-04-15',cat:'payroll',title:'Monthly payroll tax deposit (March 2026)',sub:'EFTPS deposit',urgency:'high'},
+  {id:'b21',date:'2026-04-20',cat:'sales',title:'Alabama sales tax — Q1 return (quarterly filers)',sub:'January–March 2026 sales — MAT portal',urgency:'high'},
+  {id:'b22',date:'2026-04-20',cat:'sales',title:'Alabama sales tax return (monthly filers)',sub:'March 2026 sales',urgency:'high'},
+  {id:'b23',date:'2026-04-30',cat:'payroll',title:'Form 941 — Q1 2026 federal payroll return',sub:'January–March 2026 wages, SS, Medicare, FIT',urgency:'high'},
+  {id:'b24',date:'2026-04-30',cat:'state',title:'Alabama SUI — Q1 quarterly report',sub:'File via AL Dept of Labor eGov; $8,000 taxable wage base',urgency:'high'},
+  {id:'b25',date:'2026-05-15',cat:'payroll',title:'Monthly payroll tax deposit (April 2026)',sub:'EFTPS deposit',urgency:'high'},
+  {id:'b26',date:'2026-05-20',cat:'sales',title:'Alabama sales tax return & payment',sub:'Monthly filers: April 2026 sales',urgency:'high'},
+  {id:'b27',date:'2026-05-31',cat:'labor',title:'Verify OSHA injury & illness log is current',sub:'Form 300 — update Q1 incidents before mid-year',urgency:'low'},
+  {id:'b28',date:'2026-06-15',cat:'federal',title:'Q2 2026 federal estimated tax payment',sub:'Form 1040-ES / 1120-W',urgency:'high'},
+  {id:'b29',date:'2026-06-15',cat:'state',title:'Alabama Q2 estimated tax payment',sub:'ALDOR quarterly estimated payment',urgency:'med'},
+  {id:'b30',date:'2026-06-15',cat:'payroll',title:'Monthly payroll tax deposit (May 2026)',sub:'EFTPS deposit',urgency:'high'},
+  {id:'b31',date:'2026-06-20',cat:'sales',title:'Alabama sales tax — Q2 return (quarterly filers)',sub:'April–June 2026 sales — MAT portal',urgency:'high'},
+  {id:'b32',date:'2026-06-20',cat:'sales',title:'Alabama sales tax return (monthly filers)',sub:'May 2026 sales',urgency:'high'},
+  {id:'b33',date:'2026-06-30',cat:'labor',title:'Mid-year workers compensation coverage review',sub:'Verify coverage limits match current payroll exposure',urgency:'med'},
+  {id:'b34',date:'2026-07-01',cat:'license',title:'Annual business license renewal (city / county)',sub:'Most AL municipalities renew July 1 — check local office',urgency:'high'},
+  {id:'b35',date:'2026-07-15',cat:'payroll',title:'Monthly payroll tax deposit (June 2026)',sub:'EFTPS deposit',urgency:'high'},
+  {id:'b36',date:'2026-07-20',cat:'sales',title:'Alabama sales tax return (monthly filers)',sub:'June 2026 sales — MAT portal',urgency:'high'},
+  {id:'b37',date:'2026-07-31',cat:'payroll',title:'Form 941 — Q2 2026 federal payroll return',sub:'April–June 2026 wages',urgency:'high'},
+  {id:'b38',date:'2026-07-31',cat:'state',title:'Alabama SUI — Q2 quarterly report',sub:'AL Dept of Labor eGov portal',urgency:'high'},
+  {id:'b39',date:'2026-08-15',cat:'payroll',title:'Monthly payroll tax deposit (July 2026)',sub:'EFTPS deposit',urgency:'high'},
+  {id:'b40',date:'2026-08-20',cat:'sales',title:'Alabama sales tax return (monthly filers)',sub:'July 2026 sales',urgency:'high'},
+  {id:'b41',date:'2026-08-31',cat:'labor',title:'Annual OSHA safety training review',sub:'GHS/SDS refresher for cleaning chemicals; update training records',urgency:'med'},
+  {id:'b42',date:'2026-09-15',cat:'federal',title:'Q3 2026 federal estimated tax payment',sub:'Form 1040-ES / 1120-W',urgency:'high'},
+  {id:'b43',date:'2026-09-15',cat:'state',title:'Alabama Q3 estimated tax payment',sub:'ALDOR quarterly estimated payment',urgency:'med'},
+  {id:'b44',date:'2026-09-15',cat:'federal',title:'Extended S-corp / partnership return deadline',sub:'Form 1120-S / 1065 — if extension filed in March',urgency:'high'},
+  {id:'b45',date:'2026-09-15',cat:'payroll',title:'Monthly payroll tax deposit (August 2026)',sub:'EFTPS deposit',urgency:'high'},
+  {id:'b46',date:'2026-09-20',cat:'sales',title:'Alabama sales tax — Q3 return (quarterly filers)',sub:'July–September 2026 sales',urgency:'high'},
+  {id:'b47',date:'2026-09-20',cat:'sales',title:'Alabama sales tax return (monthly filers)',sub:'August 2026 sales',urgency:'high'},
+  {id:'b48',date:'2026-09-30',cat:'insurance',title:'General liability insurance renewal review',sub:'Initiate renewal 60 days before policy expiry; confirm limits',urgency:'med'},
+  {id:'b49',date:'2026-10-15',cat:'federal',title:'Extended federal corporate / individual return deadline',sub:'Form 1120 / 1040 — if extension filed April 15',urgency:'high'},
+  {id:'b50',date:'2026-10-15',cat:'state',title:'Extended Alabama income tax return deadline',sub:'6-month extension from April 15 original due date',urgency:'high'},
+  {id:'b51',date:'2026-10-15',cat:'payroll',title:'Monthly payroll tax deposit (September 2026)',sub:'EFTPS deposit',urgency:'high'},
+  {id:'b52',date:'2026-10-20',cat:'sales',title:'Alabama sales tax return (monthly filers)',sub:'September 2026 sales',urgency:'high'},
+  {id:'b53',date:'2026-10-31',cat:'payroll',title:'Form 941 — Q3 2026 federal payroll return',sub:'July–September 2026 wages',urgency:'high'},
+  {id:'b54',date:'2026-10-31',cat:'state',title:'Alabama SUI — Q3 quarterly report',sub:'AL Dept of Labor eGov portal',urgency:'high'},
+  {id:'b55',date:'2026-11-01',cat:'insurance',title:'Workers compensation annual payroll audit',sub:'Gather payroll records; insurer audit typically Nov–Dec',urgency:'med'},
+  {id:'b56',date:'2026-11-15',cat:'payroll',title:'Monthly payroll tax deposit (October 2026)',sub:'EFTPS deposit',urgency:'high'},
+  {id:'b57',date:'2026-11-20',cat:'sales',title:'Alabama sales tax return (monthly filers)',sub:'October 2026 sales',urgency:'high'},
+  {id:'b58',date:'2026-12-15',cat:'federal',title:'Q4 2026 estimated tax payment (C-Corp)',sub:'Form 1120-W — corporations only',urgency:'high'},
+  {id:'b59',date:'2026-12-15',cat:'payroll',title:'Monthly payroll tax deposit (November 2026)',sub:'EFTPS deposit',urgency:'high'},
+  {id:'b60',date:'2026-12-20',cat:'sales',title:'Alabama sales tax return (monthly filers)',sub:'November 2026 sales — MAT portal',urgency:'high'},
+  {id:'b61',date:'2026-12-31',cat:'labor',title:'New-hire reporting compliance review',sub:'AL requires each new hire reported within 7 days of hire date',urgency:'low'},
+  {id:'b62',date:'2026-12-31',cat:'license',title:'Verify all occupational & local permits before year-end',sub:'Renew any licenses expiring Dec 31',urgency:'med'},
+  {id:'b63',date:'2026-12-31',cat:'insurance',title:'Year-end insurance policy review',sub:'Commercial auto, umbrella, property — confirm 2027 renewals',urgency:'med'},
+  {id:'b64',date:'2026-12-31',cat:'labor',title:'Update labor law posters for 2027',sub:'State, federal & OSHA notices — all must be current by Jan 1',urgency:'med'},
+];
+
+const CAT_LABELS = {federal:'Federal IRS',payroll:'Payroll/TDS',sales:'Sales Tax',state:'State Income',labor:'Labor/OSHA',license:'Licenses',insurance:'Insurance',custom:'Custom'};
+const URG_LABELS = {high:'Critical',med:'Important',low:'Routine'};
+const MONTHS = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+const WDAYS = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+const TODAY = new Date(2026,5,3);
+
+// ══════════════════════════════════════════════
+//  PERSISTENCE
+// ══════════════════════════════════════════════
+let overrides = JSON.parse(localStorage.getItem('mc_overrides') || '{}');
+let customEvents = JSON.parse(localStorage.getItem('mc_custom') || '[]');
+let deletedBaseIds = new Set(JSON.parse(localStorage.getItem('mc_deleted') || '[]'));
+// eventStatus: {id -> {status:'done'|'pending', filedAt: ISO string|null}}
+let eventStatus = JSON.parse(localStorage.getItem('mc_status') || '{}');
+
+function saveAll(){
+  localStorage.setItem('mc_overrides',JSON.stringify(overrides));
+  localStorage.setItem('mc_custom',JSON.stringify(customEvents));
+  localStorage.setItem('mc_deleted',JSON.stringify([...deletedBaseIds]));
+  localStorage.setItem('mc_status',JSON.stringify(eventStatus));
+}
+
+function allEvents(){
+  const base = BASE
+    .filter(e=>!deletedBaseIds.has(e.id))
+    .map(e => overrides[e.id] ? {...e,...overrides[e.id],id:e.id,_base:true,_modified:true} : {...e,_base:true,_modified:false});
+  return [...base,...customEvents.map(e=>({...e,_base:false,_modified:false}))];
+}
+
+function getEvStatus(id){ return eventStatus[id] || {status:'pending',filedAt:null}; }
+
+function setEvStatus(id, status){
+  const now = new Date();
+  const filedAt = status==='done' ? now.toISOString() : null;
+  eventStatus[id] = {status, filedAt};
+  saveAll();
+  render();
+}
+
+function fmtDateTime(iso){
+  if(!iso) return '';
+  const d = new Date(iso);
+  return d.toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'numeric'})+' at '+d.toLocaleTimeString('en-IN',{hour:'2-digit',minute:'2-digit'});
+}
+
+// ══════════════════════════════════════════════
+//  STATE
+// ══════════════════════════════════════════════
+let activeFilter='all', searchQuery='', currentView='calendar', statusFilter='all';
+let calYear=2026, calMonth=5, selDate=null, editingId=null;
+
+function isPast(ds){ return new Date(ds+'T00:00:00') < TODAY; }
+function fmtShort(ds){ const d=new Date(ds+'T00:00:00'); return (d.getMonth()+1)+'/'+d.getDate(); }
+function fmtFull(ds){ const d=new Date(ds+'T00:00:00'); return MONTHS[d.getMonth()]+' '+d.getDate()+', '+d.getFullYear(); }
+
+function getFiltered(monthKey){
+  return allEvents().filter(e=>{
+    const catOk = activeFilter==='all'||e.cat===activeFilter;
+    const q=searchQuery.toLowerCase();
+    const txtOk = !q||e.title.toLowerCase().includes(q)||(e.sub||'').toLowerCase().includes(q)||(CAT_LABELS[e.cat]||'').toLowerCase().includes(q);
+    // statusFilter: if monthKey is provided, only filter within that month; for list view filter globally
+    let sfOk = true;
+    if(statusFilter!=='all'){
+      const st=getEvStatus(e.id).status;
+      if(statusFilter==='done') sfOk = st==='done';
+      if(statusFilter==='pending') sfOk = st==='pending'||st!=='done';
+    }
+    // if monthKey provided (calendar), also restrict to that month
+    if(monthKey) return catOk&&txtOk&&e.date.startsWith(monthKey);
+    return catOk&&txtOk&&sfOk;
+  });
+}
+
+// ══════════════════════════════════════════════
+//  STATS
+// ══════════════════════════════════════════════
+function updateStats(){
+  const all=allEvents(), f=getFiltered();
+  document.getElementById('statTotal').textContent=all.length;
+  document.getElementById('statHigh').textContent=all.filter(e=>e.urgency==='high').length;
+  document.getElementById('statUpcoming').textContent=all.filter(e=>!isPast(e.date)&&getEvStatus(e.id).status!=='done').length;
+  document.getElementById('statDone').textContent=Object.values(eventStatus).filter(s=>s.status==='done').length;
+  const future=f.filter(e=>!isPast(e.date)&&getEvStatus(e.id).status!=='done').sort((a,b)=>a.date.localeCompare(b.date));
+  if(future.length){
+    const n=future[0],d=new Date(n.date+'T00:00:00');
+    document.getElementById('statNext').textContent=MONTHS[d.getMonth()].slice(0,3)+' '+d.getDate();
+    document.getElementById('statNextSub').textContent=n.title.slice(0,40)+(n.title.length>40?'…':'');
+  }else{document.getElementById('statNext').textContent='All done!';document.getElementById('statNextSub').textContent='';}
+}
+
+// ══════════════════════════════════════════════
+//  VIEW TOGGLE
+// ══════════════════════════════════════════════
+function setView(v){
+  currentView=v;
+  document.getElementById('calendarView').style.display=v==='calendar'?'block':'none';
+  document.getElementById('listView').style.display=v==='list'?'block':'none';
+  document.getElementById('btnCal').classList.toggle('active',v==='calendar');
+  document.getElementById('btnList').classList.toggle('active',v==='list');
+  render();
+}
+
+// ══════════════════════════════════════════════
+//  CALENDAR RENDER
+// ══════════════════════════════════════════════
+function changeMonth(d){calMonth+=d;if(calMonth>11){calMonth=0;calYear++;}if(calMonth<0){calMonth=11;calYear--;}renderCalendar();}
+function goToday(){calYear=2026;calMonth=5;renderCalendar();}
+
+function renderCalendar(){
+  updateStats();
+  const monthKey=`${calYear}-${String(calMonth+1).padStart(2,'0')}`;
+  // For calendar, apply statusFilter only to current month; show all other months normally
+  const allFiltered=getFiltered();
+  const monthFiltered=statusFilter==='all'?allFiltered:allFiltered.filter(e=>{
+    const st=getEvStatus(e.id).status;
+    if(statusFilter==='done') return st==='done';
+    return st!=='done';
+  });
+  const evts=monthFiltered;
+  const byDate={};
+  evts.forEach(e=>{if(!byDate[e.date])byDate[e.date]=[];byDate[e.date].push(e);});
+  document.getElementById('calLabel').textContent=MONTHS[calMonth]+' '+calYear;
+  const firstDay=new Date(calYear,calMonth,1).getDay();
+  const dim=new Date(calYear,calMonth+1,0).getDate();
+  const dip=new Date(calYear,calMonth,0).getDate();
+  const container=document.getElementById('calDays');
+  container.innerHTML='';
+  let cells=[];
+  for(let i=firstDay-1;i>=0;i--)cells.push({day:dip-i,cur:false});
+  for(let d=1;d<=dim;d++)cells.push({day:d,cur:true});
+  while(cells.length%7!==0)cells.push({day:cells.length-firstDay-dim+1,cur:false});
+  cells.forEach(({day,cur})=>{
+    const ds=cur?`${calYear}-${String(calMonth+1).padStart(2,'0')}-${String(day).padStart(2,'0')}`:null;
+    const de=ds&&byDate[ds]?byDate[ds]:[];
+    const isToday=ds==='2026-06-03';
+    const cell=document.createElement('div');
+    cell.className='cal-cell'+(cur?'':' other-month')+(isToday?' today':'')+(cur&&isPast(ds)&&ds!=='2026-06-03'?' past-cell':'');
+    if(cur)cell.onclick=()=>openDayModal(ds);
+    const num=document.createElement('div');num.className='cal-day-num';num.textContent=day;cell.appendChild(num);
+    de.slice(0,3).forEach(ev=>{
+      const st=getEvStatus(ev.id);
+      const dot=document.createElement('div');
+      dot.className='cal-event-dot cat-'+ev.cat;
+      const statusDot=document.createElement('span');
+      statusDot.className='status-dot '+(st.status==='done'?'done':'pending');
+      dot.appendChild(statusDot);
+      const txt=document.createTextNode((ev._modified?'✎ ':'')+ev.title);
+      dot.appendChild(txt);
+      dot.onclick=e=>{e.stopPropagation();openDayModal(ds);};
+      cell.appendChild(dot);
+    });
+    if(de.length>3){const m=document.createElement('div');m.className='cal-more';m.textContent='+'+(de.length-3)+' more';cell.appendChild(m);}
+    container.appendChild(cell);
+  });
+}
+
+// ══════════════════════════════════════════════
+//  LIST RENDER
+// ══════════════════════════════════════════════
+function renderList(){
+  updateStats();
+  let evts=getFiltered().sort((a,b)=>a.date.localeCompare(b.date));
+  if(statusFilter!=='all'){
+    evts=evts.filter(e=>{
+      const st=getEvStatus(e.id).status;
+      if(statusFilter==='done') return st==='done';
+      return st!=='done';
+    });
+  }
+  const grouped={};
+  evts.forEach(e=>{const m=e.date.slice(0,7);if(!grouped[m])grouped[m]=[];grouped[m].push(e);});
+  const body=document.getElementById('listBody');body.innerHTML='';
+  if(!evts.length){body.innerHTML='<div class="empty-state">No events match your filter or search.</div>';return;}
+  Object.keys(grouped).sort().forEach(ym=>{
+    const [yr,mo]=ym.split('-');
+    const es=grouped[ym];
+    const allPast=es.every(e=>isPast(e.date));
+    const doneCount=es.filter(e=>getEvStatus(e.id).status==='done').length;
+    const pendingCount=es.length-doneCount;
+    const block=document.createElement('div');
+    block.className='month-block'+(allPast?' past-month':'');
+    const hdr=document.createElement('div');
+    hdr.className='month-hdr';
+    hdr.innerHTML=`<span class="month-name">${MONTHS[parseInt(mo)-1]} ${yr}</span><span class="month-ct">${es.length} event${es.length>1?'s':''}</span>
+      <div class="month-status-btns">
+        <span class="month-stat-pill done-pill">&#10003; ${doneCount} Completed</span>
+        <span class="month-stat-pill pending-pill">&#9679; ${pendingCount} Pending</span>
+      </div>`;
+    block.appendChild(hdr);
+    const list=document.createElement('div');list.className='ev-list';
+    es.forEach(ev=>{
+      const st=getEvStatus(ev.id);
+      const row=document.createElement('div');
+      row.className='ev-row'
+        +(isPast(ev.date)?' past-ev':'')
+        +(ev._modified?' modified':'')
+        +(ev.cat==='custom'?' modified':'')
+        +(st.status==='done'?' ev-done':'')
+        +(st.status==='pending'&&!isPast(ev.date)?'':st.status==='pending'&&isPast(ev.date)?' ev-pending':'');
+      let filedHtml='';
+      if(st.status==='done'&&st.filedAt){
+        filedHtml=`<div class="ev-filed-ts">&#10003; Filed on ${fmtDateTime(st.filedAt)}</div>`;
+      }
+      row.innerHTML=`
+        <div class="ev-date-col">${fmtShort(ev.date)}</div>
+        <div class="ev-badge badge-${ev.cat}">${CAT_LABELS[ev.cat]||ev.cat}</div>
+        <div class="ev-info">
+          <div class="ev-title">${ev._modified?'<span style="color:var(--accent2);font-size:11px;">✎ edited &nbsp;</span>':''}${ev.title}</div>
+          <div class="ev-sub">${ev.sub||''}</div>
+          ${filedHtml}
+        </div>
+        <div class="ev-actions">
+          <div class="urg-pill urg-${ev.urgency}">${URG_LABELS[ev.urgency]}</div>
+          <button class="status-btn btn-done${st.status==='done'?' active':''}" onclick="event.stopPropagation();setEvStatus('${ev.id}','done')">&#10003; Done</button>
+          <button class="status-btn btn-pending${st.status==='pending'?' active':''}" onclick="event.stopPropagation();setEvStatus('${ev.id}','pending')">&#9679; Pending</button>
+          <button class="edit-btn-row" onclick="event.stopPropagation();openEditForm('${ev.id}',${ev._base})">&#9998; Edit</button>
+          <button style="font-family:'DM Sans',sans-serif;font-size:11px;font-weight:600;padding:4px 9px;border:1px solid #F5C6C5;border-radius:6px;background:#FDECEA;color:#9B2A2A;cursor:pointer;white-space:nowrap;display:none;" class="del-btn-row" onclick="event.stopPropagation();quickDeleteEvent('${ev.id}',${ev._base},null)">&#128465; Delete</button>
+        </div>`;
+      row.onclick=()=>openDayModal(ev.date);
+      list.appendChild(row);
+    });
+    block.appendChild(list);body.appendChild(block);
+  });
+}
+
+function render(){if(currentView==='calendar')renderCalendar();else renderList();}
+
+// ══════════════════════════════════════════════
+//  DAY MODAL
+// ══════════════════════════════════════════════
+function openDayModal(ds){
+  selDate=ds;
+  const d=new Date(ds+'T00:00:00');
+  document.getElementById('modalDayName').textContent=WDAYS[d.getDay()];
+  document.getElementById('modalDateTitle').textContent=fmtFull(ds);
+  const de=getFiltered().filter(e=>e.date===ds);
+  const cont=document.getElementById('modalEvents');cont.innerHTML='';
+  if(!de.length){cont.innerHTML='<div class="modal-empty">No compliance events on this date.</div>';}
+  else de.forEach(ev=>{
+    const st=getEvStatus(ev.id);
+    const card=document.createElement('div');
+    let cardClass='modal-ev-card';
+    if(ev._modified)cardClass+=' modified-card';
+    if(st.status==='done')cardClass+=' ev-card-done';
+    else if(isPast(ds))cardClass+=' ev-card-pending';
+    card.className=cardClass;
+    let filedHtml='';
+    if(st.status==='done'&&st.filedAt){
+      filedHtml=`<div class="mc-filed">&#10003; Filed on ${fmtDateTime(st.filedAt)}</div>`;
+    }
+    card.innerHTML=`
+      <div class="mc-title">${ev._modified?'<span style="font-size:11px;color:var(--accent2);">✎ edited &nbsp;</span>':''}${ev.title}</div>
+      ${ev.sub?`<div class="mc-sub">${ev.sub}</div>`:''}
+      ${filedHtml}
+      <div class="mc-meta">
+        <span class="ev-badge badge-${ev.cat}" style="font-size:11px">${CAT_LABELS[ev.cat]||ev.cat}</span>
+        <span class="urg-pill urg-${ev.urgency}" style="font-size:11px">${URG_LABELS[ev.urgency]}</span>
+        <button style="margin-left:auto;font-size:12px;padding:4px 11px;border:1px solid var(--border);border-radius:5px;background:transparent;cursor:pointer;color:var(--accent);font-family:'DM Sans',sans-serif;" onclick="openEditForm('${ev.id}',${ev._base})">&#9998; Edit</button>
+        <button style="font-size:12px;padding:4px 10px;border:1px solid #F5C6C5;border-radius:5px;background:#FDECEA;cursor:pointer;color:#9B2A2A;font-family:'DM Sans',sans-serif;" onclick="quickDeleteEvent('${ev.id}',${ev._base},'${ds}')">&#128465;</button>
+      </div>
+      <div class="modal-status-row">
+        <button class="status-btn btn-done${st.status==='done'?' active':''}" onclick="setEvStatus('${ev.id}','done');openDayModal('${ds}')">&#10003; Mark Completed</button>
+        <button class="status-btn btn-pending${st.status==='pending'?' active':''}" onclick="setEvStatus('${ev.id}','pending');openDayModal('${ds}')">&#9679; Mark Pending</button>
+      </div>`;
+    cont.appendChild(card);
+  });
+  document.getElementById('dayOverlay').classList.add('open');
+}
+function closeDayModal(e){if(!e||e.target===document.getElementById('dayOverlay'))document.getElementById('dayOverlay').classList.remove('open');}
+function openAddFormDate(){document.getElementById('dayOverlay').classList.remove('open');openAddForm(selDate);}
+
+// ══════════════════════════════════════════════
+//  FORM — ADD
+// ══════════════════════════════════════════════
+function openAddForm(dateStr){
+  editingId=null;
+  document.getElementById('formTitle').textContent='Add New Event';
+  document.getElementById('formNotice').style.display='none';
+  document.getElementById('fDate').value=dateStr||'2026-06-15';
+  document.getElementById('fCat').value='custom';
+  document.getElementById('fTitle').value='';
+  document.getElementById('fSub').value='';
+  document.getElementById('fUrg').value='med';
+  document.getElementById('fEditId').value='';
+  document.getElementById('fIsBase').value='0';
+  document.getElementById('fResetBtn').style.display='none';
+  document.getElementById('fDelBtn').style.display='none';
+  document.getElementById('formOverlay').classList.add('open');
+}
+
+// ══════════════════════════════════════════════
+//  FORM — EDIT
+// ══════════════════════════════════════════════
+function openEditForm(id, isBase){
+  document.getElementById('dayOverlay').classList.remove('open');
+  editingId=id;
+  let ev;
+  if(isBase){
+    const base=BASE.find(e=>e.id===id);
+    ev=overrides[id]?{...base,...overrides[id]}:{...base};
+  }else{
+    ev=customEvents.find(e=>e.id===id);
+  }
+  if(!ev)return;
+  document.getElementById('formTitle').textContent='Edit Event';
+  document.getElementById('formNotice').style.display=isBase?'block':'none';
+  document.getElementById('fDate').value=ev.date;
+  document.getElementById('fCat').value=ev.cat;
+  document.getElementById('fTitle').value=ev.title;
+  document.getElementById('fSub').value=ev.sub||'';
+  document.getElementById('fUrg').value=ev.urgency;
+  document.getElementById('fEditId').value=id;
+  document.getElementById('fIsBase').value=isBase?'1':'0';
+  document.getElementById('fResetBtn').style.display=isBase&&overrides[id]?'inline-flex':'none';
+  document.getElementById('fDelBtn').style.display='inline-flex';
+  document.getElementById('formOverlay').classList.add('open');
+}
+
+function closeFormModal(e){if(!e||e.target===document.getElementById('formOverlay'))document.getElementById('formOverlay').classList.remove('open');}
+
+function saveEvent(){
+  const date=document.getElementById('fDate').value;
+  const cat=document.getElementById('fCat').value;
+  const title=document.getElementById('fTitle').value.trim();
+  const sub=document.getElementById('fSub').value.trim();
+  const urgency=document.getElementById('fUrg').value;
+  const id=document.getElementById('fEditId').value;
+  const isBase=document.getElementById('fIsBase').value==='1';
+  if(!date||!title){alert('Please fill in Date and Event Title.');return;}
+  if(isBase){
+    overrides[id]={date,cat,title,sub,urgency};
+  }else if(id){
+    const idx=customEvents.findIndex(e=>e.id===id);
+    if(idx>-1)customEvents[idx]={id,date,cat,title,sub,urgency};
+  }else{
+    customEvents.push({id:'c'+Date.now(),date,cat,title,sub,urgency});
+  }
+  saveAll();
+  closeFormModal();
+  render();
+  if(isBase)document.getElementById('fResetBtn').style.display='inline-flex';
+}
+
+function resetBaseEvent(){
+  if(!editingId)return;
+  if(!confirm('Reset this event to its original values?'))return;
+  delete overrides[editingId];
+  saveAll();
+  closeFormModal();
+  render();
+}
+
+function deleteEvent(){
+  if(!editingId)return;
+  if(!confirm('Delete this event? This cannot be undone.'))return;
+  const isBase=document.getElementById('fIsBase').value==='1';
+  if(isBase){
+    deletedBaseIds.add(editingId);
+    delete overrides[editingId];
+  }else{
+    customEvents=customEvents.filter(e=>e.id!==editingId);
+  }
+  saveAll();
+  closeFormModal();
+  render();
+}
+
+// Quick delete from modal or list row (no form needed)
+function quickDeleteEvent(id, isBase, reopenDate){
+  if(!confirm('Delete this event?'))return;
+  if(isBase){
+    deletedBaseIds.add(id);
+    delete overrides[id];
+  }else{
+    customEvents=customEvents.filter(e=>e.id!==id);
+  }
+  saveAll();
+  if(reopenDate){
+    // reopen the day modal to show remaining events
+    document.getElementById('dayOverlay').classList.remove('open');
+    render();
+    // small delay so the modal re-opens after render
+    setTimeout(()=>openDayModal(reopenDate),50);
+  }else{
+    render();
+  }
+}
+
+// ══════════════════════════════════════════════
+//  EXPORT — includes status & filed timestamp
+// ══════════════════════════════════════════════
+function openExport(){document.getElementById('expOverlay').classList.add('open');}
+function closeExport(e){if(!e||e.target===document.getElementById('expOverlay'))document.getElementById('expOverlay').classList.remove('open');}
+
+function getExportData(){
+  const scope=document.querySelector('input[name="expScope"]:checked').value;
+  let evts=allEvents().sort((a,b)=>a.date.localeCompare(b.date));
+  if(scope==='upcoming')evts=evts.filter(e=>!isPast(e.date));
+  if(scope==='filtered')evts=getFiltered().sort((a,b)=>a.date.localeCompare(b.date));
+  return evts;
+}
+
+function doExport(fmt){
+  const evts=getExportData();
+  const rows=evts.map(e=>{
+    const st=getEvStatus(e.id);
+    return {
+      'Date':e.date,
+      'Day':WDAYS[new Date(e.date+'T00:00:00').getDay()],
+      'Category':CAT_LABELS[e.cat]||e.cat,
+      'Event Title':e.title,
+      'Description':e.sub||'',
+      'Priority':URG_LABELS[e.urgency],
+      'Completion Status':st.status==='done'?'Completed':'Pending',
+      'Filed On':st.filedAt?fmtDateTime(st.filedAt):'—',
+      'Modified':e._modified?'Yes':'No',
+      'Type':e._base?'Built-in':'Custom',
+    };
+  });
+
+  if(fmt==='csv'){
+    const headers=Object.keys(rows[0]);
+    const csv=[headers.join(','),...rows.map(r=>headers.map(h=>`"${(r[h]||'').toString().replace(/"/g,'""')}"`).join(','))].join('\n');
+    const blob=new Blob([csv],{type:'text/csv'});
+    const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='Roots_Multiclean_Compliance_2026.csv';a.click();
+  } else {
+    const ws=XLSX.utils.json_to_sheet(rows);
+    ws['!cols']=[{wch:12},{wch:10},{wch:14},{wch:52},{wch:55},{wch:10},{wch:14},{wch:22},{wch:9},{wch:9}];
+    const headerStyle={font:{bold:true,color:{rgb:'FFFFFF'}},fill:{fgColor:{rgb:'1E4D3B'}},alignment:{horizontal:'center'}};
+    const hRow=['A1','B1','C1','D1','E1','F1','G1','H1','I1','J1'];
+    hRow.forEach(cell=>{if(ws[cell])ws[cell].s=headerStyle;});
+    const catColors={
+      'Federal IRS':'EAF0FA','Payroll/TDS':'F0EAFA','Sales Tax':'FAF0E0',
+      'State Income':'E8F5EC','Labor/OSHA':'FAE8E8','Licenses':'FAE8F2',
+      'Insurance':'E3F2F0','Custom':'FFF8E6'
+    };
+    const urgColors={'Critical':'FDECEA','Important':'FEF3E2','Routine':'EBF5EE'};
+    const statusColors={'Completed':'EBF5EE','Pending':'FEF3E2'};
+    const range=XLSX.utils.decode_range(ws['!ref']);
+    for(let r=range.s.r+1;r<=range.e.r;r++){
+      const catCell=ws[XLSX.utils.encode_cell({r,c:2})];
+      const urgCell=ws[XLSX.utils.encode_cell({r,c:5})];
+      const statusCell=ws[XLSX.utils.encode_cell({r,c:6})];
+      if(catCell&&catColors[catCell.v])catCell.s={fill:{fgColor:{rgb:catColors[catCell.v]}}};
+      if(urgCell&&urgColors[urgCell.v])urgCell.s={fill:{fgColor:{rgb:urgColors[urgCell.v]}}};
+      if(statusCell&&statusColors[statusCell.v])statusCell.s={fill:{fgColor:{rgb:statusColors[statusCell.v]}}};
+    }
+    const wb=XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb,ws,'Compliance Calendar 2026');
+    const cats=Object.entries(CAT_LABELS);
+    const doneAll=evts.filter(e=>getEvStatus(e.id).status==='done').length;
+    const summaryData=[
+      ['Roots Multiclean Inc — 2026 Compliance Calendar Summary',''],
+      ['Generated on',new Date().toLocaleDateString()],
+      ['',''],
+      ['Category','Event Count'],
+      ...cats.map(([k,v])=>[v,evts.filter(e=>e.cat===k).length]),
+      ['',''],
+      ['Priority','Count'],
+      ['Critical',evts.filter(e=>e.urgency==='high').length],
+      ['Important',evts.filter(e=>e.urgency==='med').length],
+      ['Routine',evts.filter(e=>e.urgency==='low').length],
+      ['',''],
+      ['Completion Status','Count'],
+      ['Completed',doneAll],
+      ['Pending',evts.length-doneAll],
+      ['',''],
+      ['Total Events Exported',evts.length],
+    ];
+    const ws2=XLSX.utils.aoa_to_sheet(summaryData);
+    ws2['!cols']=[{wch:38},{wch:18}];
+    XLSX.utils.book_append_sheet(wb,ws2,'Summary');
+    XLSX.writeFile(wb,'Roots_Multiclean_Compliance_2026.xlsx');
+  }
+  closeExport();
+}
+
+// ══════════════════════════════════════════════
+//  FILTERS & SEARCH
+// ══════════════════════════════════════════════
+document.querySelectorAll('.filter-btn').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    activeFilter=btn.dataset.cat;
+    document.querySelectorAll('.filter-btn').forEach(b=>b.classList.toggle('active',b.dataset.cat===activeFilter));
+    render();
+  });
+});
+
+function setStatusFilter(sf){
+  statusFilter=sf;
+  ['All','Done','Pending'].forEach((_,i)=>{
+    const ids=['sfAll','sfDone','sfPending'];
+    const btn=document.getElementById(ids[i]);
+    if(!btn)return;
+    const active=btn.dataset.sf===sf;
+    if(btn.dataset.sf==='all'){
+      btn.style.background=active?'var(--accent)':'transparent';
+      btn.style.color=active?'#fff':'var(--muted)';
+      btn.style.borderColor=active?'var(--accent)':'var(--border)';
+    } else if(btn.dataset.sf==='done'){
+      btn.style.background=active?'#2A6B3C':'#EBF5EE';
+      btn.style.color=active?'#fff':'#1A5C2A';
+      btn.style.borderColor=active?'#2A6B3C':'#B8DFC4';
+    } else {
+      btn.style.background=active?'#E07B00':'#FEF3E2';
+      btn.style.color=active?'#fff':'#8A4D0C';
+      btn.style.borderColor=active?'#E07B00':'#F9D9A8';
+    }
+  });
+  render();
+}
+document.getElementById('searchInput').addEventListener('input',e=>{searchQuery=e.target.value;render();});
+document.addEventListener('keydown',e=>{
+  if(e.key==='Escape'){
+    document.getElementById('dayOverlay').classList.remove('open');
+    document.getElementById('formOverlay').classList.remove('open');
+    document.getElementById('expOverlay').classList.remove('open');
+  }
+});
+
+render();
+</script>
+</body>
+</html>
